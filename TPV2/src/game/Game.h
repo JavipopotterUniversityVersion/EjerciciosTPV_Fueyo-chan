@@ -19,5 +19,6 @@ public:
 	void start();
 private:
 	std::vector<GameObject*> _objs;
+	Container* _fighter;
 };
 
