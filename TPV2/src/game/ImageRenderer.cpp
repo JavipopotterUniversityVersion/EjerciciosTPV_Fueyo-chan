@@ -14,5 +14,5 @@ ImageRenderer::~ImageRenderer() {
 
 void ImageRenderer::render(Container *o) {
 	SDL_Rect dest = build_sdlrect(o->getPos(), o->getWidth(), o->getHeight());
-	_img->render(dest);
+	_img->render(dest, o->getRotation());
 }

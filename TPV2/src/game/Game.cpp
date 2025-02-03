@@ -58,7 +58,16 @@ void Game::init() {
 	}
 
 	_fighter = new Container();
-	_fighter.
+	_fighter->getPos().setX(sdlutils().width() / 2);
+	_fighter->getPos().setY(sdlutils().height() / 2);
+	_fighter->setHeight(50);
+	_fighter->setHeight(50);
+
+	ImageRenderer* spriteRenderer = new ImageRenderer(&sdlutils().images().at("Fighter"));
+	_fighter->setRotation(90);
+	_fighter->addComponent(spriteRenderer);
+
+	_objs.push_back(_fighter);
 }
 
 void Game::start() {
