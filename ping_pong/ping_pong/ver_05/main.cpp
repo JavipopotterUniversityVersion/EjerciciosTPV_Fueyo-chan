@@ -1,11 +1,29 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #include <iostream>
-#include "sdlutils/sdlutils_demo.h"
 
-int main(int ac, char **av) {
+#include "game/AIPingPongFactory.h"
+#include "game/ConfigFilePingPongFactory.h"
+#include "game/DefaultPingPongFactory.h"
+#include "game/Game.h"
+
+
+
+void start() {
+	Game g;
+
+	//DefaultPingPongFactory factory;
+	//AIPingPongFactory factory;
+	ConfigFilePingPongFactory factory("resources/config/pingpong.cfg.json");
+
+	g.init(factory);
+	g.start();
+}
+
+int main(int, char **) {
+
 	try {
-		sdlutils_basic_demo();
+		start();
 	} catch (const std::string &e) { // catch exceptions thrown as strings
 		std::cerr << e << std::endl;
 	} catch (const char *e) { // catch exceptions thrown as char*
