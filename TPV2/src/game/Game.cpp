@@ -42,7 +42,7 @@ void Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("Ping Pong", 800, 600,
-			"resources/config/pingpong.resources.json")) {
+			"resources/config/test.resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
@@ -56,6 +56,9 @@ void Game::init() {
 		return;
 
 	}
+
+	_fighter = new Container();
+	_fighter.
 }
 
 void Game::start() {
