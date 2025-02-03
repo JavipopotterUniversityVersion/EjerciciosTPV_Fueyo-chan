@@ -21,6 +21,8 @@
 #include "SimpleMove.h"
 #include "StopOnBorder.h"
 
+#include "FighterCtrl.h"
+
 Game::Game(){}
 
 Game::~Game() {
@@ -66,6 +68,9 @@ void Game::init() {
 	ImageRenderer* spriteRenderer = new ImageRenderer(&sdlutils().images().at("Fighter"));
 	_fighter->setRotation(90);
 	_fighter->addComponent(spriteRenderer);
+
+	FighterCtrl* ctrl = new FighterCtrl(_fighter);
+	_fighter->addComponent(ctrl);
 
 	_objs.push_back(_fighter);
 }

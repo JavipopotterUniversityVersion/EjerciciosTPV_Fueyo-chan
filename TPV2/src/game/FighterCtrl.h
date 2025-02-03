@@ -1,9 +1,14 @@
 #pragma once
-#include "Component.h"
-class FighterCtrl : public Component
+#include "InputComponent.h"
+class Container;
+
+class FighterCtrl : public InputComponent
 {
+private:
 public:
-	FighterCtrl(){}
+	FighterCtrl() {}
 	virtual ~FighterCtrl() {}
+
+	void handleInput(Container* o) override;
 };
 
