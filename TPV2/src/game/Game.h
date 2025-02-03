@@ -18,12 +18,6 @@ public:
 	void init();
 	void start();
 private:
-	void checkCollisions();
-
-	GameManager *_gm;
-	Container *_leftPaddle;
-	Container *_rightPaddle;
-	Container *_ball;
 	std::vector<GameObject*> _objs;
 };
 

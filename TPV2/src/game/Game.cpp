@@ -21,12 +21,7 @@
 #include "SimpleMove.h"
 #include "StopOnBorder.h"
 
-Game::Game() :
-		_gm(nullptr), //
-		_leftPaddle(nullptr), //
-		_rightPaddle(nullptr), //
-		_ball(nullptr) {
-}
+Game::Game(){}
 
 Game::~Game() {
 	// delete all game objects
@@ -61,66 +56,6 @@ void Game::init() {
 		return;
 
 	}
-
-	// the ball
-	_ball = new Container();
-	_ball->addComponent(new SimpleMove());
-	_ball->addComponent(new BounceOnBorder());
-//	ball_->addComponent(new RectangleRenderer(build_sdlcolor(0xff0000ff)));
-	_ball->addComponent(
-			new ImageRenderer(&sdlutils().images().at("tennis_ball")));
-
-	_ball->setWidth(10.0f);
-	_ball->setHeight(10.0f);
-	_ball->getPos().set(sdlutils().width() / 2 - 5,
-			sdlutils().height() / 2 - 5);
-
-
-
-	// the left paddle
-	_leftPaddle = new Container();
-	_leftPaddle->setWidth(10.0f);
-	_leftPaddle->setHeight(50.0f);
-	_leftPaddle->getPos().set(10, sdlutils().height() / 2 - 25);
-
-//	auto leftPaddle_ic = new MovePaddleWithKeyBoard();
-//	leftPaddle_ic->setKeys(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A);
-//	leftPaddle_->addComponent(leftPaddle_ic);
-	_leftPaddle->addComponent(new AIPaddle(_ball));
-
-	_leftPaddle->addComponent(
-			new RectangleRenderer(build_sdlcolor(0xff0000ff)));
-	_leftPaddle->addComponent(new SimpleMove());
-	_leftPaddle->addComponent(new StopOnBorder());
-
-	// the right paddle
-	_rightPaddle = new Container();
-	_rightPaddle->setWidth(10.0f);
-	_rightPaddle->setHeight(50.0f);
-	_rightPaddle->getPos().set(sdlutils().width() - 15,
-			sdlutils().height() / 2 - 25);
-
-//	rightPaddle_->addComponent(new MovePaddleWithMouse());
-	_rightPaddle->addComponent(new AIPaddle(_ball));
-
-	_rightPaddle->addComponent(
-			new EmptyRectangleRenderer(build_sdlcolor(0x00ff00ff)));
-
-	_rightPaddle->addComponent(new SimpleMove());
-	_rightPaddle->addComponent(new StopOnBorder());
-
-	// game manager
-	_gm = new GameManager(_ball);
-	_gm->addComponent(new GameCtrl());
-	_gm->addComponent(new ScoreRenderer());
-	_gm->addComponent(new InfoMsgs());
-
-	// add them all to the list of game objects
-	_objs.push_back(_ball);
-	_objs.push_back(_leftPaddle);
-	_objs.push_back(_rightPaddle);
-	_objs.push_back(_gm);
-
 }
 
 void Game::start() {
@@ -154,8 +89,6 @@ void Game::start() {
 			o->update();
 		}
 
-		checkCollisions();
-
 		sdlutils().clearRenderer();
 
 		// render
@@ -171,29 +104,3 @@ void Game::start() {
 	}
 
 }
-
-void Game::checkCollisions() {
-	if (_gm->getState() != GameManager::RUNNING)
-		return;
-
-	// check if ball hits paddles
-	if (Collisions::collides(_leftPaddle->getPos(), _leftPaddle->getWidth(),
-			_leftPaddle->getHeight(), _ball->getPos(), _ball->getWidth(),
-			_ball->getHeight())
-			|| Collisions::collides(_rightPaddle->getPos(),
-					_rightPaddle->getWidth(), _rightPaddle->getHeight(),
-					_ball->getPos(), _ball->getWidth(), _ball->getHeight())) {
-
-		// change the direction of the ball, and increment the speed
-		auto &vel = _ball->getVel(); // the use of & is important, so the changes goes directly to the ball
-		vel.setX(-vel.getX());
-		vel = vel * 1.2f;
-
-		// play some sound
-		sdlutils().soundEffects().at("paddle_hit").play();
-	} else if (_ball->getPos().getX() < 0)
-		_gm->onBallExit(GameManager::LEFT);
-	else if (_ball->getPos().getX() + _ball->getWidth() > sdlutils().width())
-		_gm->onBallExit(GameManager::RIGHT);
-}
-
