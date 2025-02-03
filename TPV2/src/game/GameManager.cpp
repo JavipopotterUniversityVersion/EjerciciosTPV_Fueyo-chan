@@ -3,10 +3,13 @@
 #include "GameManager.h"
 
 #include <cassert>
-#include <string>
 
+#include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
+#include "Container.h"
+
+#include "GameObject.h"
 
 GameManager::GameManager(GameObject *ball) :
 		_score(), //
@@ -18,69 +21,9 @@ GameManager::GameManager(GameObject *ball) :
 GameManager::~GameManager() {
 }
 
-void GameManager::handleInput(const SDL_Event &event) {
-	if (_state != RUNNING) {
-		if (event.type == SDL_KEYDOWN
-				&& event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
-			switch (_state) {
-			case NEWGAME:
-				moveBall();
-				_state = RUNNING;
-				break;
-			case PAUSED:
-				moveBall();
-				_state = RUNNING;
-				break;
-			case GAMEOVER:
-				_state = NEWGAME;
-				_score[0] = _score[1] = 0;
-				break;
-			default:
-				break;
-			}
-		}
-	}
-}
-
-void GameManager::update() {
-}
-
-void GameManager::render() {
-
-	// message when game is not running
-	if (_state != RUNNING) {
-
-		// game over message
-		if (_state == GAMEOVER) {
-			auto &t = sdlutils().msgs().at("gameover");
-			t.render((sdlutils().width() - t.width()) / 2,
-					(sdlutils().height() - t.height()) / 2);
-		}
-
-		// new game message
-		if (_state == NEWGAME) {
-			auto &t = sdlutils().msgs().at("start");
-			t.render((sdlutils().width() - t.width()) / 2,
-					sdlutils().height() / 2 + t.height() * 2);
-		} else {
-			auto &t = sdlutils().msgs().at("continue");
-			t.render((sdlutils().width() - t.width()) / 2,
-					sdlutils().height() / 2 + t.height() * 2);
-		}
-	}
-
-	// score
-	Texture scoreMsg(
-			sdlutils().renderer(), //
-			std::to_string(_score[0]) + " - " + std::to_string(_score[1]),
-			sdlutils().fonts().at("ARIAL16"), build_sdlcolor(0xffffffff));
-	scoreMsg.render((sdlutils().width() - scoreMsg.width()) / 2, 10);
-
-}
-
 void GameManager::onBallExit(Side side) {
 
-	assert(_state == RUNNING); // this should be called only when game is runnnig
+	assert(_state == RUNNING); // this should be called only when game is running
 
 	if (side == LEFT) {
 		_score[1]++;

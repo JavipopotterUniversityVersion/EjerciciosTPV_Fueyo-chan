@@ -3,16 +3,17 @@
 #pragma once
 
 #include <array>
-#include "GameObject.h"
 
-class GameManager: public GameObject {
+#include "Container.h"
+
+class GameManager: public Container {
 public:
 
 	enum Side {
 		LEFT = 0, //
 		RIGHT
 	};
-	
+
 	enum GameState {
 		NEWGAME = 0, // just before starting a new game
 		PAUSED, // between rounds
@@ -27,15 +28,23 @@ public:
 		return _state;
 	}
 
+	inline void setState(GameState state) {
+		_state = state;
+	}
+
+	inline void setScore(std::size_t player, unsigned int score) {
+		_score[player] = score;
+	}
+
+	inline unsigned int getScore(std::size_t player) {
+		return _score[player];
+	}
+
 	void onBallExit(Side side);
-
-	void handleInput(const SDL_Event &event) override;
-	void update() override;
-	void render() override;
-
-private:
 	void resetBall();
 	void moveBall();
+
+private:
 	std::array<unsigned int, 2> _score;
 	GameState _state;
 	const unsigned int _maxScore;

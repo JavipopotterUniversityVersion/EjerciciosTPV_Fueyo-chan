@@ -8,10 +8,8 @@
 
 // when you are not using the methods of a class, just
 // say that it exists, that saves time when parsing files
-class GameObject;
+class Container;
 class GameManager;
-class Paddle;
-class Ball;
 
 class Game {
 public:
@@ -23,9 +21,9 @@ private:
 	void checkCollisions();
 
 	GameManager *_gm;
-	Paddle *_leftPaddle;
-	Paddle *_rightPaddle;
-	Ball *_ball;
+	Container *_leftPaddle;
+	Container *_rightPaddle;
+	Container *_ball;
 	std::vector<GameObject*> _objs;
 };
 

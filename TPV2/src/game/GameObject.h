@@ -7,7 +7,6 @@
 
 #include "../utils/Vector2D.h"
 
-
 class GameObject {
 public:
 	GameObject() :
@@ -16,7 +15,7 @@ public:
 	virtual ~GameObject() {
 	}
 
-	virtual void handleInput(const SDL_Event &event) = 0;
+	virtual void handleInput() = 0;
 	virtual void update() = 0;
 	virtual void render() = 0;
 
