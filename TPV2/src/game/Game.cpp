@@ -38,37 +38,37 @@ void Game::init() {
 	}
 
 	// the ball
-	_ball = new Ball();
+	//_ball = new Ball();
 
-	_ball->setWidth(6.0f);
-	_ball->setHeight(6.0f);
-	_ball->getPos().set(sdlutils().width() / 2 - 5,
-			sdlutils().height() / 2 - 5);
+	//_ball->setWidth(6.0f);
+	//_ball->setHeight(6.0f);
+	//_ball->getPos().set(sdlutils().width() / 2 - 5,
+	//		sdlutils().height() / 2 - 5);
 
-	// the left paddle
-	_leftPaddle = new Paddle(build_sdlcolor(0xff0000ff));
-	_leftPaddle->setWidth(10.0f);
-	_leftPaddle->setHeight(50.0f);
-	_leftPaddle->getPos().set(10, sdlutils().height() / 2 - 25);
-	_leftPaddle->setKeys(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A);
+	//// the left paddle
+	//_leftPaddle = new Paddle(build_sdlcolor(0xff0000ff));
+	//_leftPaddle->setWidth(10.0f);
+	//_leftPaddle->setHeight(50.0f);
+	//_leftPaddle->getPos().set(10, sdlutils().height() / 2 - 25);
+	//_leftPaddle->setKeys(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A);
 
-	// the right paddle
-	_rightPaddle = new Paddle(build_sdlcolor(0x0000ffff));
-	_rightPaddle->setWidth(10.0f);
-	_rightPaddle->setHeight(50.0f);
-	_rightPaddle->getPos().set(sdlutils().width() - 15,
-			sdlutils().height() / 2 - 25);
-	_rightPaddle->setKeys(SDL_SCANCODE_UP, SDL_SCANCODE_DOWN,
-			SDL_SCANCODE_LEFT);
+	//// the right paddle
+	//_rightPaddle = new Paddle(build_sdlcolor(0x0000ffff));
+	//_rightPaddle->setWidth(10.0f);
+	//_rightPaddle->setHeight(50.0f);
+	//_rightPaddle->getPos().set(sdlutils().width() - 15,
+	//		sdlutils().height() / 2 - 25);
+	//_rightPaddle->setKeys(SDL_SCANCODE_UP, SDL_SCANCODE_DOWN,
+	//		SDL_SCANCODE_LEFT);
 
-	// game manager
-	_gm = new GameManager(_ball);
+	//// game manager
+	//_gm = new GameManager(_ball);
 
-	// add them all to the list of game objects
-	_objs.push_back(_ball);
-	_objs.push_back(_leftPaddle);
-	_objs.push_back(_rightPaddle);
-	_objs.push_back(_gm);
+	//// add them all to the list of game objects
+	//_objs.push_back(_ball);
+	//_objs.push_back(_leftPaddle);
+	//_objs.push_back(_rightPaddle);
+	//_objs.push_back(_gm);
 
 }
 
