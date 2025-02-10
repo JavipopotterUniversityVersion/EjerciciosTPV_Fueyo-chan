@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\game\Ball.cpp" />
+    <ClCompile Include="..\src\game\FighterCtrl.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\GameManager.cpp" />
+    <ClCompile Include="..\src\game\ImageRenderer.cpp" />
     <ClCompile Include="..\src\game\Paddle.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
@@ -35,12 +37,16 @@
     <ClCompile Include="..\SRC\sdlutils\Texture.cpp" />
     <ClCompile Include="..\SRC\utils\Collisions.cpp" />
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
+    <ClCompile Include="FighterCtrl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\Ball.h" />
+    <ClInclude Include="..\src\game\Component.h" />
+    <ClInclude Include="..\src\game\FighterCtrl.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\GameManager.h" />
     <ClInclude Include="..\src\game\GameObject.h" />
+    <ClInclude Include="..\src\game\ImageRenderer.h" />
     <ClInclude Include="..\src\game\Paddle.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
