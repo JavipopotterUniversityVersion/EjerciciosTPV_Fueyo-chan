@@ -9,8 +9,12 @@ public:
 	~Transform() {};
 
 	void Set(float x, float y);
+	float x() { return _position.getX(); };
+	float y() { return _position.getY(); };
+
 	void Translate(float x, float y);
 	void SetVelocity(float x, float y);
+	Vector2D getVelocity() { return _velocity; };
 
 	void update() override;
 private:
