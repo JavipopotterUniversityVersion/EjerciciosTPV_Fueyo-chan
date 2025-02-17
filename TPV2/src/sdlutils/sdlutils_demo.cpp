@@ -44,7 +44,7 @@ void sdlutils_basic_demo() {
 	SDL_Renderer *renderer = sdl.renderer();
 
 	// we can take textures from the predefined ones, and we can create a custom one as well
-	auto &sdlLogo = sdl.images().at("sdl_logo");
+	auto &sdlLogo = sdl.images().at("Circle");
 	auto &helloSDL = sdl.msgs().at("HelloSDL");
 	Texture pressAnyKey(renderer, "Press any key to exit",
 			sdl.fonts().at("ARIAL24"), build_sdlcolor(0x112233ff),
@@ -84,16 +84,16 @@ void sdlutils_basic_demo() {
 		sdl.clearRenderer();
 
 		// render Hello SDL
-		helloSDL.render(x1, y1);
-		if (x1 + helloSDL.width() > winWidth)
-			helloSDL.render(x1 - winWidth, y1);
-		x1 = (x1 + 5) % winWidth;
+		//helloSDL.render(x1, y1);
+		//if (x1 + helloSDL.width() > winWidth)
+		//	helloSDL.render(x1 - winWidth, y1);
+		//x1 = (x1 + 5) % winWidth;
 
-		// render Press Any Key
-		pressAnyKey.render(x0, y0);
+		//// render Press Any Key
+		//pressAnyKey.render(x0, y0);
 
-		// render the SDLogo
-		sdlLogo.render(x2, y2);
+		//// render the SDLogo
+		//sdlLogo.render(x2, y2);
 
 		// present new frame
 		sdl.presentRenderer();
