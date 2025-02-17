@@ -14,3 +14,8 @@ void Transform::SetVelocity(float x, float y)
 {
 	_velocity.set(x, y);
 }
+
+void Transform::update()
+{
+	_position.set(_position.getX() + _velocity.getX(), _position.getY() + _velocity.getY());
+}

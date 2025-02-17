@@ -11,6 +11,8 @@ public:
 	void Set(float x, float y);
 	void Translate(float x, float y);
 	void SetVelocity(float x, float y);
+
+	void update() override;
 private:
 	Vector2D _position;
 	Vector2D _velocity;
