@@ -36,40 +36,6 @@ void Game::init() {
 				<< std::endl;
 		return;
 	}
-
-	// the ball
-	_ball = new Ball();
-
-	_ball->setWidth(6.0f);
-	_ball->setHeight(6.0f);
-	_ball->getPos().set(sdlutils().width() / 2 - 5,
-			sdlutils().height() / 2 - 5);
-
-	// the left paddle
-	_leftPaddle = new Paddle(build_sdlcolor(0xff0000ff));
-	_leftPaddle->setWidth(10.0f);
-	_leftPaddle->setHeight(50.0f);
-	_leftPaddle->getPos().set(10, sdlutils().height() / 2 - 25);
-	_leftPaddle->setKeys(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A);
-
-	// the right paddle
-	_rightPaddle = new Paddle(build_sdlcolor(0x0000ffff));
-	_rightPaddle->setWidth(10.0f);
-	_rightPaddle->setHeight(50.0f);
-	_rightPaddle->getPos().set(sdlutils().width() - 15,
-			sdlutils().height() / 2 - 25);
-	_rightPaddle->setKeys(SDL_SCANCODE_UP, SDL_SCANCODE_DOWN,
-			SDL_SCANCODE_LEFT);
-
-	// game manager
-	_gm = new GameManager(_ball);
-
-	// add them all to the list of game objects
-	_objs.push_back(_ball);
-	_objs.push_back(_leftPaddle);
-	_objs.push_back(_rightPaddle);
-	_objs.push_back(_gm);
-
 }
 
 void Game::start() {
@@ -125,27 +91,6 @@ void Game::start() {
 }
 
 void Game::checkCollisions() {
-	if (_gm->getState() != GameManager::RUNNING)
-		return;
-
-	// check if ball hits paddles
-	if (Collisions::collides(_leftPaddle->getPos(), _leftPaddle->getWidth(),
-			_leftPaddle->getHeight(), _ball->getPos(), _ball->getWidth(),
-			_ball->getHeight())
-			|| Collisions::collides(_rightPaddle->getPos(),
-					_rightPaddle->getWidth(), _rightPaddle->getHeight(),
-					_ball->getPos(), _ball->getWidth(), _ball->getHeight())) {
-
-		// change the direction of the ball, and increment the speed
-		auto &vel = _ball->getVel(); // the use of & is important, so the changes goes directly to the ball
-		vel.setX(-vel.getX());
-		vel = vel * 1.2f;
-
-		// play some sound
-		sdlutils().soundEffects().at("paddle_hit").play();
-	} else if (_ball->getPos().getX() < 0)
-		_gm->onBallExit(GameManager::LEFT);
-	else if (_ball->getPos().getX() + _ball->getWidth() > sdlutils().width())
-		_gm->onBallExit(GameManager::RIGHT);
+	return;
 }
 
