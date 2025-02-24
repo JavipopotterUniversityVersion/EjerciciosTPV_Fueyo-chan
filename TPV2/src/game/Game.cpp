@@ -3,10 +3,9 @@
 #include "Game.h"
 
 #include "../sdlutils/SDLUtils.h"
-#include "Ball.h"
-#include "Paddle.h"
 #include "GameManager.h"
 #include "../utils/Collisions.h"
+#include "../ecs/Entity.h"
 
 Game::Game() :
 		_gm(nullptr), //
@@ -29,7 +28,7 @@ Game::~Game() {
 void Game::init() {
 
 	// initialize the SDL singleton
-	if (!SDLUtils::Init("Ping Pong", 800, 600,
+	if (!SDLUtils::Init("ASTEROIDS", 800, 600,
 			"resources/config/asteroid.resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"

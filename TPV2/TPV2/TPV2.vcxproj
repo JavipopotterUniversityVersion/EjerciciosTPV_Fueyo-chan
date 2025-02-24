@@ -43,6 +43,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\components\Deacceleration.h" />
     <ClInclude Include="..\src\components\FighterCtrl.h" />
+    <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\Transform.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />

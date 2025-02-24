@@ -46,10 +46,6 @@ enum cmpId : cmpId_t {
 	_CMPS_LIST_, /* taken from ../game/ecs_defs */
 
 	// do not remove this
-	TRANSFORM,
-	FIGHTER_CTRL,
-	SHOW_AT_OPPOSITE_SIDE,
-	DEACCELERATION,
 	_LAST_CMP_ID
 };
 }

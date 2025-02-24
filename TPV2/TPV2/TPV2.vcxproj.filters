@@ -179,5 +179,8 @@
     <ClInclude Include="..\src\components\FighterCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\components\Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
