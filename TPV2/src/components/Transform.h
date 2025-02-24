@@ -11,6 +11,7 @@ public:
 	void set(float x, float y);
 	float x() { return _position.getX(); };
 	float y() { return _position.getY(); };
+	Vector2D getPos() { return _position; }
 
 	void translate(float x, float y);
 	void setVelocity(float x, float y);
@@ -21,6 +22,11 @@ public:
 	float getRotation() { return _rotation; };
 	void addRotation(float rot) { _rotation += rot; };
 
+	void setHeight(float h) { _h = h; }
+	float getHeight() { return _h; }
+	void setWidth(float w) { _w = w; }
+	float getWidth() { return _w; }
+
 	void update() override;
 
 	Vector2D up() const;
@@ -28,4 +34,6 @@ private:
 	Vector2D _position;
 	Vector2D _velocity;
 	float _rotation;
+	float _h;
+	float _w;
 };
