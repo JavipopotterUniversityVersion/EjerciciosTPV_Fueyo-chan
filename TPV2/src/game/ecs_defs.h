@@ -20,7 +20,7 @@
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	PADDLES
+	PLAYER
 
 // Handlers list - must have at least one element
 //
