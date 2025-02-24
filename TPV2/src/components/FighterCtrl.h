@@ -5,7 +5,7 @@ class Transform;
 class FighterCrtl : public ecs::Component
 {
 public:
-	FighterCrtl() {};
+	FighterCrtl() : t() {};
 	~FighterCrtl() {};
 	void initComponent() override;
 	void update() override;
