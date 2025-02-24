@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\components\Deacceleration.cpp" />
+    <ClCompile Include="..\src\components\FighterCtrl.cpp" />
+    <ClCompile Include="..\src\components\Transform.cpp" />
+    <ClCompile Include="..\src\ecs\Manager.cpp" />
     <ClCompile Include="..\src\game\Ball.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\GameManager.cpp" />
@@ -37,6 +41,13 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\Deacceleration.h" />
+    <ClInclude Include="..\src\components\FighterCtrl.h" />
+    <ClInclude Include="..\src\components\Transform.h" />
+    <ClInclude Include="..\src\ecs\Component.h" />
+    <ClInclude Include="..\src\ecs\ecs.h" />
+    <ClInclude Include="..\src\ecs\Entity.h" />
+    <ClInclude Include="..\src\ecs\Manager.h" />
     <ClInclude Include="..\src\game\Ball.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\GameManager.h" />

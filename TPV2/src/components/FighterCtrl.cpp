@@ -7,10 +7,20 @@
 void FighterCrtl::update()
 {
 	auto& inputHandler = *InputHandler::Instance();
-	Transform* t = _ent->getMngr()->getComponent<Transform>(_ent);
 
 	if (inputHandler.isKeyDown(SDLK_LEFT))
 	{
-		
+		t->addRotation(-ROTATION_SPEED);
+	}
+	else if (inputHandler.isKeyDown(SDLK_RIGHT))
+	{
+		t->addRotation(ROTATION_SPEED);
+	}
+
+	if (inputHandler.isKeyDown(SDLK_UP))
+	{
+		t->setVelocity(t->up() * SPEED);
 	}
 }
+
+void FighterCrtl::initComponent() { t = _ent->getMngr()->getComponent<Transform>(_ent); }

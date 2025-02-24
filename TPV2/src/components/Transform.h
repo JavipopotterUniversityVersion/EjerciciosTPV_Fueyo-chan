@@ -14,6 +14,7 @@ public:
 
 	void translate(float x, float y);
 	void setVelocity(float x, float y);
+	void setVelocity(Vector2D velocity);
 	Vector2D getVelocity() { return _velocity; };
 
 	void setRotation(float rot) { _rotation = rot; };
@@ -21,6 +22,8 @@ public:
 	void addRotation(float rot) { _rotation += rot; };
 
 	void update() override;
+
+	Vector2D up() const;
 private:
 	Vector2D _position;
 	Vector2D _velocity;
