@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "../utils/Collisions.h"
 #include "../ecs/Entity.h"
+#include "../components/Image.h"
 
 Game::Game() :
 		_gm(nullptr), //
@@ -35,6 +36,7 @@ void Game::init() {
 				<< std::endl;
 		return;
 	}
+
 }
 
 void Game::start() {
