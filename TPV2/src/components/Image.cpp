@@ -32,6 +32,6 @@ void Image::render() {
 			_tr->getHeight());
 
 	assert(_tex != nullptr);
-	_tex->render(dest, _tr->getRot());
+	_tex->render(dest, _tr->getRotation());
 
 }

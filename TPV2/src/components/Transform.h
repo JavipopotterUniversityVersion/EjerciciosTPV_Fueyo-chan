@@ -11,7 +11,7 @@ public:
 	void set(float x, float y);
 	float x() { return _position.getX(); };
 	float y() { return _position.getY(); };
-	Vector2D getPos() { return _position; }
+	Vector2D& getPos() { return _position; }
 
 	void translate(float x, float y);
 	void setVelocity(float x, float y);
