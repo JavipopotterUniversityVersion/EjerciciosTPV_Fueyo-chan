@@ -30,6 +30,7 @@ public:
 	void update() override;
 
 	Vector2D up() const;
+	static const ecs::cmpId_t id = ecs::cmp::cmpId::TRANSFORM;
 private:
 	Vector2D _position;
 	Vector2D _velocity;
