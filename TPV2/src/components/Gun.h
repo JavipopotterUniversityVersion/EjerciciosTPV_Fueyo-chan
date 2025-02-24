@@ -18,13 +18,16 @@ public:
 	constexpr static uint8_t _max_bullets = 20;
 	typedef std::array<Bullet, _max_bullets> bullets_array_t;
 	typedef bullets_array_t::iterator iterator;
+
 	void reset();
+
 	iterator begin() {
 		return _bullets.begin();
 	}
 	iterator end() {
 		return _bullets.end();
 	}
+
 	void initComponent();
 
 	void update();
@@ -34,6 +37,7 @@ public:
 private:
 	void shoot(Vector2D p, Vector2D v, int width, int height, float r);
 	bullets_array_t _bullets;
+	iterator _lastActiveBullet = begin();
 	Transform* _tr;
 	float _shootTime = 0.0f;
 };
