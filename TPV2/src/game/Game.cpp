@@ -41,8 +41,6 @@ void Game::start() {
 	// delta-time in the first iteration
 	//
 	sdlutils().resetTime();
-	FighterUtils fighterUtils(_manager);
-	fighterUtils.create_fighter();
 
 	while (!exit) {
 		// store the current time -- all game objects should use this time when

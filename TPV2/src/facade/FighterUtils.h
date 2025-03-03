@@ -6,7 +6,7 @@
 class FighterUtils : public FighterFacade
 {
 public:
-	FighterUtils(ecs::Manager* manager);
+	FighterUtils();
 	virtual ~FighterUtils() {}
 	void create_fighter() override;
 	void reset_fighter() override;

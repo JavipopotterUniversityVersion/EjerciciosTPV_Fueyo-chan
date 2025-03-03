@@ -1,11 +1,12 @@
 #pragma once
 #include "FighterUtils.h"
 #include "../ecs/Manager.h"
+#include "../game/Game.h"
 #include "../components/Image.h"
 #include "../components/Health.h"
 #include "../components/Transform.h"
 
-FighterUtils::FighterUtils(ecs::Manager* manager) : _fighter(nullptr), _manager(manager) {}
+FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->getManager()) {}
 
 void FighterUtils::create_fighter()
 {
