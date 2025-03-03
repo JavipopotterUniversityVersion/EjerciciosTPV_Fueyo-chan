@@ -5,7 +5,7 @@
 class Transform : public ecs::Component
 {
 public:
-	Transform(float x, float y) : _position(Vector2D(x,y)), _velocity(Vector2D(0,0)) {}
+	Transform(float x, float y);
 	~Transform() {};
 
 	void set(float x, float y);
@@ -21,6 +21,8 @@ public:
 	void setRotation(float rot) { _rotation = rot; };
 	float getRotation() { return _rotation; };
 	void addRotation(float rot) { _rotation += rot; };
+
+	void initComponent() override;
 
 	void setHeight(float h) { _h = h; }
 	float getHeight() { return _h; }
@@ -38,4 +40,6 @@ private:
 	float _rotation;
 	float _h;
 	float _w;
+
+	Vector2D _originalPosition;
 };

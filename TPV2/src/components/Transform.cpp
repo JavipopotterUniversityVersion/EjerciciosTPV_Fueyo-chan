@@ -1,5 +1,12 @@
 #include "Transform.h"
 
+Transform::Transform(float x, float y) : _position(Vector2D(x, y)), _velocity(Vector2D(0, 0)), _h(), _w(), _rotation() {}
+
+void Transform::initComponent()
+{
+	_originalPosition = getPos();
+}
+
 void Transform::set(float x, float y)
 {
 	_position.set(x, y);
