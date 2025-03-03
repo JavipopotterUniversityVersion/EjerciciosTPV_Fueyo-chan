@@ -10,7 +10,7 @@ public:
 	void ShowHealth();
 	void LoseHealth(int h) { _health -= h; }
 	void ResetHealth() { _health = 3; }
-	int GetHealth() { return _health; }
+	const int GetHealth() { return _health; }
 
 	__CMPID_DECL__(ecs::cmp::HEALTH)
 

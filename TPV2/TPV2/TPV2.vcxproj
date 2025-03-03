@@ -25,10 +25,8 @@
     <ClCompile Include="..\src\components\Image_With_Frames.cpp" />
     <ClCompile Include="..\src\components\Transform.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
-    <ClCompile Include="..\src\game\Ball.cpp" />
+    <ClCompile Include="..\src\facade\FighterUtils.cpp" />
     <ClCompile Include="..\src\game\Game.cpp" />
-    <ClCompile Include="..\src\game\GameManager.cpp" />
-    <ClCompile Include="..\src\game\Paddle.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
     <ClCompile Include="..\SRC\json\json_demo.cpp" />
@@ -56,11 +54,7 @@
     <ClInclude Include="..\src\facade\AsteroidsUtils.h" />
     <ClInclude Include="..\src\facade\FighterFacade.h" />
     <ClInclude Include="..\src\facade\FighterUtils.h" />
-    <ClInclude Include="..\src\game\Ball.h" />
     <ClInclude Include="..\src\game\Game.h" />
-    <ClInclude Include="..\src\game\GameManager.h" />
-    <ClInclude Include="..\src\game\GameObject.h" />
-    <ClInclude Include="..\src\game\Paddle.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
     <ClInclude Include="..\SRC\json\json_demo.h" />
