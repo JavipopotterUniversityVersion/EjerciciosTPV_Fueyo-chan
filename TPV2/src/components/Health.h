@@ -12,6 +12,8 @@ public:
 	void ResetHealth() { _health = 3; }
 	int GetHealth() { return _health; }
 
+	__CMPID_DECL__(ecs::cmp::HEALTH)
+
 private:
 	int _health = 3;
 };

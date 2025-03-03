@@ -34,6 +34,8 @@ public:
 
 	void render();
 
+	__CMPID_DECL__(ecs::cmp::GUN)
+
 private:
 	void shoot(Vector2D p, Vector2D v, int width, int height, float r);
 	bullets_array_t _bullets;

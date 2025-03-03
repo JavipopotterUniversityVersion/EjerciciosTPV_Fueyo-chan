@@ -3,23 +3,16 @@
 #include "Game.h"
 
 #include "../sdlutils/SDLUtils.h"
-#include "GameManager.h"
 #include "../utils/Collisions.h"
 #include "../ecs/Entity.h"
 #include "../components/Image.h"
+#include "../facade/FighterUtils.h"
 
-Game::Game() :
-		_gm(nullptr), //
-		_leftPaddle(nullptr), //
-		_rightPaddle(nullptr), //
-		_ball(nullptr) {
+Game::Game(){
+	_manager = new ecs::Manager();
 }
 
 Game::~Game() {
-	// delete all game objects
-	for (GameObject *o : _objs) {
-		delete o;
-	}
 
 	// release SLDUtil if the instance was created correctly.
 	if (!SDLUtils::HasInstance())
@@ -36,7 +29,6 @@ void Game::init() {
 				<< std::endl;
 		return;
 	}
-
 }
 
 void Game::start() {
@@ -49,6 +41,8 @@ void Game::start() {
 	// delta-time in the first iteration
 	//
 	sdlutils().resetTime();
+	FighterUtils fighterUtils(_manager);
+	fighterUtils.create_fighter();
 
 	while (!exit) {
 		// store the current time -- all game objects should use this time when
@@ -63,24 +57,13 @@ void Game::start() {
 				exit = true;
 				continue;
 			}
-			for (auto &o : _objs) {
-				o->handleInput(event);
-			}
 		}
 
-		// update
-		for (auto &o : _objs) {
-			o->update();
-		}
-
-		checkCollisions();
+		_manager->update();
 
 		sdlutils().clearRenderer();
 
-		// render
-		for (auto &o : _objs) {
-			o->render();
-		}
+		_manager->render();
 
 		sdlutils().presentRenderer();
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
@@ -90,8 +73,3 @@ void Game::start() {
 	}
 
 }
-
-void Game::checkCollisions() {
-	return;
-}
-

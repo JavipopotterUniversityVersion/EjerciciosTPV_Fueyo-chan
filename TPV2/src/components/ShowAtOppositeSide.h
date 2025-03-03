@@ -28,4 +28,6 @@ public:
 			_tr->Set(_tr->x(), 0);
 		}
 	}
+
+	__CMPID_DECL__(ecs::cmp::SHOW_AT_OPPOSITE_SIDE)
 };

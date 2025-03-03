@@ -10,6 +10,8 @@ public:
 	void initComponent() override;
 	void update() override;
 
+	__CMPID_DECL__(ecs::cmp::FIGHTER_CTRL)
+
 private:
 	Transform* t;
 	const float ROTATION_SPEED = 0.5f;

@@ -23,6 +23,8 @@ public:
 		//_tr->getVelocity().rotate(_tr->getVelocity().angle(_playerTr->getPos() - _tr->getPos()) > 0 ? 1.0f : -1.0f)
 	}
 
+	__CMPID_DECL__(ecs::cmp::FOLLOW)
+
 private:
 	float _speed;
 }

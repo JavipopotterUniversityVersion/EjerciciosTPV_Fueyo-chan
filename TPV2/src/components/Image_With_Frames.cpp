@@ -16,5 +16,6 @@ void Image_With_Frames::update() {
 		_textures.pop();
 		_textures.push(tex);
 		_img->setTexture(tex);
+		timer = 0;
 	}
 }

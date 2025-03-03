@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\components\Deacceleration.cpp" />
     <ClCompile Include="..\src\components\FighterCtrl.cpp" />
+    <ClCompile Include="..\src\components\Image.cpp" />
+    <ClCompile Include="..\src\components\Image_With_Frames.cpp" />
     <ClCompile Include="..\src\components\Transform.cpp" />
     <ClCompile Include="..\src\ecs\Manager.cpp" />
     <ClCompile Include="..\src\game\Ball.cpp" />
@@ -44,6 +46,7 @@
     <ClInclude Include="..\src\components\Deacceleration.h" />
     <ClInclude Include="..\src\components\FighterCtrl.h" />
     <ClInclude Include="..\src\components\Image.h" />
+    <ClInclude Include="..\src\components\Image_With_Frames.h" />
     <ClInclude Include="..\src\components\Transform.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />

@@ -4,14 +4,8 @@
 
 #include <vector>
 
-#include "GameManager.h"
-
-// when you are not using the methods of a class, just
-// say that it exists, that saves time when parsing files
-class GameObject;
-class GameManager;
-class Paddle;
-class Ball;
+#include "../ecs/Entity.h"
+#include "../ecs/Manager.h"
 
 class Game {
 public:
@@ -20,12 +14,7 @@ public:
 	void init();
 	void start();
 private:
-	void checkCollisions();
-
-	GameManager *_gm;
-	Paddle *_leftPaddle;
-	Paddle *_rightPaddle;
-	Ball *_ball;
-	std::vector<GameObject*> _objs;
+	ecs::Manager* _manager;
+	std::vector<ecs::entity_t> _entities;
 };
 
