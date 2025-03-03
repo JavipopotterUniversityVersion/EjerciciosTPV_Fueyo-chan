@@ -3,6 +3,7 @@
 #include "ecs/Manager.h"
 #include "../components/Image.h"
 #include "../components/Health.h"
+#include "../components/Transform.h"
 
 FighterUtils::FighterUtils(ecs::Manager* manager) : _fighter(nullptr), _manager(manager) {}
 
@@ -15,7 +16,7 @@ void FighterUtils::create_fighter()
 
 void FighterUtils::reset_fighter()
 {
-	_manager->getComponent<
+	//_manager->getComponent<Transform>()->resetPosition();
 }
 
 void FighterUtils::reset_lives()
@@ -25,5 +26,5 @@ void FighterUtils::reset_lives()
 
 int FighterUtils::update_lives(int n)
 {
-	
+	return n;
 }

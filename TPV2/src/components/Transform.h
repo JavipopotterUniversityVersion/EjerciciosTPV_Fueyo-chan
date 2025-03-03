@@ -30,6 +30,7 @@ public:
 	float getWidth() { return _w; }
 
 	void update() override;
+	inline void resetPosition() { _position = _originalPosition; }
 
 	Vector2D up() const;
 	__CMPID_DECL__(ecs::cmp::TRANSFORM)

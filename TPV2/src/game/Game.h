@@ -13,6 +13,7 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
+	inline ecs::Manager* getManager() { return _manager; }
 private:
 	ecs::Manager* _manager;
 	std::vector<ecs::entity_t> _entities;

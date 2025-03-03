@@ -52,6 +52,10 @@
     <ClInclude Include="..\src\ecs\ecs.h" />
     <ClInclude Include="..\src\ecs\Entity.h" />
     <ClInclude Include="..\src\ecs\Manager.h" />
+    <ClInclude Include="..\src\facade\AsteroidsFacade.h" />
+    <ClInclude Include="..\src\facade\AsteroidsUtils.h" />
+    <ClInclude Include="..\src\facade\FighterFacade.h" />
+    <ClInclude Include="..\src\facade\FighterUtils.h" />
     <ClInclude Include="..\src\game\Ball.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\GameManager.h" />

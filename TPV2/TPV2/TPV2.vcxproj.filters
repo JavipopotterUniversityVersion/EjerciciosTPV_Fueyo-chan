@@ -191,5 +191,17 @@
     <ClInclude Include="..\src\components\Image_With_Frames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\facade\AsteroidsFacade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\facade\AsteroidsUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\facade\FighterFacade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\facade\FighterUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
