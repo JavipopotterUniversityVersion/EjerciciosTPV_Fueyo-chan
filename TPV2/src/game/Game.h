@@ -6,8 +6,9 @@
 
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
+#include "../utils/Singleton.h"
 
-class Game {
+class Game : public Singleton<Game> {
 public:
 	Game();
 	virtual ~Game();
