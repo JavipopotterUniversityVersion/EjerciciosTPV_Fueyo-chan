@@ -10,7 +10,7 @@ public:
 	RandomNumberGenerator _rnd;
 
 	TowardsDestination(float s) { _speed = s; }
-	~TowardsDestination();
+	~TowardsDestination() {};
 
 	void initComponent() {
 		_tr = _ent->getMngr()->getComponent<Transform>(_ent);

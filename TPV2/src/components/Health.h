@@ -4,7 +4,7 @@
 class Health : public ecs::Component
 {
 public:
-	Health(int h) : _health(h);
+	Health(int h) : _health(h) {};
 	~Health();
 
 	void ShowHealth();

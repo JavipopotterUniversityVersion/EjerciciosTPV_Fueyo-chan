@@ -6,15 +6,20 @@
 class ShowAtOppositeSide : public ecs::Component
 {
 public:
-	ShowAtOppositeSide();
-	~ShowAtOppositeSide();
+	Transform* _tr;
 
+	ShowAtOppositeSide() {};
+	~ShowAtOppositeSide() {};
+
+	void initComponent() {
+		_tr = Game::Instance()->getMngr()->getComponent<Transform>(_ent);
+	}
 	void update() override {
 		tp(_tr);
 	}
 
 	void tp() {
-		Transform* _tr = _ent->getComponent
+		
 		if (_tr->x() < 0) {
 			_tr->Set(SDLUtils::width(), _tr->y());
 		}
