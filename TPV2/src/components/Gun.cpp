@@ -36,10 +36,10 @@ Gun::render() {
 void
 Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r) {
 	auto it = _lastActiveBullet++;
-	while (it.used && (it != _lastActiveBullet)) {
+	while (it->used && (it != _lastActiveBullet)) {
 		it++;
 	}
-	if (!it.used) {
+	if (!it->used) {
 		_lastActiveBullet = it;
 		_lastActiveBullet->pos = p;
 		_lastActiveBullet->vel = v;
