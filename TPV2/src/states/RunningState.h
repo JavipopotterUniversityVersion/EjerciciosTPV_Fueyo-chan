@@ -15,7 +15,7 @@ public:
 	RunningState() {}
 	~RunningState() {}
 
-	VirtualTimer _timer;
+	float _waitTime = 5000.0f;
 	AsteroidsUtils _fachadaAsteroides;
 	FighterUtils _fachadaFighter;
 
@@ -25,7 +25,6 @@ public:
 	Gun* _gunComponent;
 
 	void enter() {
-		_timer.resetTime();
 		_fachadaAsteroides = AsteroidsUtils();
 		_fachadaFighter = FighterUtils();
 
@@ -67,9 +66,9 @@ public:
 		Game::Instance()->getManager()->refresh();
 
 		//Se añade un nuevo asteroide cada 5 segundos
-		if (_timer.currRealTime() > 5000) {
+		if (sdlutils().virtualTimer().currRealTime() > _waitTime) {
 			_fachadaAsteroides.create_asteroids(1);
-			_timer.resetTime();
+			_waitTime += 5000.0f;
 		}
 
 	}
