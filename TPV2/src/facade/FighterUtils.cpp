@@ -5,6 +5,8 @@
 #include "../components/Image_With_Frames.h";
 #include "../components/Health.h"
 #include "../components/Transform.h"
+#include "../components/FighterCtrl.h"
+#include "../components/Deacceleration.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Image.h"
 
@@ -15,6 +17,8 @@ void FighterUtils::create_fighter()
 	_fighter = _manager->addEntity(ecs::grp::PLAYER);
 	_manager->addComponent<Transform>(_fighter,0,0);
 	_manager->addComponent<Image>(_fighter,&sdlutils().images().at("fighter"));
+	_manager->addComponent<FighterCrtl>(_fighter);
+	_manager->addComponent<Deacceleration>(_fighter);
 }
 
 void FighterUtils::reset_fighter()

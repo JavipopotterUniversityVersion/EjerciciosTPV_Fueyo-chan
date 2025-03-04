@@ -8,6 +8,7 @@
 #include "../components/Image.h"
 #include "../facade/FighterUtils.h"
 #include "../facade/AsteroidsUtils.h"
+#include "../sdlutils/InputHandler.h"
 
 Game::Game(){
 	_manager = new ecs::Manager();
@@ -35,6 +36,7 @@ bool Game::init() {
 }
 
 void Game::start() {
+	InputHandler::Init();
 
 	// a boolean to exit the loop
 	bool exit = false;

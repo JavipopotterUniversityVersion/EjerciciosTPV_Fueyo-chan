@@ -16,7 +16,9 @@ public:
 	void translate(float x, float y);
 	void setVelocity(float x, float y);
 	void setVelocity(Vector2D velocity);
-	Vector2D getVelocity() { return _velocity; };
+	Vector2D getVelocity();
+
+	void multVelocity(float mult);
 
 	void setRotation(float rot) { _rotation = rot; };
 	float getRotation() { return _rotation; };
@@ -42,6 +44,8 @@ private:
 	float _rotation;
 	float _h;
 	float _w;
+
+	static constexpr int DEFAULT_SIZE = 64;
 
 	Vector2D _originalPosition;
 };
