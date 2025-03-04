@@ -20,7 +20,7 @@ public:
 	void update() {
 		font.renderText(text, SDL_Color::b);
 
-		if (inputHandler.) {
+		if (inputHandler.keyDownEvent()) {
 			FighterUtils::reset_lives(3);
 			Game::Instance()->setState(Game::NEWROUND);
 		}

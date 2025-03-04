@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "../game/Game.h"
 #include "../facade/FighterUtils.h"
+#include "../facade/AsteroidUtils.h"
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
 
