@@ -2,7 +2,7 @@
 #include "GameState.h"
 #include "../game/Game.h"
 #include "../facade/FighterUtils.h"
-#include "../facade/AsteroidUtils.h"
+#include "../facade/AsteroidsUtils.h"
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
 
@@ -11,20 +11,23 @@ public:
 	NewRoundState() {}
 	~NewRoundState() {}
 
-	Font font = new Font("ARIAL.tff", 8);
+	Font font = Font("ARIAL.tff", 8);
 	std::string text = "press ENTER to start a new game";
-	auto& inputHandler;
+	InputHandler* inputHandler;
+	FighterUtils _fachadaFighter;
+	AsteroidsUtils _fachadaAsteroids;
 
 	void enter() {
-		inputHandler = *InputHandler::Instance();
+		inputHandler = InputHandler::Instance();
+		_fachadaFighter = FighterUtils();
 	}
 	void update() {
 		font.renderText(text, SDL_Color::b);
 
-		if (inputHandler.isKeyDown(SDLK_KP_ENTER)) {
-			FighterUtils::reset_fighter();
-			AsteroidUtils::remove_all_asteroids();
-			AsteroidUtils::create_asteroids(10);
+		if (inputHandler->isKeyDown(SDLK_KP_ENTER)) {
+			_fachadaFighter.reset_fighter();
+			_fachadaAsteroids.remove_all_asteroids();
+			_fachadaAsteroids.create_asteroids(10);
 			Game::Instance()->setState(Game::RUNNING);
 		}
 	}

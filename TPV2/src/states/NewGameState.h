@@ -10,18 +10,20 @@ public:
 	NewGameState() {}
 	~NewGameState() {}
 
-	Font font = new Font("ARIAL.tff", 8);
+	Font _font = Font("ARIAL.tff", 8);
 	std::string text = "press any key to start a new game";
-	auto& inputHandler;
+	InputHandler* inputHandler;
+	FighterUtils _fachadaFighter;
 
 	void enter() {
-		inputHandler = *InputHandler::Instance();
+		inputHandler = InputHandler::Instance();
+		_fachadaFighter = FighterUtils();
 	}
 	void update() {
-		font.renderText(text, SDL_Color::b);
+		_font.renderText(text, SDL_Color::b);
 
-		if (inputHandler.keyDownEvent()) {
-			FighterUtils::reset_lives(3);
+		if (inputHandler->keyDownEvent()) {
+			_fachadaFighter.reset_lives();
 			Game::Instance()->setState(Game::NEWROUND);
 		}
 	}
