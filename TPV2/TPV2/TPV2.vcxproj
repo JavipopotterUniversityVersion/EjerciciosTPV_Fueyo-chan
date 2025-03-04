@@ -23,6 +23,7 @@
     <ClCompile Include="..\src\components\Deacceleration.cpp" />
     <ClCompile Include="..\src\components\FighterCtrl.cpp" />
     <ClCompile Include="..\src\components\Generations.cpp" />
+    <ClCompile Include="..\src\components\Gun.cpp" />
     <ClCompile Include="..\src\components\Health.cpp" />
     <ClCompile Include="..\src\components\Image.cpp" />
     <ClCompile Include="..\src\components\Image_With_Frames.cpp" />

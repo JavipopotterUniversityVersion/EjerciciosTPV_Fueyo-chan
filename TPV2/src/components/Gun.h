@@ -5,7 +5,6 @@
 
 class Gun : public ecs::Component {
 public:
-	Transform* _tr;
 	struct Bullet {
 		bool used = false;
 		Vector2D pos;
