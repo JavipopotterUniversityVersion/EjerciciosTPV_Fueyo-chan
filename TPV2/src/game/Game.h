@@ -12,7 +12,7 @@ class Game : public Singleton<Game> {
 public:
 	Game();
 	virtual ~Game();
-	void init();
+	bool init();
 	void start();
 	inline ecs::Manager* getManager() { return _manager; }
 private:

@@ -7,10 +7,9 @@
 
 
 void start() {
-	Game g;
+	Game::Init();
 
-	g.init();
-	g.start();
+	Game::Instance()->start();
 }
 
 int main(int, char**) {

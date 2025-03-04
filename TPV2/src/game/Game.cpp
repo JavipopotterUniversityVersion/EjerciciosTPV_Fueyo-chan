@@ -7,6 +7,7 @@
 #include "../ecs/Entity.h"
 #include "../components/Image.h"
 #include "../facade/FighterUtils.h"
+#include "../facade/AsteroidsUtils.h"
 
 Game::Game(){
 	_manager = new ecs::Manager();
@@ -19,7 +20,7 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
-void Game::init() {
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("ASTEROIDS", 800, 600,
@@ -27,8 +28,10 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
+
+	return true;
 }
 
 void Game::start() {
@@ -41,6 +44,12 @@ void Game::start() {
 	// delta-time in the first iteration
 	//
 	sdlutils().resetTime();
+
+	//AsteroidsUtils asteroidUtils;
+	//asteroidUtils.create_asteroids(2);
+
+	FighterUtils fUtils;
+	fUtils.create_fighter();
 
 	while (!exit) {
 		// store the current time -- all game objects should use this time when

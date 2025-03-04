@@ -6,6 +6,7 @@
 #include "../components/Health.h"
 #include "../components/Transform.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../components/Image.h"
 
 FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->getManager()) {}
 
@@ -13,6 +14,7 @@ void FighterUtils::create_fighter()
 {
 	_fighter = _manager->addEntity(ecs::grp::PLAYER);
 	_manager->addComponent<Transform>(_fighter,0,0);
+	_manager->addComponent<Image>(_fighter,&sdlutils().images().at("fighter"));
 }
 
 void FighterUtils::reset_fighter()

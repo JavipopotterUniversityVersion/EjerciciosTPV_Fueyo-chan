@@ -16,11 +16,12 @@ void AsteroidsUtils::create_asteroids(int n)
 	for(int i = 0; i < 2; i++)
 	{
 		ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
-		Transform* tr = _manager->addComponent<Transform>(_asteroid, 0, 0);
-		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroids"), 6, 5);
+		Transform* tr = _manager->addComponent<Transform>(_asteroid, 2, 2);
+		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
 		_manager->addComponent<Generations>(_asteroid, n-1);
 
 		tr->setWidthAndHeight(n);
+		std::cout << "asteroid was created succesfully" << std::endl;
 	}
 }
 
