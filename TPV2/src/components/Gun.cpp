@@ -4,7 +4,7 @@ void
 Gun::reset() {
 	auto it = begin();
 	while (it != end()) {
-		it.used = false;
+		it->used = false;
 		it++;
 	}
 }
