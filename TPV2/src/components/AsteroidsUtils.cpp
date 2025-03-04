@@ -3,24 +3,31 @@
 #include "../game/Game.h"
 #include "../components/Transform.h"
 #include "../components/Image_With_Frames.h"
+#include "../components/Image.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Generations.h"
 #include <vector>
 
 AsteroidsUtils::AsteroidsUtils() : _manager(Game::Instance()->getManager()) {}
 
-void AsteroidsUtils::create_asteroids(int n)
+void AsteroidsUtils::create_asteroids(int n, Vector2D p)
 {
 	if (n <= 0) return;
 
 	for(int i = 0; i < 2; i++)
 	{
 		ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
-		Transform* tr = _manager->addComponent<Transform>(_asteroid, 2, 2);
+		Transform* tr = _manager->addComponent<Transform>(_asteroid, p.getX(), p.getY());
 		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
+		//_manager->addComponent<Image>(_asteroid, &sdlutils().images().at("fighter"));
 		_manager->addComponent<Generations>(_asteroid, n-1);
 
-		tr->setWidthAndHeight(n);
+		int r = sdlutils().rand().nextInt(0, 360);
+		int s = sdlutils().rand().nextInt(2, 4);
+		tr->addRotation(r);
+		tr->setVelocity(tr->up() * s);
+
+		tr->setWidthAndHeight(float(n-1) / 2 * tr->getHeight());
 		std::cout << "asteroid was created succesfully" << std::endl;
 	}
 }
@@ -41,5 +48,5 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 {
 	Generations* gn = _manager->getComponent<Generations>(a);
 	_manager->setAlive(a, false);
-	create_asteroids(gn->getGeneration());
+	create_asteroids(gn->getGeneration(), _manager->getComponent<Transform>(a)->getPos());
 }

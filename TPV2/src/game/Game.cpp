@@ -53,6 +53,9 @@ void Game::start() {
 	FighterUtils fUtils;
 	fUtils.create_fighter();
 
+	AsteroidsUtils aUtils;
+	aUtils.create_asteroids(2, Vector2D(200, 200));
+
 	while (!exit) {
 		// store the current time -- all game objects should use this time when
 		// then need to the current time. They also have accessed to the time elapsed

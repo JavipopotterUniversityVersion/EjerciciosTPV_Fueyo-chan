@@ -5,8 +5,6 @@
 
 void Deacceleration::update()
 {
-	//std::cout << t->getVelocity() << std::endl;
-
 	t->multVelocity(_slowFactor);
 	if (t->getVelocity().magnitude() <= 0.05f) t->setVelocity(0,0);
 }

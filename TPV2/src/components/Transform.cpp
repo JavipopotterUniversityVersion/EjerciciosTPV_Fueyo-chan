@@ -49,6 +49,5 @@ Vector2D Transform::up() const
 {
 	float rotInRad = (_rotation - 90) * 3.141516f / 180;
 	Vector2D direction(cosf(rotInRad), sinf(rotInRad));
-	std::cout << direction << std::endl;
 	return direction;
 }
