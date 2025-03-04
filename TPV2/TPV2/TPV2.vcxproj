@@ -19,8 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\components\AsteroidsUtils.cpp" />
     <ClCompile Include="..\src\components\Deacceleration.cpp" />
     <ClCompile Include="..\src\components\FighterCtrl.cpp" />
+    <ClCompile Include="..\src\components\Generations.cpp" />
+    <ClCompile Include="..\src\components\Health.cpp" />
     <ClCompile Include="..\src\components\Image.cpp" />
     <ClCompile Include="..\src\components\Image_With_Frames.cpp" />
     <ClCompile Include="..\src\components\Transform.cpp" />
@@ -43,8 +46,13 @@
   <ItemGroup>
     <ClInclude Include="..\src\components\Deacceleration.h" />
     <ClInclude Include="..\src\components\FighterCtrl.h" />
+    <ClInclude Include="..\src\components\Follow.h" />
+    <ClInclude Include="..\src\components\Generations.h" />
+    <ClInclude Include="..\src\components\Gun.h" />
+    <ClInclude Include="..\src\components\Health.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\Image_With_Frames.h" />
+    <ClInclude Include="..\src\components\TowardsDestination.h" />
     <ClInclude Include="..\src\components\Transform.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />
@@ -70,6 +78,12 @@
     <ClInclude Include="..\SRC\sdlutils\SoundEffect.h" />
     <ClInclude Include="..\SRC\sdlutils\Texture.h" />
     <ClInclude Include="..\SRC\sdlutils\VirtualTimer.h" />
+    <ClInclude Include="..\src\states\GameOverState.h" />
+    <ClInclude Include="..\src\states\GameState.h" />
+    <ClInclude Include="..\src\states\NewGameState.h" />
+    <ClInclude Include="..\src\states\NewRoundState.h" />
+    <ClInclude Include="..\src\states\PausedState.h" />
+    <ClInclude Include="..\src\states\RunningState.h" />
     <ClInclude Include="..\SRC\utils\Collisions.h" />
     <ClInclude Include="..\SRC\utils\DynamicBitSet.h" />
     <ClInclude Include="..\SRC\utils\GenID.h" />

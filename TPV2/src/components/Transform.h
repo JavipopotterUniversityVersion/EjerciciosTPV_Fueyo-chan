@@ -24,10 +24,11 @@ public:
 
 	void initComponent() override;
 
-	void setHeight(float h) { _h = h; }
-	float getHeight() { return _h; }
-	void setWidth(float w) { _w = w; }
-	float getWidth() { return _w; }
+	inline void setWidthAndHeight(float wh) { _h = _w = wh; }
+	inline void setHeight(float h) { _h = h; }
+	inline float getHeight() { return _h; }
+	inline void setWidth(float w) { _w = w; }
+	inline float getWidth() { return _w; }
 
 	void update() override;
 	inline void resetPosition() { _position = _originalPosition; }

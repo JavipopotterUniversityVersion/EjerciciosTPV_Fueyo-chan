@@ -16,12 +16,14 @@
 	SHOW_AT_OPPOSITE_SIDE, \
 	DEACCELERATION, \
 	GAMESTATE, \
+	GENERATIONS, \
 	GAMEINFOMSGS
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	PLAYER
+	PLAYER, \
+	ASTEROID
 
 // Handlers list - must have at least one element
 //

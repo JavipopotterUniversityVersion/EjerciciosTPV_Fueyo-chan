@@ -33,5 +33,4 @@ void Image::render() {
 
 	assert(_tex != nullptr);
 	_tex->render(dest, _tr->getRotation());
-
 }
