@@ -18,6 +18,8 @@ public:
 	typedef std::array<Bullet, _max_bullets> bullets_array_t;
 	typedef bullets_array_t::iterator iterator;
 
+	Gun();
+	~Gun() {};
 	void reset();
 
 	iterator begin() {
@@ -40,5 +42,8 @@ private:
 	bullets_array_t _bullets;
 	iterator _lastActiveBullet = begin();
 	Transform* _tr;
-	float _shootTime = 0.0f;
+	Texture* _bulletTex;
+	float _shootTime = 0.2f;
+
+	const int SHOOT_RATE = 250;
 };
