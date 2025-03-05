@@ -6,7 +6,7 @@
 class Follow : public ecs::Component {
 public:
 	Transform* _tr;
-	Transform* _fighterTr;
+	Transform* _playerTr;
 
 	Follow(float s) { _speed = s; }
 	~Follow() {};

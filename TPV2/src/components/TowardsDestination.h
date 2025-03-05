@@ -19,12 +19,12 @@ public:
 
 	void update() {
 		Vector2D newDir = (_targetPos - _tr->getPos());
-		if (abs(newDir) <= 10.0f) {
+		if (abs(newDir.magnitude()) <= 10.0f) {
 			_targetPos = { _rnd.nextInt(0, 800), _rnd.nextInt(0, 600) };
 		}
 		newDir.normalize();
 		_tr->setVelocity(newDir * _speed);
-		_tr->getVelocity().rotate(_tr->getVelocity().angle(_playerTr->getPos() - _tr->getPos()));
+		_tr->getVelocity().rotate(_tr->getVelocity().angle(_targetPos - _tr->getPos()));
 	}
 
 private:

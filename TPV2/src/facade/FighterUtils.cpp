@@ -36,5 +36,5 @@ void FighterUtils::reset_lives()
 int FighterUtils::update_lives(int n)
 {
 	_manager->getComponent<Health>(_fighter)->LoseHealth(-n);
-	return n;
+	return _manager->getComponent<Health>(_fighter)->GetHealth();
 }
