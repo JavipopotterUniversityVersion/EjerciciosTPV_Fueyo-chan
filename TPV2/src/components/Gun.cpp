@@ -41,7 +41,11 @@ Gun::render() {
 	{
 		it->pos = it->pos + it->vel;
 		SDL_Rect dest{ it->pos.getX(), it->pos.getY(), it->width, it->height };
-		_bulletTex->render(dest, it->rot);
+
+		if(it->used) _bulletTex->render(dest, it->rot);
+
+		if (it->pos.getX() > sdlutils().width() || it->pos.getX() < 0
+			|| it->pos.getY() > sdlutils().height() || it->pos.getY() < 0){it->used = false;}
 	}
 }
 
@@ -53,7 +57,6 @@ Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r) {
 	}
 	if (!it->used) {
 		_lastActiveBullet = it;
-		if (_lastActiveBullet == _bullets.end() - 1) _lastActiveBullet = _bullets.begin();
 		_lastActiveBullet->pos = p;
 		_lastActiveBullet->vel = v;
 		_lastActiveBullet->width = width;
@@ -61,4 +64,5 @@ Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r) {
 		_lastActiveBullet->rot = r;
 		_lastActiveBullet->used = true;
 	}
+	if (_lastActiveBullet == _bullets.end() - 1) _lastActiveBullet = _bullets.begin();
 }
