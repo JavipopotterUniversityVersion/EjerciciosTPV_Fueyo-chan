@@ -8,11 +8,11 @@
 #include "../ecs/Manager.h"
 #include "../utils/Singleton.h"
 #include "../states/GameState.h"
-#include "../states/GameOverState.h"
-#include "../states/NewGameState.h"
-#include "../states/NewRoundState.h"
-#include "../states/PausedState.h"
-#include "../states/RunningState.h"
+class GameOverState;
+class NewGameState;
+class NewRoundState;
+class PausedState;
+class RunningState;
 
 class Game : public Singleton<Game> {
 public:
@@ -55,10 +55,10 @@ private:
 	ecs::Manager* _manager;
 	std::vector<ecs::entity_t> _entities;
 	GameState* _state;
-	GameState* _paused_state = new PausedState();
-	GameState* _runing_state = new RunningState();
-	GameState* _newgame_state = new NewGameState();
-	GameState* _newround_state = new NewRoundState();
-	GameState* _gameover_state = new GameOverState();
+	GameState* _paused_state;
+	GameState* _runing_state;
+	GameState* _newgame_state;
+	GameState* _newround_state;
+	GameState* _gameover_state;
 };
 

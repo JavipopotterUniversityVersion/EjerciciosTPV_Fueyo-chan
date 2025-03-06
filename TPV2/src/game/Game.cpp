@@ -9,8 +9,10 @@
 #include "../facade/FighterUtils.h"
 #include "../facade/AsteroidsUtils.h"
 #include "../sdlutils/InputHandler.h"
+#include "../states/GameOverState.h"
 
 Game::Game(){
+	_gameover_state = new GameOverState();
 }
 
 Game::~Game() {
