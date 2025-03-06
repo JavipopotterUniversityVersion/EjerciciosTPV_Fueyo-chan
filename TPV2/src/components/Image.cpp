@@ -7,6 +7,7 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/Texture.h"
+#include "../game/Game.h"
 #include "Transform.h"
 
 Image::Image() :
@@ -21,7 +22,7 @@ Image::~Image() {
 }
 
 void Image::initComponent() {
-	auto *mngr = _ent->getMngr();
+	auto *mngr = Game::Instance()->getManager();
 	_tr = mngr->getComponent<Transform>(_ent);
 	assert(_tr != nullptr);
 }

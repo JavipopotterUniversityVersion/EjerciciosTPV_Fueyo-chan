@@ -1,5 +1,6 @@
 #include "Gun.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../game/Game.h"
 
 Gun::Gun()
 {
@@ -16,11 +17,11 @@ Gun::reset() {
 }
 
 void
-Gun::initComponent() { _tr = _ent->getMngr()->getComponent<Transform>(_ent); }
+Gun::initComponent() { _tr = Game::Instance()->getManager()->getComponent<Transform>(_ent); }
 
 void
 Gun::update() {
-	auto& inputHandler = *InputHandler::Instance();
+	auto& inputHandler = ih();
 	if (inputHandler.isKeyDown(SDLK_SPACE) && (sdlutils().virtualTimer().currRealTime() >= _shootTime)) {
 		int bw = 5;
 		int bh = 20;

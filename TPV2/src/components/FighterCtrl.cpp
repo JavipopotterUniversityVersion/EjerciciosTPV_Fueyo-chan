@@ -4,10 +4,11 @@
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../game/Game.h"
 
 void FighterCrtl::update()
 {
-	auto& inputHandler = *InputHandler::Instance();
+	auto& inputHandler = ih();
 
 	if (inputHandler.isKeyDown(SDLK_LEFT))
 	{
@@ -25,4 +26,4 @@ void FighterCrtl::update()
 	}
 }
 
-void FighterCrtl::initComponent() { t = _ent->getMngr()->getComponent<Transform>(_ent); }
+void FighterCrtl::initComponent() { t = Game::Instance()->getManager()->getComponent<Transform>(_ent); }

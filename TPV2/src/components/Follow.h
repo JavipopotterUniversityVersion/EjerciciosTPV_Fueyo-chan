@@ -2,6 +2,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "Transform.h"
 #include "../ecs/Manager.h"
+#include "../game/Game.h"
 
 class Follow : public ecs::Component {
 public:
@@ -12,8 +13,9 @@ public:
 	~Follow() {};
 
 	void initComponent() {
-		_tr = _ent->getMngr()->getComponent<Transform>(_ent);
-		_playerTr = _ent->getMngr()->getComponent<Transform>(_ent->getMngr()->getEntities(ecs::grp::PLAYER)[0]);
+		_tr = Game::Instance()->getManager()->getComponent<Transform>(_ent);
+		_playerTr = Game::Instance()->getManager()->getComponent<Transform>
+			(Game::Instance()->getManager()->getEntities(ecs::grp::PLAYER)[0]);
 	}
 
 	void update() {

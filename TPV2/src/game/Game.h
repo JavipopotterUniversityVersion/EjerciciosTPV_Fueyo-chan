@@ -22,7 +22,9 @@ public:
 		RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER
 	};
 	inline void setState(State s) {
-		_state->leave();
+		if (_state != nullptr) {
+			_state->leave();
+		}
 		switch (s) {
 		case RUNNING:
 			_state = _runing_state;

@@ -1,6 +1,7 @@
 #include "Deacceleration.h"
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
+#include "../game/Game.h"
 #include <iostream>
 
 void Deacceleration::update()
@@ -11,5 +12,5 @@ void Deacceleration::update()
 
 void Deacceleration::initComponent()
 {
-	t = _ent->getMngr()->getComponent<Transform>(_ent);
+	t = Game::Instance()->getManager()->getComponent<Transform>(_ent);
 }

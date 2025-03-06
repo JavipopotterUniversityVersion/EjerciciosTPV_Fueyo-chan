@@ -2,9 +2,10 @@
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../game/Game.h"
 
 void Image_With_Frames::initComponent() {
-	_tr = _ent->getMngr()->getComponent<Transform>(_ent);
+	_tr = Game::Instance()->getManager()->getComponent<Transform>(_ent);
 }
 
 void Image_With_Frames::update() {
