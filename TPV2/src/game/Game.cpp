@@ -10,9 +10,17 @@
 #include "../facade/AsteroidsUtils.h"
 #include "../sdlutils/InputHandler.h"
 #include "../states/GameOverState.h"
+#include "../states/NewGameState.h"
+#include "../states/NewRoundState.h"
+#include "../states/PausedState.h"
+#include "../states/RunningState.h"
 
 Game::Game(){
 	_gameover_state = new GameOverState();
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_paused_state = new PausedState();
+	_runing_state = new RunningState();
 }
 
 Game::~Game() {
