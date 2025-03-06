@@ -7,7 +7,7 @@ class AsteroidsUtils : public AsteroidsFacade
 public:
 	AsteroidsUtils();
 	~AsteroidsUtils() {}
-	void create_asteroids(int n, Vector2D p) override;
+	void create_asteroids(int n) override;
 	void remove_all_asteroids() override;
 	void split_asteroid(ecs::Entity* a) override;
 private:
