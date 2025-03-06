@@ -2,15 +2,16 @@
 #include "GameState.h"
 #include "../game/Game.h"
 #include "../facade/FighterUtils.h"
+#include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
 
 class GameOverState : public GameState{
 public:
-	GameOverState() {}
+	GameOverState() : inputHandler(&ih()), _font(&sdlutils().fonts().at("ARIAL16")) {}
 	~GameOverState() {}
 
-	Font _font = Font("ARIAL.tff", 8);
+	Font* _font;
 	std::string _winText = "Game Over Loser! Press ENTER to continue.";
 	std::string _loseText = "Game Over Champion! Press ENTER to continue.";
 	std::string _usedText;

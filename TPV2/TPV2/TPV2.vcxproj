@@ -41,6 +41,11 @@
     <ClCompile Include="..\SRC\sdlutils\sdlutils_demo.cpp" />
     <ClCompile Include="..\SRC\sdlutils\SoundEffect.cpp" />
     <ClCompile Include="..\SRC\sdlutils\Texture.cpp" />
+    <ClCompile Include="..\src\states\GameOverState.cpp" />
+    <ClCompile Include="..\src\states\NewGameState.cpp" />
+    <ClCompile Include="..\src\states\NewRoundState.cpp" />
+    <ClCompile Include="..\src\states\PausedState.cpp" />
+    <ClCompile Include="..\src\states\RunningState.cpp" />
     <ClCompile Include="..\SRC\utils\Collisions.cpp" />
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>

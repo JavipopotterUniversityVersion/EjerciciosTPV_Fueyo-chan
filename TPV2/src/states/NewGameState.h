@@ -7,10 +7,10 @@
 
 class NewGameState : public GameState{
 public:
-	NewGameState() {}
+	NewGameState() : _font("ARIAL.tff", 8), inputHandler(&ih()) {}
 	~NewGameState() {}
-
-	Font _font = Font("ARIAL.tff", 8);
+	
+	Font _font;
 	std::string text = "press any key to start a new game";
 	InputHandler* inputHandler;
 	FighterUtils _fachadaFighter;

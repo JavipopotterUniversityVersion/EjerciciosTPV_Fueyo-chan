@@ -9,10 +9,10 @@
 
 class NewRoundState : public GameState{
 public:
-	NewRoundState() {}
+	NewRoundState() : inputHandler(&ih()), font("ARIAL.tff", 8) {}
 	~NewRoundState() {}
 
-	Font font = Font("ARIAL.tff", 8);
+	Font font;
 	std::string text = "press ENTER to start a new game";
 	InputHandler* inputHandler;
 	FighterUtils _fachadaFighter;

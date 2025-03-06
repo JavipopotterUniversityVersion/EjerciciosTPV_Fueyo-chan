@@ -5,12 +5,11 @@
 #include "../sdlutils/Font.h"
 #include "../sdlutils/VirtualTimer.h"
 #include "../sdlutils/InputHandler.h"
-#include "../sdlutils/VirtualTimer.h"
 #include "../sdlutils/SDLUtils.h"
 
 class PausedState : public GameState{
 public:
-	PausedState() {}
+	PausedState() : inputHandler(&ih()) {}
 	~PausedState() {}
 	
 	Font _font = Font("ARIAL.tff", 8);

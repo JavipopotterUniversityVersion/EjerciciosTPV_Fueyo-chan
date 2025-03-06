@@ -1,7 +1,6 @@
 #include "RunningState.h"
 
-void
-RunningState::enter() {
+RunningState::RunningState() {
 	_fachadaAsteroides = AsteroidsUtils();
 	_fachadaFighter = FighterUtils();
 
@@ -9,6 +8,11 @@ RunningState::enter() {
 	_playerTr = Game::Instance()->getManager()->getComponent<Transform>(_player);
 	_asteroids = Game::Instance()->getManager()->getEntities(ecs::grp::ASTEROID);
 	_gunComponent = Game::Instance()->getManager()->getComponent<Gun>(_player);
+}
+
+void RunningState::enter()
+{
+
 }
 
 void
@@ -46,7 +50,7 @@ RunningState::update() {
 
 	//Se añade un nuevo asteroide cada 5 segundos
 	if (sdlutils().virtualTimer().currRealTime() > _waitTime) {
-		_fachadaAsteroides.create_asteroids(1, Vector2D{ _rnd.nextInt(0, 600), _rnd.nextInt(0, 480) });
+		_fachadaAsteroides.create_asteroids(1, Vector2D{ float(_rnd.nextInt(0, 600)), float(_rnd.nextInt(0, 480)) });
 		_waitTime += 5000.0f;
 	}
 

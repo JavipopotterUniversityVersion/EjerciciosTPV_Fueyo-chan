@@ -6,7 +6,7 @@
 #include "../sdlutils/VirtualTimer.h"
 #include "../utils/Collisions.h"
 #include "../facade/FighterUtils.h"
-#include "../components/AsteroidsUtils.cpp"
+#include "../facade/AsteroidsUtils.h"
 #include "../components/Transform.h"
 #include "../components/Gun.h"
 #include "../sdlutils/RandomNumberGenerator.h"
@@ -14,7 +14,7 @@
 
 class RunningState : public GameState{
 public:
-	RunningState() {}
+	RunningState();
 	~RunningState() {}
 
 	float _waitTime = 5000.0f;
