@@ -1,4 +1,5 @@
 #include "NewGameState.h"
+#include "../facade/FighterUtils.h"
 
 void
 NewGameState::enter() {
@@ -9,7 +10,10 @@ void
 NewGameState::update() {
 	_font->renderText(text, SDL_Color{ 0, 0, 255, 255 });
 
-	if (inputHandler->keyDownEvent()) {
+	if (inputHandler->isKeyDown(SDLK_a)) {
+		FighterUtils fUtils;
+		fUtils.reset_lives();
+
 		Game::Instance()->setState(Game::NEWROUND);
 	}
 }

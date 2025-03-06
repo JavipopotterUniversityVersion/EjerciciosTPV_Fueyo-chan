@@ -27,12 +27,11 @@ void AsteroidsUtils::create_asteroids(int n, Vector2D p)
 
 		int s = sdlutils().rand().nextInt(1, 3);
 
-		/*if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
-		else _manager->addComponent<TowardsDestination>(_asteroid, s);*/
+		if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
+		else _manager->addComponent<TowardsDestination>(_asteroid, s);
 
 		int r = sdlutils().rand().nextInt(0, 360);
 		tr->addRotation(r);
-		tr->setVelocity(tr->up() * s);
 
 		tr->setWidthAndHeight(float(n-1) / 2 * tr->getHeight());
 		std::cout << "asteroid was created succesfully" << std::endl;

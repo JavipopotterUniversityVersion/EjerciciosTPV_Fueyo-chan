@@ -20,7 +20,7 @@ public:
 
 	void update() {
 		Vector2D newDir = (_playerTr->getPos() - _tr->getPos());
-		newDir.normalize();
+		newDir = newDir.normalize();
 		_tr->setVelocity(newDir * _speed);
 		_tr->getVelocity().rotate(_tr->getVelocity().angle(_playerTr->getPos() - _tr->getPos()) > 0 ? 1.0f : -1.0f);
 	}

@@ -28,6 +28,9 @@ Game::~Game() {
 void Game::initGame() {
 	_manager = new ecs::Manager();
 
+	FighterUtils fUtils;
+	fUtils.create_fighter();
+
 	_gameover_state = new GameOverState();
 	_newgame_state = new NewGameState();
 	_newround_state = new NewRoundState();

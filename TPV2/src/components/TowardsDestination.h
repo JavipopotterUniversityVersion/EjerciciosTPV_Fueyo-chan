@@ -22,7 +22,7 @@ public:
 		if (abs(newDir.magnitude()) <= 10.0f) {
 			_targetPos = {float( _rnd.nextInt(0, 600)), float(_rnd.nextInt(0, 480)) };
 		}
-		newDir.normalize();
+		newDir = newDir.normalize();
 		_tr->setVelocity(newDir * _speed);
 		_tr->getVelocity().rotate(_tr->getVelocity().angle(_targetPos - _tr->getPos()));
 	}
