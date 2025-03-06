@@ -27,34 +27,34 @@ public:
 		RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER
 	};
 	inline void setState(State s) {
-		if (_state != nullptr) {
-			_state->leave();
+		if (_current_state != nullptr) {
+			_current_state->leave();
 		}
 		switch (s) {
 		case RUNNING:
-			_state = _runing_state;
+			_current_state = _runing_state;
 			break;
 		case PAUSED:
-			_state = _paused_state;
+			_current_state = _paused_state;
 			break;
 		case NEWGAME:
-			_state = _newgame_state;
+			_current_state = _newgame_state;
 			break;
 		case NEWROUND:
-			_state = _newround_state;
+			_current_state = _newround_state;
 			break;
 		case GAMEOVER:
-			_state = _gameover_state;
+			_current_state = _gameover_state;
 			break;
 		default:
 			break;
 		}
-		_state->enter();
+		_current_state->enter();
 	}
 private:
 	ecs::Manager* _manager;
 	std::vector<ecs::entity_t> _entities;
-	GameState* _state;
+	GameState* _current_state;
 	GameState* _paused_state;
 	GameState* _runing_state;
 	GameState* _newgame_state;

@@ -62,7 +62,7 @@ void Game::start() {
 			continue;
 		}
 
-		_state->update();
+		_current_state->update();
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
 
