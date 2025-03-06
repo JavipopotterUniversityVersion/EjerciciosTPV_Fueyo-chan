@@ -12,7 +12,7 @@ RunningState::RunningState() {
 
 void RunningState::enter()
 {
-
+	sdlutils().musics().at("main_theme").play();
 }
 
 void
