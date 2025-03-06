@@ -16,11 +16,6 @@
 #include "../states/RunningState.h"
 
 Game::Game(){
-	_gameover_state = new GameOverState();
-	_newgame_state = new NewGameState();
-	_newround_state = new NewRoundState();
-	_paused_state = new PausedState();
-	_runing_state = new RunningState();
 }
 
 Game::~Game() {
@@ -50,6 +45,12 @@ bool Game::init() {
 			<< std::endl;
 		return false;
 	}
+
+	_gameover_state = new GameOverState();
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_paused_state = new PausedState();
+	_runing_state = new RunningState();
 
 	return true;
 }

@@ -4,14 +4,14 @@ RunningState::RunningState() {
 	_fachadaAsteroides = AsteroidsUtils();
 	_fachadaFighter = FighterUtils();
 
-	_player = Game::Instance()->getManager()->getEntities(ecs::grp::PLAYER)[0];
-	_playerTr = Game::Instance()->getManager()->getComponent<Transform>(_player);
-	_asteroids = Game::Instance()->getManager()->getEntities(ecs::grp::ASTEROID);
-	_gunComponent = Game::Instance()->getManager()->getComponent<Gun>(_player);
 }
 
 void RunningState::enter()
 {
+	_player = Game::Instance()->getManager()->getEntities(ecs::grp::PLAYER)[0];
+	_playerTr = Game::Instance()->getManager()->getComponent<Transform>(_player);
+	_asteroids = Game::Instance()->getManager()->getEntities(ecs::grp::ASTEROID);
+	_gunComponent = Game::Instance()->getManager()->getComponent<Gun>(_player);
 	sdlutils().musics().at("main_theme").play();
 }
 
