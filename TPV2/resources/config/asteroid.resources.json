@@ -17,12 +17,15 @@
     
     "sounds" : [
       { "id" : "wall_hit", "file" : "resources/sound/wall_hit.wav" },
-      { "id" : "explosion", "file" : "resources/sound/explosion.wav" }
+      { "id" : "explosion", "file" : "resources/sound/explosion.wav" },
+      { "id" : "shoot", "file" : "resources/sound/gunshot.wav" },
+      { "id" : "trust", "file" : "resources/sound/Aliens.wav" }
     ],
   
     "musics" : [
       { "id" : "beat", "file" : "resources/sound/beat.wav" },
-      { "id" : "explosion", "file" : "resources/sound/explosion.wav" }
+      { "id" : "explosion", "file" : "resources/sound/explosion.wav" },
+      { "id" : "main_theme", "file" : "resources/sound/main_theme.wav" }
     ]
   
   }

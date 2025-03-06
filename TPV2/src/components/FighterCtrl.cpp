@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
+#include "../sdlutils/SDLUtils.h"
 
 void FighterCrtl::update()
 {
@@ -19,6 +20,7 @@ void FighterCrtl::update()
 
 	if (inputHandler.isKeyDown(SDLK_UP))
 	{
+		sdlutils().soundEffects().at("trust").play();
 		t->setVelocity(t->up() * SPEED);
 	}
 }

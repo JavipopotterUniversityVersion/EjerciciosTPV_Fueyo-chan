@@ -49,6 +49,7 @@ void Game::start() {
 
 	//AsteroidsUtils asteroidUtils;
 	//asteroidUtils.create_asteroids(2);
+	sdlutils().musics().at("main_theme").play();
 
 	FighterUtils fUtils;
 	fUtils.create_fighter();
