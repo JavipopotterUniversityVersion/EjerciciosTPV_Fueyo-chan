@@ -12,8 +12,8 @@ public:
 	~GameOverState() {}
 
 	Font* _font;
-	std::string _winText = "Game Over Loser! Press ENTER to continue.";
-	std::string _loseText = "Game Over Champion! Press ENTER to continue.";
+	std::string _loseText = "Game Over Loser! Press ENTER to continue.";
+	std::string _winText = "Game Over Champion! Press ENTER to continue.";
 	std::string _usedText;
 
 	InputHandler* inputHandler;
