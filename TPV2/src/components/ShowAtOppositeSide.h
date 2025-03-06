@@ -1,7 +1,9 @@
 #pragma once
 #include "../ecs/Component.h"
-#include "Transform.h"
+#include "../components/Transform.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../game/Game.h"
+#include "../ecs/Manager.h"
 
 class ShowAtOppositeSide : public ecs::Component
 {
@@ -12,25 +14,20 @@ public:
 	~ShowAtOppositeSide() {};
 
 	void initComponent() {
-		_tr = Game::Instance()->getMngr()->getComponent<Transform>(_ent);
+		_tr = Game::Instance()->getManager()->getComponent<Transform>(_ent);
 	}
 	void update() override {
-		tp(_tr);
-	}
-
-	void tp() {
-		
 		if (_tr->x() < 0) {
-			_tr->Set(SDLUtils::width(), _tr->y());
+			_tr->set(sdlutils().width(), _tr->y());
 		}
-		else if (_tr->x() > SDLUtils::width()) {
-			_tr->Set(0, _tr->y());
+		else if (_tr->x() > sdlutils().width()) {
+			_tr->set(0, _tr->y());
 		}
 		if (_tr->y() < 0) {
-			_tr->Set(_tr->x(), SDLUtils::height());
+			_tr->set(_tr->x(), sdlutils().height());
 		}
-		else if (_tr->y() > SDLUtils::height()) {
-			_tr->Set(_tr->x(), 0);
+		else if (_tr->y() > sdlutils().height()) {
+			_tr->set(_tr->x(), 0);
 		}
 	}
 

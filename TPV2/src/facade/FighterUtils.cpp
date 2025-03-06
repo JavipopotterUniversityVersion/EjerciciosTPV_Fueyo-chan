@@ -10,6 +10,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Image.h"
 #include "../components/Gun.h"
+#include "../components/ShowAtOppositeSide.h"
 
 FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->getManager()) {}
 
@@ -20,6 +21,7 @@ void FighterUtils::create_fighter()
 	_manager->addComponent<Image>(_fighter,&sdlutils().images().at("fighter"));
 	_manager->addComponent<FighterCrtl>(_fighter);
 	_manager->addComponent<Deacceleration>(_fighter);
+	_manager->addComponent<ShowAtOppositeSide>(_fighter);
 	_manager->addComponent<Gun>(_fighter);
 }
 
