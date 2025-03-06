@@ -6,6 +6,7 @@
 #include "../sdlutils/VirtualTimer.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/VirtualTimer.h"
+#include "../sdlutils/SDLUtils.h"
 
 class PausedState : public GameState{
 public:
@@ -21,7 +22,7 @@ public:
 		inputHandler = InputHandler::Instance();
 	}
 	void update() {
-		_font.renderText(text, SDL_Color::b);
+		_font.renderText(text, SDL_Color{ 0, 0, 255, 255 });
 
 		if (inputHandler->keyDownEvent()) {
 			Game::Instance()->setState(Game::RUNNING);

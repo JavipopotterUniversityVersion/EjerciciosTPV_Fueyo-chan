@@ -17,6 +17,7 @@
 	DEACCELERATION, \
 	GAMESTATE, \
 	GENERATIONS, \
+	TOWARDS_DESTINATION,\
 	GAMEINFOMSGS
 
 // Groups list - must have at least one element
