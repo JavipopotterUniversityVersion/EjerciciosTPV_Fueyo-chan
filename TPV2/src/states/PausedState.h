@@ -9,10 +9,10 @@
 
 class PausedState : public GameState{
 public:
-	PausedState() : inputHandler(&ih()) {}
+	PausedState() : inputHandler(&ih()), _font(&sdlutils().fonts().at("ARIAL16")) {}
 	~PausedState() {}
 	
-	Font _font = Font("ARIAL.tff", 8);
+	Font* _font;
 	std::string text = "press any key to resume the game";
 	InputHandler* inputHandler;
 

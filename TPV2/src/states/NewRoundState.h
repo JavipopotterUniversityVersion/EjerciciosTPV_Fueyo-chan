@@ -9,7 +9,7 @@
 
 class NewRoundState : public GameState{
 public:
-	NewRoundState() : inputHandler(&ih()), font("ARIAL.tff", 8) {}
+	NewRoundState() : inputHandler(&ih()), font(&sdlutils().fonts().at("ARIAL16")) {}
 	~NewRoundState() {}
 
 	Font font;
