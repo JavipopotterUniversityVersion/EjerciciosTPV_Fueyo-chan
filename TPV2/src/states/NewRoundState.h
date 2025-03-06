@@ -13,7 +13,7 @@ public:
 	NewRoundState() : inputHandler(&ih()), font(&sdlutils().fonts().at("ARIAL16")) {}
 	~NewRoundState() {}
 
-	Font font;
+	Font* font;
 	std::string text = "press ENTER to start a new game";
 	InputHandler* inputHandler;
 	FighterUtils _fachadaFighter;

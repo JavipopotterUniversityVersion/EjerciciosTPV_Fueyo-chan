@@ -8,7 +8,7 @@ PausedState::enter() {
 
 void
 PausedState::update() {
-	_font.renderText(text, SDL_Color{ 0, 0, 255, 255 });
+	_font->renderText(text, SDL_Color{ 0, 0, 255, 255 });
 
 	if (inputHandler->keyDownEvent()) {
 		Game::Instance()->setState(Game::RUNNING);
