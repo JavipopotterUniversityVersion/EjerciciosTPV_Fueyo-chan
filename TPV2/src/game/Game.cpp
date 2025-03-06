@@ -51,6 +51,7 @@ void Game::start() {
 	auto& vt = sdlutils().virtualTimer(); 
 
 	vt.resetTime();
+	setState(NEWGAME);
 	while (!exit) {
 		Uint32 startTime = vt.regCurrTime();
 		_inputHandler.refresh();
