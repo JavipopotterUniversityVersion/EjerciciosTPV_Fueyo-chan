@@ -17,18 +17,7 @@ public:
 	std::string text = "press any key to resume the game";
 	InputHandler* inputHandler;
 
-	void enter() {
-		sdlutils().virtualTimer().pause();
-		inputHandler = InputHandler::Instance();
-	}
-	void update() {
-		_font.renderText(text, SDL_Color{ 0, 0, 255, 255 });
-
-		if (inputHandler->keyDownEvent()) {
-			Game::Instance()->setState(Game::RUNNING);
-		}
-	}
-	void leave() {
-		sdlutils().virtualTimer().resume();
-	}
+	void enter();
+	void update();
+	void leave();
 };

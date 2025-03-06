@@ -15,19 +15,7 @@ public:
 	InputHandler* inputHandler;
 	FighterUtils _fachadaFighter;
 
-	void enter() {
-		inputHandler = InputHandler::Instance();
-		_fachadaFighter = FighterUtils();
-	}
-	void update() {
-		_font.renderText(text, SDL_Color{ 0, 0, 255, 255 });
-
-		if (inputHandler->keyDownEvent()) {
-			_fachadaFighter.reset_lives();
-			Game::Instance()->setState(Game::NEWROUND);
-		}
-	}
-	void leave() {
-
-	}
+	void enter();
+	void update();
+	void leave();
 };
