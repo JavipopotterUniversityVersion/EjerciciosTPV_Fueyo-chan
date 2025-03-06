@@ -13,7 +13,11 @@
 #include "../components/Health.h"
 #include "../components/ShowAtOppositeSide.h"
 
-FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->getManager()) {}
+FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->getManager())
+{
+	if(Game::Instance()->getManager()->getEntities(ecs::grp::PLAYER).size() > 0)
+		_fighter = Game::Instance()->getManager()->getEntities(ecs::grp::PLAYER)[0];
+}
 
 void FighterUtils::create_fighter()
 {
@@ -25,6 +29,7 @@ void FighterUtils::create_fighter()
 	_manager->addComponent<ShowAtOppositeSide>(_fighter);
 	_manager->addComponent<Health>(_fighter, 3);
 	_manager->addComponent<Gun>(_fighter);
+	std::cout << "COMp-id: " << _fighter << std::endl;
 }
 
 void FighterUtils::reset_fighter()

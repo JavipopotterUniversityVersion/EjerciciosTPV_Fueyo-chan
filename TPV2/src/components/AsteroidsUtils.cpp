@@ -6,6 +6,9 @@
 #include "../components/Image.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Generations.h"
+#include "../components/Follow.h"
+#include "../components/TowardsDestination.h"
+#include "../components/ShowAtOppositeSide.h"
 #include <vector>
 
 AsteroidsUtils::AsteroidsUtils() : _manager(Game::Instance()->getManager()) {}
@@ -19,11 +22,15 @@ void AsteroidsUtils::create_asteroids(int n, Vector2D p)
 		ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
 		Transform* tr = _manager->addComponent<Transform>(_asteroid, p.getX(), p.getY());
 		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
-		//_manager->addComponent<Image>(_asteroid, &sdlutils().images().at("fighter"));
 		_manager->addComponent<Generations>(_asteroid, n-1);
+		_manager->addComponent<ShowAtOppositeSide>(_asteroid);
+
+		int s = sdlutils().rand().nextInt(1, 3);
+
+		/*if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
+		else _manager->addComponent<TowardsDestination>(_asteroid, s);*/
 
 		int r = sdlutils().rand().nextInt(0, 360);
-		int s = sdlutils().rand().nextInt(2, 4);
 		tr->addRotation(r);
 		tr->setVelocity(tr->up() * s);
 

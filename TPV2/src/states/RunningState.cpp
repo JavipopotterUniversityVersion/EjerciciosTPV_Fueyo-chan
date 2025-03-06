@@ -1,8 +1,6 @@
 #include "RunningState.h"
 
 RunningState::RunningState() {
-	_fachadaAsteroides = AsteroidsUtils();
-	_fachadaFighter = FighterUtils();
 
 }
 
@@ -13,6 +11,9 @@ void RunningState::enter()
 	_asteroids = Game::Instance()->getManager()->getEntities(ecs::grp::ASTEROID);
 	_gunComponent = Game::Instance()->getManager()->getComponent<Gun>(_player);
 	sdlutils().musics().at("main_theme").play();
+
+	_fachadaAsteroides = AsteroidsUtils();
+	_fachadaFighter = FighterUtils();
 }
 
 void
@@ -46,7 +47,7 @@ RunningState::update() {
 	Game::Instance()->getManager()->render();
 
 	//Se refrescan las entidades para eliminar las entidades muertas
-	Game::Instance()->getManager()->refresh();
+	//Game::Instance()->getManager()->refresh();
 
 	//Se añade un nuevo asteroide cada 5 segundos
 	if (sdlutils().virtualTimer().currRealTime() > _waitTime) {
@@ -74,11 +75,10 @@ RunningState::checkPlayerCollisions(Transform* playerTr, std::vector<ecs::entity
 
 void
 RunningState::checkBulletCollisions(Gun* _gunComponent, std::vector<ecs::entity_t> asteroids) {
-	return;
 	Gun::iterator _bulletIterator = _gunComponent->begin();
 	Transform* asteroidTr;
 
-	for (_bulletIterator;_bulletIterator != _gunComponent->end(); ++_gunComponent)
+	for (_bulletIterator;_bulletIterator != _gunComponent->end(); ++_bulletIterator)
 	{
 		if (_bulletIterator->used)
 		{
