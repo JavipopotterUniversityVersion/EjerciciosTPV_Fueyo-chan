@@ -10,6 +10,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Image.h"
 #include "../components/Gun.h"
+#include "../components/Health.h"
 #include "../components/ShowAtOppositeSide.h"
 
 FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->getManager()) {}
@@ -17,11 +18,12 @@ FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->get
 void FighterUtils::create_fighter()
 {
 	_fighter = _manager->addEntity(ecs::grp::PLAYER);
-	_manager->addComponent<Transform>(_fighter,0,0);
+	_manager->addComponent<Transform>(_fighter,200,200);
 	_manager->addComponent<Image>(_fighter,&sdlutils().images().at("fighter"));
 	_manager->addComponent<FighterCrtl>(_fighter);
 	_manager->addComponent<Deacceleration>(_fighter);
 	_manager->addComponent<ShowAtOppositeSide>(_fighter);
+	_manager->addComponent<Health>(_fighter, 3);
 	_manager->addComponent<Gun>(_fighter);
 }
 

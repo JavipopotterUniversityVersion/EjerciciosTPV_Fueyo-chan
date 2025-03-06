@@ -74,6 +74,7 @@ RunningState::checkPlayerCollisions(Transform* playerTr, std::vector<ecs::entity
 
 void
 RunningState::checkBulletCollisions(Gun* _gunComponent, std::vector<ecs::entity_t> asteroids) {
+	return;
 	Gun::iterator _bulletIterator = _gunComponent->begin();
 	Transform* asteroidTr;
 

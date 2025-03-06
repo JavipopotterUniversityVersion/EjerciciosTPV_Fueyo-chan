@@ -8,6 +8,7 @@
 
 void start() {
 	Game::Init();
+	Game::Instance()->initGame();
 
 	Game::Instance()->start();
 }

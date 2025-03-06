@@ -14,7 +14,6 @@ public:
 	Font* _font;
 	std::string text = "press any key to start a new game";
 	InputHandler* inputHandler;
-	FighterUtils _fachadaFighter;
 
 	void enter();
 	void update();
