@@ -3,6 +3,7 @@
 #include "../game/Game.h"
 #include "../facade/FighterUtils.h"
 #include "../sdlutils/Font.h"
+#include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/InputHandler.h"
 
 class NewGameState : public GameState{

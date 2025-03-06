@@ -5,6 +5,7 @@
 #include "../facade/AsteroidsUtils.h"
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
+#include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/RandomNumberGenerator.h"
 
 class NewRoundState : public GameState{
