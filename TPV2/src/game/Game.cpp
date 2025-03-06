@@ -11,7 +11,6 @@
 #include "../sdlutils/InputHandler.h"
 
 Game::Game(){
-	_manager = new ecs::Manager();
 }
 
 Game::~Game() {
@@ -21,6 +20,10 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
+void Game::initGame() {
+	_manager = new ecs::Manager();
+
+}
 bool Game::init() {
 
 	// initialize the SDL singleton
@@ -32,57 +35,35 @@ bool Game::init() {
 		return false;
 	}
 
+	if (!InputHandler::Init()) {
+		std::cerr << "Something went wrong while initializing InputHandler"
+			<< std::endl;
+		return false;
+	}
+
 	return true;
 }
 
 void Game::start() {
-	InputHandler::Init();
 
-	// a boolean to exit the loop
 	bool exit = false;
-	SDL_Event event;
+	auto& _inputHandler = ih();
+	auto& vt = sdlutils().virtualTimer(); 
 
-	// reset the time before starting - so we calculate correct
-	// delta-time in the first iteration
-	//
-	sdlutils().resetTime();
-
-	//AsteroidsUtils asteroidUtils;
-	//asteroidUtils.create_asteroids(2);
-	sdlutils().musics().at("main_theme").play();
-
-	FighterUtils fUtils;
-	fUtils.create_fighter();
-
-	AsteroidsUtils aUtils;
-	aUtils.create_asteroids(2, Vector2D(200, 200));
-
+	vt.resetTime();
 	while (!exit) {
-		// store the current time -- all game objects should use this time when
-		// then need to the current time. They also have accessed to the time elapsed
-		// between the last two calls to regCurrTime().
-		Uint32 startTime = sdlutils().regCurrTime();
-
-		// handle input
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_KEYDOWN
-					&& event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
-				exit = true;
-				continue;
-			}
+		Uint32 startTime = vt.regCurrTime();
+		_inputHandler.refresh();
+		if (_inputHandler.isKeyDown(SDL_SCANCODE_ESCAPE)) {
+			exit = true;
+			continue;
 		}
 
-		_manager->update();
-
-		sdlutils().clearRenderer();
-
-		_manager->render();
-
-		sdlutils().presentRenderer();
+		_state->update();
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
-		if (frameTime < 20)
-			SDL_Delay(20 - frameTime);
+
+		if (frameTime < 10) SDL_Delay(10 - frameTime);
 	}
 
 }

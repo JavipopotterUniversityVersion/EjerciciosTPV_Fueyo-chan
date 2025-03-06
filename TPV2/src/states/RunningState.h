@@ -9,6 +9,7 @@
 #include "../components/AsteroidsUtils.cpp"
 #include "../components/Transform.h"
 #include "../components/Gun.h"
+#include "../sdlutils/RandomNumberGenerator.h"
 
 class RunningState : public GameState{
 public:
@@ -23,6 +24,7 @@ public:
 	Transform* _playerTr;
 	std::vector<ecs::entity_t> _asteroids;
 	Gun* _gunComponent;
+	RandomNumberGenerator _rnd;
 
 	void enter() {
 		_fachadaAsteroides = AsteroidsUtils();
@@ -67,7 +69,7 @@ public:
 
 		//Se añade un nuevo asteroide cada 5 segundos
 		if (sdlutils().virtualTimer().currRealTime() > _waitTime) {
-			_fachadaAsteroides.create_asteroids(1);
+			_fachadaAsteroides.create_asteroids(1, Vector2D{ _rnd.nextInt(0, 600), _rnd.nextInt(0, 480) });
 			_waitTime += 5000.0f;
 		}
 
