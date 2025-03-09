@@ -22,7 +22,7 @@ FighterUtils::FighterUtils() : _fighter(nullptr), _manager(Game::Instance()->get
 void FighterUtils::create_fighter()
 {
 	_fighter = _manager->addEntity(ecs::grp::PLAYER);
-	_manager->addComponent<Transform>(_fighter,800/2,680/2);
+	_manager->addComponent<Transform>(_fighter, sdlutils().width()/2, sdlutils().height()/2);
 	_manager->addComponent<Image>(_fighter,&sdlutils().images().at("fighter"));
 	_manager->addComponent<FighterCrtl>(_fighter);
 	_manager->addComponent<Deacceleration>(_fighter);

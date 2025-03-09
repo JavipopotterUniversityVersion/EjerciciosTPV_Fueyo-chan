@@ -14,13 +14,13 @@ public:
 
 	void initComponent() {
 		_tr = _ent->getMngr()->getComponent<Transform>(_ent);
-		_targetPos = { float(_rnd.nextInt(0, 600)), float(_rnd.nextInt(0, 480)) };
+		_targetPos = { float(_rnd.nextInt(0, sdlutils().width())), float(_rnd.nextInt(0, sdlutils().height())) };
 	}
 
 	void update() {
 		Vector2D newDir = (_targetPos - _tr->getPos());
 		if (abs(newDir.magnitude()) <= 10.0f) {
-			_targetPos = {float( _rnd.nextInt(0, 600)), float(_rnd.nextInt(0, 480)) };
+			_targetPos = {float( _rnd.nextInt(0, sdlutils().width())), float(_rnd.nextInt(0, sdlutils().height())) };
 		}
 		newDir = newDir.normalize();
 		_tr->setVelocity(newDir * _speed);

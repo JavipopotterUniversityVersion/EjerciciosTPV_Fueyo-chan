@@ -10,7 +10,7 @@ void
 NewGameState::update() {
 	_font->renderText(text, SDL_Color{ 0, 0, 255, 255 });
 
-	if (inputHandler->isKeyDown(SDLK_a)) {
+	if (inputHandler->keyDownEvent()) {
 		FighterUtils fUtils;
 		fUtils.reset_lives();
 

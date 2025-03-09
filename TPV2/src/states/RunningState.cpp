@@ -47,7 +47,7 @@ RunningState::update() {
 	Game::Instance()->getManager()->render();
 
 	//Se refrescan las entidades para eliminar las entidades muertas
-	//Game::Instance()->getManager()->refresh();
+	Game::Instance()->getManager()->refresh();
 
 	//Se añade un nuevo asteroide cada 5 segundos
 	if (sdlutils().virtualTimer().currRealTime() > _waitTime) {
