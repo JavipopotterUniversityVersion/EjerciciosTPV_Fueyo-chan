@@ -23,10 +23,10 @@ void AsteroidsUtils::create_asteroids(int n)
 
 		Vector2D pos = Vector2D();
 		int rndBorder = sdlutils().rand().nextInt(0, 4);
-		if (rndBorder == 0) pos = { 0, sdlutils().rand().nextInt(0, 680) }; //Borde izq.
-		else if (rndBorder == 1) pos = { 800, sdlutils().rand().nextInt(0, 680) }; //Borde der.
-		else if (rndBorder == 2) pos = { sdlutils().rand().nextInt(0, 800), 0 }; //Borde arriba
-		else if (rndBorder == 3) pos = { sdlutils().rand().nextInt(0, 800), 680 }; //Borde abajo
+		if (rndBorder == 0) pos = { 0.0f, float(sdlutils().rand().nextInt(0, 680)) }; //Borde izq.
+		else if (rndBorder == 1) pos = { 800.0f, float(sdlutils().rand().nextInt(0, 680)) }; //Borde der.
+		else if (rndBorder == 2) pos = { float(sdlutils().rand().nextInt(0, 800)), 0.0f }; //Borde arriba
+		else if (rndBorder == 3) pos = { float(sdlutils().rand().nextInt(0, 800)), 680.0f }; //Borde abajo
 		Transform* tr = _manager->addComponent<Transform>(_asteroid, pos.getX(), pos.getY());
 
 		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
@@ -84,7 +84,7 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 			else {
 				_manager->addComponent<TowardsDestination>(_asteroid, s);
 				_manager->getComponent<TowardsDestination>(_asteroid)->
-					forceDirection({400 + sdlutils().rand().nextInt(-100,101), 340 + sdlutils().rand().nextInt(-100,101)});
+					forceDirection({400.0f + sdlutils().rand().nextInt(-100,101), 340.0f + sdlutils().rand().nextInt(-100,101)});
 			}
 
 			int r = sdlutils().rand().nextInt(0, 360);
