@@ -51,7 +51,7 @@ RunningState::update() {
 
 	//Se añade un nuevo asteroide cada 5 segundos
 	if (sdlutils().virtualTimer().currRealTime() > _waitTime) {
-		_fachadaAsteroides.create_asteroids(1, Vector2D{ float(_rnd.nextInt(0, 600)), float(_rnd.nextInt(0, 480)) });
+		_fachadaAsteroides.create_asteroids(1);
 		_waitTime += 5000.0f;
 	}
 

@@ -27,6 +27,10 @@ public:
 		_tr->getVelocity().rotate(_tr->getVelocity().angle(_targetPos - _tr->getPos()));
 	}
 
+	void forceDirection(Vector2D _newTargetPos) {
+		_targetPos = _newTargetPos;
+	}
+
 	__CMPID_DECL__(ecs::cmp::TOWARDS_DESTINATION)
 private:
 	float _speed;

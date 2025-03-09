@@ -20,9 +20,17 @@ void AsteroidsUtils::create_asteroids(int n)
 	for(int i = 0; i < n; i++)
 	{
 		ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
-		Transform* tr = _manager->addComponent<Transform>(_asteroid, p.getX(), p.getY());
+
+		Vector2D pos = Vector2D();
+		int rndBorder = sdlutils().rand().nextInt(0, 4);
+		if (rndBorder == 0) pos = { 0, sdlutils().rand().nextInt(0, 680) }; //Borde izq.
+		else if (rndBorder == 1) pos = { 800, sdlutils().rand().nextInt(0, 680) }; //Borde der.
+		else if (rndBorder == 2) pos = { sdlutils().rand().nextInt(0, 800), 0 }; //Borde arriba
+		else if (rndBorder == 3) pos = { sdlutils().rand().nextInt(0, 800), 680 }; //Borde abajo
+		Transform* tr = _manager->addComponent<Transform>(_asteroid, pos.getX(), pos.getY());
+
 		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
-		_manager->addComponent<Generations>(_asteroid, 2);
+		_manager->addComponent<Generations>(_asteroid, sdlutils().rand().nextInt(1, 4));
 		_manager->addComponent<ShowAtOppositeSide>(_asteroid);
 
 		int s = sdlutils().rand().nextInt(1, 3);
@@ -33,7 +41,7 @@ void AsteroidsUtils::create_asteroids(int n)
 		int r = sdlutils().rand().nextInt(0, 360);
 		tr->addRotation(r);
 
-		//tr->setWidthAndHeight(float(n-1) / 2 * tr->getHeight());
+		tr->setWidthAndHeight(10.0f + (5.0f * _manager->getComponent<Generations>(_asteroid)->getGeneration()));
 		std::cout << "asteroid was created succesfully" << std::endl;
 	}
 }
@@ -53,25 +61,37 @@ void AsteroidsUtils::remove_all_asteroids()
 void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 {
 	Generations* gn = _manager->getComponent<Generations>(a);
+	Transform* _aTr = _manager->getComponent<Transform>(a);
 	_manager->setAlive(a, false);
 
-	for (int i = 0; i < 2; i++)
-	{
-		ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
-		Transform* tr = _manager->addComponent<Transform>(_asteroid, p.getX(), p.getY());
-		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
-		_manager->addComponent<Generations>(_asteroid, 2);
-		_manager->addComponent<ShowAtOppositeSide>(_asteroid);
+	if (gn->getGeneration() > 1) {
+		for (int i = 0; i < 2; i++)
+		{
+			ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
 
-		int s = sdlutils().rand().nextInt(1, 3);
+			Vector2D pos = {_aTr->getPos().getX() + sdlutils().rand().nextInt(-10,11),
+				_aTr->getPos().getY() + sdlutils().rand().nextInt(-10,11) };
 
-		if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
-		else _manager->addComponent<TowardsDestination>(_asteroid, s);
+			Transform* tr = _manager->addComponent<Transform>(_asteroid, pos.getX(),pos.getY());
 
-		int r = sdlutils().rand().nextInt(0, 360);
-		tr->addRotation(r);
+			_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
+			_manager->addComponent<Generations>(_asteroid, gn->getGeneration() - 1);
+			_manager->addComponent<ShowAtOppositeSide>(_asteroid);
 
-		tr->setWidthAndHeight(float(gn->getGeneration() - 1) / 2 * tr->getHeight());
-		std::cout << "asteroid was created succesfully" << std::endl;
+			float s = sdlutils().rand().nextInt(1, 10)/10.0f;
+
+			if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
+			else {
+				_manager->addComponent<TowardsDestination>(_asteroid, s);
+				_manager->getComponent<TowardsDestination>(_asteroid)->
+					forceDirection({400 + sdlutils().rand().nextInt(-100,101), 340 + sdlutils().rand().nextInt(-100,101)});
+			}
+
+			int r = sdlutils().rand().nextInt(0, 360);
+			tr->addRotation(r);
+
+			tr->setWidthAndHeight(10.0f + (5.0f * (gn->getGeneration() - 1)));
+			std::cout << "asteroid was created succesfully" << std::endl;
+		}
 	}
 }
