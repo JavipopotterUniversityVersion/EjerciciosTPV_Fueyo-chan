@@ -9,6 +9,7 @@
 #include "../components/Follow.h"
 #include "../components/TowardsDestination.h"
 #include "../components/ShowAtOppositeSide.h"
+#include "../sdlutils/r"
 #include <vector>
 
 AsteroidsUtils::AsteroidsUtils() : _manager(Game::Instance()->getManager()) {}
@@ -22,7 +23,7 @@ void AsteroidsUtils::create_asteroids(int n)
 		ecs::entity_t _asteroid = _manager->addEntity(ecs::grp::ASTEROID);
 		Transform* tr = _manager->addComponent<Transform>(_asteroid, p.getX(), p.getY());
 		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
-		_manager->addComponent<Generations>(_asteroid, 2);
+		_manager->addComponent<Generations>(_asteroid, sdlutils().rand().nextInt(1, 4));
 		_manager->addComponent<ShowAtOppositeSide>(_asteroid);
 
 		int s = sdlutils().rand().nextInt(1, 3);
@@ -66,7 +67,7 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 		int s = sdlutils().rand().nextInt(1, 3);
 
 		if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
-		else _manager->addComponent<TowardsDestination>(_asteroid, s);
+		else _manager->addComponent<TowardsDestination>(_asteroid, gn->getGeneration() - 1);
 
 		int r = sdlutils().rand().nextInt(0, 360);
 		tr->addRotation(r);
