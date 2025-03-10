@@ -9,7 +9,7 @@
 #include "../components/Follow.h"
 #include "../components/TowardsDestination.h"
 #include "../components/ShowAtOppositeSide.h"
-#include "../sdlutils/r"
+#include "../sdlutils/RandomNumberGenerator.h"
 #include <vector>
 
 AsteroidsUtils::AsteroidsUtils() : _manager(Game::Instance()->getManager()) {}
@@ -34,7 +34,7 @@ void AsteroidsUtils::create_asteroids(int n)
 		_manager->addComponent<Generations>(_asteroid, sdlutils().rand().nextInt(1, 4));
 		_manager->addComponent<ShowAtOppositeSide>(_asteroid);
 
-		int s = sdlutils().rand().nextInt(1, 3);
+		float s = sdlutils().rand().nextInt(1, 3) / 10.0f;
 
 		if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
 		else _manager->addComponent<TowardsDestination>(_asteroid, s);
@@ -56,14 +56,14 @@ void AsteroidsUtils::remove_all_asteroids()
 		_manager->setAlive(asteroid, false);
 	}
 
-	_manager->refresh();
+ 	_manager->refresh();
 }
 
 void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 {
 	Generations* gn = _manager->getComponent<Generations>(a);
 	Transform* _aTr = _manager->getComponent<Transform>(a);
-	_manager->setAlive(a, false);
+    _manager->setAlive(a, false);
 
 	if (gn->getGeneration() > 1) {
 		for (int i = 0; i < 2; i++)
@@ -73,9 +73,6 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 			Vector2D pos = {_aTr->getPos().getX() + sdlutils().rand().nextInt(-10,11),
 				_aTr->getPos().getY() + sdlutils().rand().nextInt(-10,11) };
 
-			if (sdlutils().rand().nextInt(0, 2) == 0) _manager->addComponent<Follow>(_asteroid, s);
-			else _manager->addComponent<TowardsDestination>(_asteroid, gn->getGeneration() - 1);
-			
 			Transform* tr = _manager->addComponent<Transform>(_asteroid, pos.getX(),pos.getY());
 
 			_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);

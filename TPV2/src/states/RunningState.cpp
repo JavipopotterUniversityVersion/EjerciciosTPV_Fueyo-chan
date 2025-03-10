@@ -33,6 +33,7 @@ RunningState::update() {
 	Game::Instance()->getManager()->update();
 
 	//Comprobar colisiones entre asteroides y cazas/asteroides y balas
+	_asteroids = Game::Instance()->getManager()->getEntities(ecs::grp::ASTEROID);
 	if (checkPlayerCollisions(_playerTr, _asteroids)) {
 		if (_fachadaFighter.update_lives(-1) > 0) {
 			Game::Instance()->setState(Game::NEWROUND);
@@ -62,7 +63,7 @@ RunningState::checkPlayerCollisions(Transform* playerTr, std::vector<ecs::entity
 	bool collision = false;
 	Transform* asteroidTr;
 
-	int i = 0;
+  	int i = 0;
 	while (i < asteroids.size() && !collision) {
 		asteroidTr = Game::Instance()->getManager()->getComponent<Transform>(asteroids[i]);
 		collision = Collisions::collidesWithRotation(playerTr->getPos(), playerTr->getWidth(), playerTr->getHeight(),
@@ -86,7 +87,7 @@ RunningState::checkBulletCollisions(Gun* _gunComponent, std::vector<ecs::entity_
 			{
 				asteroidTr = Game::Instance()->getManager()->getComponent<Transform>(asteroids[i]);
 				if (Collisions::collidesWithRotation(_bulletIterator->pos, _bulletIterator->width, _bulletIterator->height,
-					_bulletIterator->rot, asteroidTr->getPos(), asteroidTr->getWidth(), asteroidTr->getHeight(), asteroidTr->getRotation()))
+					_bulletIterator->rot, asteroidTr->getPos(), asteroidTr->getWidth()*2, asteroidTr->getHeight()*2, asteroidTr->getRotation()))
 				{
 					_fachadaAsteroides.split_asteroid(asteroids[i]);
 					_bulletIterator->used = false;
