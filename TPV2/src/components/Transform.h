@@ -45,7 +45,7 @@ private:
 	float _h;
 	float _w;
 
-	static constexpr int DEFAULT_SIZE = 64;
+	static constexpr int DEFAULT_SIZE = 48;
 
 	Vector2D _originalPosition;
 };

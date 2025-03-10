@@ -11,7 +11,6 @@ NewRoundState::enter() {
 void
 NewRoundState::update() {
 	font->renderText(text, SDL_Color{ 0, 0, 255, 255 });
-	Game::Instance()->getManager()->render();
 
 	if (inputHandler->isKeyDown(SDLK_KP_ENTER)) {
 		_fachadaFighter.reset_fighter();

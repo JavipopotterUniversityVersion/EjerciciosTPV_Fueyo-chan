@@ -15,5 +15,5 @@ public:
 private:
 	Transform* t;
 	const float ROTATION_SPEED = 2.0f;
-	const float SPEED = 2.0f;
+	const float SPEED = 1.0f;
 };
