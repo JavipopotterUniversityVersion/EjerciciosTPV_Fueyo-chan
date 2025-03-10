@@ -6,7 +6,6 @@
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../sdlutils/RandomNumberGenerator.h"
 
 class NewRoundState : public GameState{
 public:
@@ -18,7 +17,6 @@ public:
 	InputHandler* inputHandler;
 	FighterUtils _fachadaFighter;
 	AsteroidsUtils _fachadaAsteroids;
-	RandomNumberGenerator _rnd;
 
 	void enter();
 	void update();
