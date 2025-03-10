@@ -7,7 +7,7 @@
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
 #include "../utils/Singleton.h"
-#include "../states/GameState.h"
+#include "GameState.h"
 class GameOverState;
 class NewGameState;
 class NewRoundState;

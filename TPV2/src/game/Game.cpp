@@ -6,14 +6,14 @@
 #include "../utils/Collisions.h"
 #include "../ecs/Entity.h"
 #include "../components/Image.h"
-#include "../facade/FighterUtils.h"
-#include "../facade/AsteroidsUtils.h"
+#include "FighterUtils.h"
+#include "../game/AsteroidsUtils.h"
 #include "../sdlutils/InputHandler.h"
-#include "../states/GameOverState.h"
-#include "../states/NewGameState.h"
-#include "../states/NewRoundState.h"
-#include "../states/PausedState.h"
-#include "../states/RunningState.h"
+#include "../game/GameOverState.h"
+#include "../game/NewGameState.h"
+#include "../game/NewRoundState.h"
+#include "../game/PausedState.h"
+#include "../game/RunningState.h"
 
 Game::Game(){
 }

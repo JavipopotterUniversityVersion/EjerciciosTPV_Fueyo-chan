@@ -1,5 +1,5 @@
 #include "NewGameState.h"
-#include "../facade/FighterUtils.h"
+#include "FighterUtils.h"
 
 void
 NewGameState::enter() {

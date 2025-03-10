@@ -1,8 +1,8 @@
 #pragma once
 #include "GameState.h"
 #include "../game/Game.h"
-#include "../facade/FighterUtils.h"
-#include "../facade/AsteroidsUtils.h"
+#include "FighterUtils.h"
+#include "AsteroidsUtils.h"
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
