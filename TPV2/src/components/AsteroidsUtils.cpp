@@ -1,4 +1,4 @@
-#include "AsteroidsUtils.h"
+#include "../game/AsteroidsUtils.h"
 #include "../ecs/Entity.h"
 #include "../game/Game.h"
 #include "../components/Transform.h"
