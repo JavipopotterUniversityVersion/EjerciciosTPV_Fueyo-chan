@@ -12,14 +12,16 @@
       { "id" : "airplanes", "file" : "resources/images/airplanes.png" },
       { "id" : "fire", "file" : "resources/images/fire.png" },
       { "id" : "asteroid", "file" : "resources/images/asteroid.png" },
-      { "id" : "golden_asteroid", "file" : "resources/images/asteroid_gold.png" }
+      { "id" : "golden_asteroid", "file" : "resources/images/asteroid_gold.png" },
+      { "id" : "heart", "file" : "resources/images/heart.png" }
     ],
     
     "sounds" : [
       { "id" : "wall_hit", "file" : "resources/sound/wall_hit.wav" },
       { "id" : "explosion", "file" : "resources/sound/explosion.wav" },
-      { "id" : "shoot", "file" : "resources/sound/gunshot.wav" },
-      { "id" : "trust", "file" : "resources/sound/Aliens.wav" }
+      { "id" : "gunshoot", "file" : "resources/sound/gunshot.wav" },
+      { "id" : "thrust", "file" : "resources/sound/Aliens.wav" },
+      { "id" : "shoot", "file" : "resources/sound/shoot.wav" }
     ],
   
     "musics" : [

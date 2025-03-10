@@ -64,6 +64,7 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a)
 	Generations* gn = _manager->getComponent<Generations>(a);
 	Transform* _aTr = _manager->getComponent<Transform>(a);
     _manager->setAlive(a, false);
+	sdlutils().soundEffects().at("explosion").play();
 
 	if (gn->getGeneration() > 1) {
 		for (int i = 0; i < 2; i++)

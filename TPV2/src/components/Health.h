@@ -6,7 +6,7 @@
 class Health : public ecs::Component
 {
 public:
-	Health(int h) : _health(h), _tex(&sdlutils().images().at("fire")) {};
+	Health(int h) : _health(h), _tex(&sdlutils().images().at("heart")) {};
 	~Health();
 
 	void render() override;

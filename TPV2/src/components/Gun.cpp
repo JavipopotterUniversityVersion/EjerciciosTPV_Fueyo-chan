@@ -52,6 +52,7 @@ Gun::render() {
 
 void
 Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r) {
+	sdlutils().soundEffects().at("shoot").play();
 	auto it = _lastActiveBullet++;
 	while (it->used && (it != _lastActiveBullet)) {
 		it++;

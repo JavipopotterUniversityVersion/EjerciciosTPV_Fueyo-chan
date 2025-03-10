@@ -21,7 +21,7 @@ void FighterCrtl::update()
 
 	if (inputHandler.isKeyDown(SDLK_UP))
 	{
-		sdlutils().soundEffects().at("trust").play();
+		sdlutils().soundEffects().at("thrust").play();
 		t->setVelocity(t->up() * SPEED);
 	}
 }
