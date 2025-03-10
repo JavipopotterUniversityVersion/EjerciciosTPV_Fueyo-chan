@@ -26,7 +26,7 @@ void AsteroidsUtils::create_asteroids(int n)
 		if (rndBorder == 0) pos = { 0.0f, float(sdlutils().rand().nextInt(0, sdlutils().height())) }; //Borde izq.
 		else if (rndBorder == 1) pos = { float(sdlutils().width()), float(sdlutils().rand().nextInt(0, sdlutils().height()))}; //Borde der.
 		else if (rndBorder == 2) pos = { float(sdlutils().rand().nextInt(0, sdlutils().width())), 0.0f }; //Borde arriba
-		else if (rndBorder == 3) pos = { float(sdlutils().rand().nextInt(0, sdlutils().width())), sdlutils().height() }; //Borde abajo
+		else if (rndBorder == 3) pos = { float(sdlutils().rand().nextInt(0, sdlutils().width())), float(sdlutils().height()) }; //Borde abajo
 		Transform* tr = _manager->addComponent<Transform>(_asteroid, pos.getX(), pos.getY());
 
 		_manager->addComponent<Image_With_Frames>(_asteroid, &sdlutils().images().at("asteroid"), 6, 5);
