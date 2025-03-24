@@ -1,0 +1,25 @@
+TPV2.2 Pacman
+
+Mensajes: game/messages_des.h
+
+Sistemas:
+- PacManSystem
+- GhostSystem
+- FoodSystem
+- ImmunitySystem
+- CollisionsSystem
+- RenderSystem
+
+Componentes:
+- Transform, Image/ImageWithFrames
+- PacMan: Health, Immunity
+- Frutas: Milagrosa
+
+Estados:
+- RunningState
+- PauseState
+- NewGameState
+- NewRoundState
+- GameOverState
+
+class Game
