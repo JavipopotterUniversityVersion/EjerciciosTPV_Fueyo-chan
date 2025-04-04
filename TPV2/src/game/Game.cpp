@@ -20,7 +20,8 @@ Game::Game() :
 		_pacmanSys(), //
 		_gameCtrlSys(), //
 		_renderSys(), //
-		_collisionSys() {
+		_collisionSys(),
+		vT(){
 
 }
 
@@ -75,6 +76,11 @@ void Game::start() {
 	while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
 		vT.regCurrTime();
+
+		Message m;
+		m.id = _m_REGISTER_TIME;
+		m.create_stars_data.n = vT.currTime();
+		_mngr->send(m);
 
 		// refresh the input handler
 		ihdlr.refresh();

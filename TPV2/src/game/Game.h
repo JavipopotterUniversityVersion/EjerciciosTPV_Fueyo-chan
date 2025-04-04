@@ -3,6 +3,7 @@
 #pragma once
 
 #include <vector>
+#include "../sdlutils/SDLUtils.h"
 
 #include "../ecs/ecs.h"
 

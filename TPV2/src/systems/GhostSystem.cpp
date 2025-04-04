@@ -3,7 +3,7 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 
-GhostSystem::GhostSystem(VirtualTimer* vt) : _vt(vt) {
+GhostSystem::GhostSystem() {
 
 }
 
@@ -17,8 +17,8 @@ void GhostSystem::initSystem() {
 
 void GhostSystem::update() {
 
-	if (_ghostsTr.size() < MAX_GHOSTS && _vt->currTime() >= _nextTime) {
-		_nextTime = _vt->currTime() + SPAWN_MARGIN;
+	if (_ghostsTr.size() < MAX_GHOSTS && _currentTime >= _nextTime) {
+		_nextTime = _currentTime + SPAWN_MARGIN;
 		_ghostsTr.push_back(_mngr->getComponent<Transform>(createGhost()));
 	}
 
@@ -28,4 +28,5 @@ void GhostSystem::update() {
 }
 
 ecs::entity_t GhostSystem::createGhost() {
+	return nullptr;
 }
