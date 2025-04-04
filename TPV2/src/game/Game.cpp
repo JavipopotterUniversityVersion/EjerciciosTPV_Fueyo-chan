@@ -9,6 +9,7 @@
 #include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
+#include "../systems/GhostSystem.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
@@ -70,6 +71,7 @@ void Game::start() {
 	bool exit = false;
 
 	auto &ihdlr = ih();
+	//VirtualTimer vT;
 
 	while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
