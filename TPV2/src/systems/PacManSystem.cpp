@@ -11,7 +11,7 @@
 PacManSystem::PacManSystem() :
 		_pmTR(nullptr) {
 }
-
+ 
 PacManSystem::~PacManSystem() {
 }
 

@@ -71,10 +71,10 @@ void Game::start() {
 	bool exit = false;
 
 	auto &ihdlr = ih();
-	//VirtualTimer vT;
 
 	while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
+		vT.regCurrTime();
 
 		// refresh the input handler
 		ihdlr.refresh();
@@ -87,6 +87,7 @@ void Game::start() {
 		_pacmanSys->update();
 		_gameCtrlSys->update();
 		_collisionSys->update();
+		_ghostSystem->update();
 
 		_mngr->refresh();
 
