@@ -13,7 +13,6 @@ public:
 
 	Texture* _text;
 	
-	Message _message = _m_ROUND_START;
 	InputHandler* inputHandler;
 
 	void enter();

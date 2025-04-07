@@ -7,7 +7,7 @@ NewRoundState::update() {
 	_text->render(400,300);
 
 	if (inputHandler->isKeyDown(SDLK_KP_ENTER)) {
-		Game::Instance()->send(_message);
+		//Game::Instance()->getManager()->send(_message);
 		Game::Instance()->setState(Game::RUNNING);
 	}
 }

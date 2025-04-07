@@ -9,7 +9,7 @@ NewGameState::update() {
 	if (inputHandler->keyDownEvent()) {
 		Message m;
 		m.id = _m_NEW_GAME;
-		Game::Instance()->send(m);
+		Game::Instance()->getManager()->send(m);
 		Game::Instance()->setState(Game::NEWROUND);
 	}
 }
