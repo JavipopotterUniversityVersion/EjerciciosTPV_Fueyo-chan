@@ -11,9 +11,7 @@ public:
 	NewGameState() : _text(&sdlutils().msgs().at("newgame")), inputHandler(&ih()) {}
 	~NewGameState() {}
 
-	Font* _text;
-
-	Message _message = _m_NEW_GAME;
+	Texture* _text;
 	InputHandler* inputHandler;
 
 	void enter();

@@ -7,7 +7,9 @@ NewGameState::update() {
 	//_font->renderText(text, SDL_Color{ 0, 0, 255, 255 });
 
 	if (inputHandler->keyDownEvent()) {
-		Game::Instance()->send(_message);
+		Message m;
+		m.id = _m_NEW_GAME;
+		Game::Instance()->send(m);
 		Game::Instance()->setState(Game::NEWROUND);
 	}
 }
