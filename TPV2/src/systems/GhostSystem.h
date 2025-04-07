@@ -12,6 +12,7 @@ public:
 	virtual ~GhostSystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message&) override;
 private:
 	static int constexpr MAX_GHOSTS = 10;
 	std::vector<Transform*> _ghostsTr;
@@ -19,7 +20,7 @@ private:
 
 	int _currentTime;
 	int _nextTime;
-	static constexpr int SPAWN_MARGIN = 500;
+	static constexpr int SPAWN_MARGIN = 5000;
 
 	ecs::entity_t createGhost();
 };

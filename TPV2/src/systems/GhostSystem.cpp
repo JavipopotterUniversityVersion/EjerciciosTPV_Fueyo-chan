@@ -21,6 +21,7 @@ void GhostSystem::update() {
 	if (_ghostsTr.size() < MAX_GHOSTS && _currentTime >= _nextTime) {
 		_nextTime = _currentTime + SPAWN_MARGIN;
 		_ghostsTr.push_back(_mngr->getComponent<Transform>(createGhost()));
+		std::cout << _currentTime << std::endl;
 	}
 
 	for (Transform* ghost : _ghostsTr){
@@ -41,4 +42,15 @@ ecs::entity_t GhostSystem::createGhost() {
 	_mngr->addComponent<Image>(ghost, &sdlutils().images().at("ghost"));
 
 	return ghost;
+}
+
+void GhostSystem::recieve(const Message& m)
+{
+	switch (m.id) {
+	case _m_REGISTER_TIME:
+		_currentTime = m.register_time_data.n;
+		break;
+	default:
+		break;
+	}
 }
