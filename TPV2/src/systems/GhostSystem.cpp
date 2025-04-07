@@ -17,16 +17,18 @@ void GhostSystem::initSystem() {
 }
 
 void GhostSystem::update() {
+	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 
-	if (_ghostsTr.size() < MAX_GHOSTS && _currentTime >= _nextTime) {
+	if (ghosts.size() < MAX_GHOSTS && _currentTime >= _nextTime) {
 		_nextTime = _currentTime + SPAWN_MARGIN;
-		_ghostsTr.push_back(_mngr->getComponent<Transform>(createGhost()));
+		createGhost();
 		std::cout << _currentTime << std::endl;
 	}
 
-	for (Transform* ghost : _ghostsTr){
-		ghost->_vel = (_pacMan->_pos - ghost->_pos).normalize() * 1.1f;
-		ghost->_pos = ghost->_pos + ghost->_vel;
+	for (ecs::entity_t ghost : ghosts){
+		Transform* gTr = _mngr->getComponent<Transform>(ghost);
+		gTr->_vel = (_pacMan->_pos - gTr->_pos).normalize() * 1.1f;
+		gTr->_pos = gTr->_pos + gTr->_vel;
 	}
 }
 
@@ -34,7 +36,6 @@ ecs::entity_t GhostSystem::createGhost() {
 	auto ghost = _mngr->addEntity(ecs::grp::GHOST);
 
 	Transform* ghostTr = _mngr->addComponent<Transform>(ghost);
-	_ghostsTr.push_back(ghostTr);
 	auto s = 50.0f;
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
