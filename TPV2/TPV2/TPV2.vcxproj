@@ -41,6 +41,11 @@
     <ClCompile Include="..\src\systems\StarsSystem.cpp" />
     <ClCompile Include="..\SRC\utils\Collisions.cpp" />
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
+    <ClCompile Include="NewGameState.cpp" />
+    <ClCompile Include="NewRoundState.cpp" />
+    <ClCompile Include="PauseState.cpp" />
+    <ClCompile Include="RunningState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\Image.h" />
@@ -88,6 +93,12 @@
     <ClInclude Include="..\SRC\utils\ptr_iterator.h" />
     <ClInclude Include="..\SRC\utils\Singleton.h" />
     <ClInclude Include="..\SRC\utils\Vector2D.h" />
+    <ClInclude Include="GameOverState.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="NewGameState.h" />
+    <ClInclude Include="NewRoundState.h" />
+    <ClInclude Include="PauseState.h" />
+    <ClInclude Include="RunningState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
