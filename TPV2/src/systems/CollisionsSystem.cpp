@@ -45,6 +45,8 @@ void CollisionsSystem::update() {
 			m.id = _m_PACMAN_GHOST_COLLISION;
 			m.pacman_ghost_collision_data.pacman_wins = isPacManInmune;
 			_mngr->send(m);
+
+			if (isPacManInmune) _mngr->setAlive(ghosts[i], false);
 		}
 	}
 }

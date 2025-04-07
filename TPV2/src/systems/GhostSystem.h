@@ -15,7 +15,6 @@ public:
 	void recieve(const Message&) override;
 private:
 	static int constexpr MAX_GHOSTS = 10;
-	std::vector<Transform*> _ghostsTr;
 	Transform* _pacMan;
 
 	int _currentTime;

@@ -9,8 +9,6 @@
 #include "../systems/InmunitySystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
-#include "../systems/StarsSystem.h"
-
 
 class RunningState : public GameState {
 public:
@@ -27,7 +25,6 @@ public:
 	InmunitySystem* _inmunitySystem;
 	PacManSystem* _pacManSystem;
 	RenderSystem* _renderSystem;
-	StarsSystem* _starsSystem;
 
 	void enter();
 	void update();

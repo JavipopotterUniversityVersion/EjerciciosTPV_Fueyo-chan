@@ -8,5 +8,9 @@ public:
 	virtual ~InmunitySystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message&) override;
 private:
+	static int constexpr INMUNE_TIME = 1000;
+	int _nextTime;
+	bool isInmune;
 };

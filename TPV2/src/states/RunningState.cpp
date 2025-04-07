@@ -4,14 +4,13 @@ RunningState::RunningState(){ }
 
 void
 RunningState::enter() {
-	_collisionSystem = Game::Instance()->getMngr()->getSystem();
-	_foodSystem = Game::Instance()->getMngr()->getSystem();
-	_GameCtrlSystem = Game::Instance()->getMngr()->getSystem();
-	_GhostSystem = Game::Instance()->getMngr()->getSystem();
-	_InmunitySystem = Game::Instance()->getMngr()->getSystem();
-	_PacManSystem = Game::Instance()->getMngr()->getSystem();
-	_RenderSystem = Game::Instance()->getMngr()->getSystem();
-	_StarsSystem = Game::Instance()->getMngr()->getSystem();
+	_collisionSystem = Game::Instance()->getManager()->getSystem<CollisionsSystem>();
+	_foodSystem = Game::Instance()->getManager()->getSystem<FoodSystem>();
+	_gameCtrlSystem = Game::Instance()->getManager()->getSystem<GameCtrlSystem>();
+	_ghostSystem = Game::Instance()->getManager()->getSystem<GhostSystem>();
+	_inmunitySystem = Game::Instance()->getManager()->getSystem<InmunitySystem>();
+	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
+	_renderSystem = Game::Instance()->getManager()->getSystem<RenderSystem>();
 }
 
 void
@@ -25,12 +24,11 @@ RunningState::update() {
 
 	_collisionSystem->update();
 	_foodSystem->update();
-	_GameCtrlSystem->update();
-	_GhostSystem->update();
-	_InmunitySystem->update();
-	_PacManSystem->update();
-	_RenderSystem->update();
-	_StarsSystem->update();
+	_gameCtrlSystem->update();
+	_ghostSystem->update();
+	_inmunitySystem->update();
+	_pacManSystem->update();
+	_renderSystem->update();
 
 	Game::Instance()->getManager()->refresh();
 }
