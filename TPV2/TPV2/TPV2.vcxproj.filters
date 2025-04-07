@@ -81,19 +81,19 @@
     <ClCompile Include="..\src\systems\InmunitySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RunningState.cpp">
+    <ClCompile Include="..\src\states\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PauseState.cpp">
+    <ClCompile Include="..\src\states\NewGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NewGameState.cpp">
+    <ClCompile Include="..\src\states\NewRoundState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NewRoundState.cpp">
+    <ClCompile Include="..\src\states\PauseState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
+    <ClCompile Include="..\src\states\RunningState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,22 +233,22 @@
     <ClInclude Include="..\src\systems\FoodSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RunningState.h">
+    <ClInclude Include="..\src\states\GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PauseState.h">
+    <ClInclude Include="..\src\states\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NewGameState.h">
+    <ClInclude Include="..\src\states\NewGameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NewRoundState.h">
+    <ClInclude Include="..\src\states\NewRoundState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverState.h">
+    <ClInclude Include="..\src\states\PauseState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
+    <ClInclude Include="..\src\states\RunningState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,7 +9,7 @@ public:
 	PausedState() : inputHandler(&ih()), _text(&sdlutils().msgs().at("paused")) {}
 	~PausedState() {}
 
-	Font* _text;
+	Texture* _text;
 	InputHandler* inputHandler;
 
 	void enter();
