@@ -33,6 +33,8 @@ class PacManSystem;
 class GameCtrlSystem;
 class CollisionsSystem;
 class GhostSystem;
+class FoodSystem;
+class InmunitySystem;
 
 #define _SYS_LIST_ \
     StarsSystem, \
@@ -40,5 +42,7 @@ class GhostSystem;
 	PacManSystem, \
 	GameCtrlSystem, \
 	CollisionsSystem, \
-	GhostSystem
+	GhostSystem, \
+	FoodSystem, \
+	InmunitySystem
 
