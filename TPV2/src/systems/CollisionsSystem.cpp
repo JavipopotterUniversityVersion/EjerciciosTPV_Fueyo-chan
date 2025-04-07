@@ -35,22 +35,6 @@ void CollisionsSystem::update() {
 	for (auto i = 0u; i < n; i++) {
 		auto e = stars[i];
 		if (_mngr->isAlive(e)) { // if the star is active (it might have died in this frame)
-
-			// the Star's Transform
-			//
-			auto eTR = _mngr->getComponent<Transform>(e);
-
-			// check if PacMan collides with the Star (i.e., eat it)
-			if (Collisions::collides(			//
-					pTR->_pos, pTR->_width, pTR->_height, //
-					eTR->_pos, eTR->_width, eTR->_height)) {
-
-				Message m;
-				m.id = _m_STAR_EATEN;
-				m.star_eaten_data.e = e;
-				_mngr->send(m);
-
-			}
 		}
 	}
 
