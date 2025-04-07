@@ -18,9 +18,9 @@ using ecs::Manager;
 Game::Game() :
 		_mngr(), //
 		_pacmanSys(), //
-		_gameCtrlSys(), //
 		_renderSys(), //
 		_collisionSys(),
+		_ghostSystem(),
 		vT(){
 
 }
@@ -61,9 +61,9 @@ void Game::init() {
 
 	// add the systems
 	_pacmanSys = _mngr->addSystem<PacManSystem>();
-	_gameCtrlSys = _mngr->addSystem<GameCtrlSystem>();
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+	_ghostSystem = _mngr->addSystem<GhostSystem>();
 }
 
 void Game::start() {
@@ -91,7 +91,6 @@ void Game::start() {
 		}
 
 		_pacmanSys->update();
-		_gameCtrlSys->update();
 		_collisionSys->update();
 		_ghostSystem->update();
 

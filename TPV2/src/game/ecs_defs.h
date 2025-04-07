@@ -23,7 +23,8 @@ struct Points;
 // Handlers list - must have at least one element
 //
 #define _HDLRS_LIST_ \
-    PACMAN
+    PACMAN, \
+	GHOST
 
 // Systems list - must have at least one element
 //
@@ -32,11 +33,13 @@ class RenderSystem;
 class PacManSystem;
 class GameCtrlSystem;
 class CollisionsSystem;
+class GhostSystem;
 
 #define _SYS_LIST_ \
     StarsSystem, \
 	RenderSystem, \
 	PacManSystem, \
 	GameCtrlSystem, \
-	CollisionsSystem
+	CollisionsSystem, \
+	GhostSystem
 

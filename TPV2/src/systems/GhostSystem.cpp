@@ -1,4 +1,5 @@
 #include "GhostSystem.h"
+#include "../components/Image.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
@@ -28,5 +29,16 @@ void GhostSystem::update() {
 }
 
 ecs::entity_t GhostSystem::createGhost() {
-	return nullptr;
+	auto ghost = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::GHOST, ghost);
+
+	Transform* ghostTr = _mngr->addComponent<Transform>(ghost);
+	_ghostsTr.push_back(ghostTr);
+	auto s = 50.0f;
+	auto x = (sdlutils().width() - s) / 2.0f;
+	auto y = (sdlutils().height() - s) / 2.0f;
+	ghostTr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+	_mngr->addComponent<Image>(ghost, &sdlutils().images().at("ghost"));
+
+	return ghost;
 }
