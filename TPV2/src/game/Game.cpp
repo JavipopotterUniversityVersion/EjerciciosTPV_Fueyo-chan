@@ -5,13 +5,22 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../utils/Vector2D.h"
+#include "../utils/Collisions.h"
+
+//Include systems
 #include "../systems/CollisionsSystem.h"
 #include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
-#include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
+
+//Include game states
+#include "../states/GameOverState.h"
+#include "../states/NewGameState.h"
+#include "../states/NewRoundState.h"
+#include "../states/PauseState.h"
+#include "../states/RunningState.h"
 
 using ecs::Manager;
 
@@ -20,10 +29,8 @@ Game::Game() :
 		_pacmanSys(), //
 		_renderSys(), //
 		_collisionSys(),
-		_ghostSystem(),
-		vT(){
-
-}
+		_ghostSystem()
+{}
 
 Game::~Game() {
 	delete _mngr;
@@ -37,7 +44,25 @@ Game::~Game() {
 		SDLUtils::Release();
 }
 
-void Game::init() {
+void Game::initGame() {
+	//Create the manager
+	_mngr = new ecs::Manager();
+
+	//Create the game states
+	_gameover_state = new GameOverState();
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_paused_state = new PausedState();
+	_runing_state = new RunningState();
+
+	//Create the systems
+	_pacmanSys = _mngr->addSystem<PacManSystem>();
+	_renderSys = _mngr->addSystem<RenderSystem>();
+	_collisionSys = _mngr->addSystem<CollisionsSystem>();
+	_ghostSystem = _mngr->addSystem<GhostSystem>();
+}
+
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
@@ -45,25 +70,17 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
-
+		return false;
 	}
 
-	// Create the manager
-	_mngr = new Manager();
-
-	// add the systems
-	_pacmanSys = _mngr->addSystem<PacManSystem>();
-	_renderSys = _mngr->addSystem<RenderSystem>();
-	_collisionSys = _mngr->addSystem<CollisionsSystem>();
-	_ghostSystem = _mngr->addSystem<GhostSystem>();
+	return true;
 }
 
 void Game::start() {
@@ -73,13 +90,16 @@ void Game::start() {
 
 	auto &ihdlr = ih();
 
+	//We set the first state
+	setState(NEWGAME);
+
 	while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
-		vT.regCurrTime();
+		sdlutils().virtualTimer().regCurrTime();
 
 		Message m;
 		m.id = _m_REGISTER_TIME;
-		m.register_time_data.new_current_time = vT.currTime();
+		m.register_time_data.n = sdlutils().virtualTimer().currTime();
 		_mngr->send(m);
 
 		// refresh the input handler
@@ -90,14 +110,8 @@ void Game::start() {
 			continue;
 		}
 
-		_pacmanSys->update();
-		_collisionSys->update();
-		_ghostSystem->update();
-
-		_mngr->refresh();
-
 		sdlutils().clearRenderer();
-		_renderSys->update();
+		_current_state->update();
 		sdlutils().presentRenderer();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
