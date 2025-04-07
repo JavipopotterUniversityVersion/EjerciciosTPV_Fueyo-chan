@@ -18,13 +18,12 @@ struct Points;
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS
+	GHOST
 
 // Handlers list - must have at least one element
 //
 #define _HDLRS_LIST_ \
-    PACMAN, \
-	GHOST
+    PACMAN
 
 // Systems list - must have at least one element
 //

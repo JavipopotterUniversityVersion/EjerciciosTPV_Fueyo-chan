@@ -26,12 +26,12 @@ void GhostSystem::update() {
 
 	for (Transform* ghost : _ghostsTr){
 		ghost->_vel = (_pacMan->_pos - ghost->_pos).normalize() * 1.1f;
+		ghost->_pos = ghost->_pos + ghost->_vel;
 	}
 }
 
 ecs::entity_t GhostSystem::createGhost() {
-	auto ghost = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::GHOST, ghost);
+	auto ghost = _mngr->addEntity(ecs::grp::GHOST);
 
 	Transform* ghostTr = _mngr->addComponent<Transform>(ghost);
 	_ghostsTr.push_back(ghostTr);

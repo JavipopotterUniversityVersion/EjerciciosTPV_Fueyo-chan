@@ -35,10 +35,14 @@ void RenderSystem::drawPacMan() {
 
 
 void RenderSystem::drawGhosts() {
-	auto e = _mngr->getHandler(ecs::hdlr::GHOST);
-	auto tr = _mngr->getComponent<Transform>(e);
-	auto tex = _mngr->getComponent<Image>(e)->_tex;
-	draw(tr, tex);
+	auto ghosts = _mngr->getEntities(ecs::grp::GHOST);
+
+	for(auto ghost : ghosts)
+	{
+		auto tr = _mngr->getComponent<Transform>(ghost);
+		auto tex = _mngr->getComponent<Image>(ghost)->_tex;
+		draw(tr, tex);
+	}
 }
 
 

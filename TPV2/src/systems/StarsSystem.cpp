@@ -23,31 +23,31 @@ void StarsSystem::initSystem() {
 
 void StarsSystem::update() {
 
-	auto currTime = sdlutils().currRealTime();
-	auto stars = _mngr->getEntities(ecs::grp::STARS);
-	auto n = stars.size();
+	//auto currTime = sdlutils().currRealTime();
+	//auto stars = _mngr->getEntities(ecs::grp::STARS);
+	//auto n = stars.size();
 
-	for (auto i = 0u; i < n; i++) {
-		auto tr = _mngr->getComponent<Transform>(stars[i]);
-		auto starmotion = _mngr->getComponent<StarMotion>(stars[i]);
+	//for (auto i = 0u; i < n; i++) {
+	//	auto tr = _mngr->getComponent<Transform>(stars[i]);
+	//	auto starmotion = _mngr->getComponent<StarMotion>(stars[i]);
 
-		if (starmotion->shouldUpdate(currTime)) {
+	//	if (starmotion->shouldUpdate(currTime)) {
 
-			// rotate it
-			tr->_rot += starmotion->_rot;
+	//		// rotate it
+	//		tr->_rot += starmotion->_rot;
 
-			// resize it
-			tr->_width *= 0.95f;
-			tr->_height *= 0.95f;
+	//		// resize it
+	//		tr->_width *= 0.95f;
+	//		tr->_height *= 0.95f;
 
-			// check if it should die
-			if (tr->_width < starmotion->_sizeLimit
-					|| tr->_height < starmotion->_sizeLimit) {
-				_mngr->setAlive(stars[i], false);
-				_currNumOfStars--;
-			}
-		}
-	}
+	//		// check if it should die
+	//		if (tr->_width < starmotion->_sizeLimit
+	//				|| tr->_height < starmotion->_sizeLimit) {
+	//			_mngr->setAlive(stars[i], false);
+	//			_currNumOfStars--;
+	//		}
+	//	}
+	//}
 }
 
 void StarsSystem::addStar(unsigned int n) {
@@ -64,46 +64,46 @@ void StarsSystem::addStar(unsigned int n) {
 
 		// add and entity to the manager
 		//
-		auto e = _mngr->addEntity(ecs::grp::STARS);
+		//auto e = _mngr->addEntity(ecs::grp::STARS);
 
 		// add a Transform component, and initialise it with random
 		// size and position
 		//
-		auto tr = _mngr->addComponent<Transform>(e);
+		//auto tr = _mngr->addComponent<Transform>(e);
 		auto s = rand.nextInt(50, 100);
-		auto x = rand.nextInt(0, sdlutils().width() - s);
-		auto y = rand.nextInt(0, sdlutils().height() - s);
-		tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+		//auto x = rand.nextInt(0, sdlutils().width() - s);
+		//auto y = rand.nextInt(0, sdlutils().height() - s);
+		//tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
 
-		// add an Image Component
-		//
-		_mngr->addComponent<Image>(e, &sdlutils().images().at("star"));
+		//// add an Image Component
+		////
+		//_mngr->addComponent<Image>(e, &sdlutils().images().at("star"));
 
 		// add a StarMotion component to resize/rotate the star
-		//
-		auto motion = _mngr->addComponent<StarMotion>(e);
+		////
+		//auto motion = _mngr->addComponent<StarMotion>(e);
 
-		motion->_rot = rand.nextInt(5, 10);
-		motion->_sizeLimit = rand.nextInt(2, 10);
-		motion->_updateFreq = rand.nextInt(20, 100);
+		//motion->_rot = rand.nextInt(5, 10);
+		//motion->_sizeLimit = rand.nextInt(2, 10);
+		//motion->_updateFreq = rand.nextInt(20, 100);
 
-		auto pts = _mngr->addComponent<Points>(e);
-		pts->_points = rand.nextInt(1, 5);
-		_currNumOfStars++;
+		//auto pts = _mngr->addComponent<Points>(e);
+		//pts->_points = rand.nextInt(1, 5);
+		//_currNumOfStars++;
 	}
 }
 
 void StarsSystem::onStarEaten(ecs::entity_t e) {
-	_mngr->setAlive(e, false);
-	_currNumOfStars--;
+	//_mngr->setAlive(e, false);
+	//_currNumOfStars--;
 
-	// play sound on channel 1 (if there is something playing there
-	// it will be cancelled
-	sdlutils().soundEffects().at("pacman_eat").play(0, 1);
+	//// play sound on channel 1 (if there is something playing there
+	//// it will be cancelled
+	//sdlutils().soundEffects().at("pacman_eat").play(0, 1);
 }
 
 void StarsSystem::recieve(const Message &m) {
-	switch (m.id) {
+	/*switch (m.id) {
 	case _m_STAR_EATEN:
 		onStarEaten(m.star_eaten_data.e);
 		break;
@@ -112,5 +112,5 @@ void StarsSystem::recieve(const Message &m) {
 		break;
 	default:
 		break;
-	}
+	}*/
 }
