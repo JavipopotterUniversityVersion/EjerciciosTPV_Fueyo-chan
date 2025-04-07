@@ -11,7 +11,7 @@ public:
 	NewRoundState() : inputHandler(&ih()), _text(&sdlutils().msgs().at("newround")) {}
 	~NewRoundState() {}
 
-	Font* _text;
+	Texture* _text;
 	
 	Message _message = _m_ROUND_START;
 	InputHandler* inputHandler;

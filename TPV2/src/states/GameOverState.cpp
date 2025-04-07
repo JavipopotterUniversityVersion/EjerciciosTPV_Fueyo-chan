@@ -4,7 +4,7 @@ void GameOverState::enter() {}
 
 void
 GameOverState::update() {
-	_text->renderText(_usedText, SDL_Color{ 0, 0, 255, 255 });
+	_text->render(400,300);
 
 	if (inputHandler->keyDownEvent()) {
 		Game::Instance()->setState(Game::NEWGAME);

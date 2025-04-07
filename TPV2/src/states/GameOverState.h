@@ -10,10 +10,10 @@ public:
 	GameOverState() : inputHandler(&ih()), _text(&sdlutils().msgs().at("gameover")) {}
 	~GameOverState() {}
 
-	Font* _text;
+	Texture* _text;
 	/*std::string _loseText = "Game Over Loser! Press ENTER to continue.";
-	std::string _winText = "Game Over Champion! Press ENTER to continue.";*/
-	std::string _usedText;
+	std::string _winText = "Game Over Champion! Press ENTER to continue.";
+	std::string _usedText;*/
 
 	InputHandler* inputHandler;
 

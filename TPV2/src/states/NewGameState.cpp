@@ -4,7 +4,7 @@ void NewGameState::enter() {}
 
 void
 NewGameState::update() {
-	//_font->renderText(text, SDL_Color{ 0, 0, 255, 255 });
+	_text->render(400,300);
 
 	if (inputHandler->keyDownEvent()) {
 		Message m;
