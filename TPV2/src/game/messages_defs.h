@@ -7,9 +7,14 @@
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
 	_m_REGISTER_TIME,
-	_m_NEW_GAME, _m_ROUND_START, _m_ROUND_OVER, _m_GAME_OVER,
-	_m_PACMAN_FOOD_COLLISION, _m_PACMAN_GHOST_COLLISION,
-	_m_IMMUNITY_START, _m_IMMUNITY_END
+	_m_PACMAN_GHOST_COLLISION,
+	_m_IMMUNITY_START, 
+	_m_IMMUNITY_END,
+	_m_NEW_GAME, 
+	_m_ROUND_START, 
+	_m_ROUND_OVER, 
+	_m_GAME_OVER,
+	_m_PACMAN_FOOD_COLLISION,
 
 };
 
@@ -25,8 +30,12 @@ struct Message {
 
 		// _m_REGISTER_TIME
 		struct {
-			unsigned int n;
+			unsigned int new_current_time;
 		} register_time_data;
 		
+		// _m_PACMAN_GHOST_COLLISION
+		struct {
+			bool pacman_wins;
+		} pacman_ghost_collision_data;
 	};
 };

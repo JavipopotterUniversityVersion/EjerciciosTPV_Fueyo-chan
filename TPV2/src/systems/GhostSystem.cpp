@@ -48,7 +48,7 @@ void GhostSystem::recieve(const Message& m)
 {
 	switch (m.id) {
 	case _m_REGISTER_TIME:
-		_currentTime = m.register_time_data.n;
+		_currentTime = m.register_time_data.new_current_time;
 		break;
 	default:
 		break;

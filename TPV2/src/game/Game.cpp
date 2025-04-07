@@ -79,7 +79,7 @@ void Game::start() {
 
 		Message m;
 		m.id = _m_REGISTER_TIME;
-		m.register_time_data.n = vT.currTime();
+		m.register_time_data.new_current_time = vT.currTime();
 		_mngr->send(m);
 
 		// refresh the input handler
