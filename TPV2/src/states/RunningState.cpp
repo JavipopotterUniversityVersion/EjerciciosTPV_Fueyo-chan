@@ -32,6 +32,7 @@ RunningState::update() {
 	_RenderSystem->update();
 	_StarsSystem->update();
 
+	Game::Instance()->getManager()->refresh();
 }
 
 void RunningState::leave() {}
