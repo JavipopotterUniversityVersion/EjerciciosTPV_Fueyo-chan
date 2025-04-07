@@ -50,14 +50,14 @@ void StarsSystem::update() {
 	//}
 }
 
-void StarsSystem::addStar(unsigned int n) {
+void StarsSystem::addStar(unsigned int new_current_time) {
 
 	// Always use the random number generator provided by SDLUtils
 	//
 	auto &rand = sdlutils().rand();
 
 	auto limit = std::min( //
-			static_cast<unsigned int>(n), //
+			static_cast<unsigned int>(new_current_time), //
 			_starsLimit - _currNumOfStars);
 
 	for (auto i = 0u; i < limit; i++) {

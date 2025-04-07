@@ -5,11 +5,13 @@
 
 class CollisionsSystem: public ecs::System {
 public:
-
 	CollisionsSystem();
 	virtual ~CollisionsSystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message&) override;
 
+private:
+	bool isPacManInmune = false;
 };
 
