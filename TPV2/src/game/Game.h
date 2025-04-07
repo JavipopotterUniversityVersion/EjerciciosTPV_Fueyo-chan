@@ -20,7 +20,6 @@ public:
 	virtual ~Game();
 	void initGame();
 	bool init();
-	void initGame();
 	void start();
 	inline ecs::Manager* getManager() { return _mngr; }
 
