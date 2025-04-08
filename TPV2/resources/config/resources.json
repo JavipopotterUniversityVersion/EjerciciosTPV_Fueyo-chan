@@ -13,9 +13,8 @@
     { "id" : "pacman", "file" : "resources/images/pacman.png"},
     { "id" : "sprites", "file" : "resources/images/pacman_sprites.png"},
     { "id" : "heart", "file" : "resources/images/heart.png"},
-    { "id" : "cherry", "file" : "resources/images/heart.png"},
-    { "id" : "pear", "file" : "resources/images/heart.png"},
-    { "id" : "pacman_sprites", "file" : "resources/images/pacman_sprites.png"}
+    { "id" : "cherry", "file" : "resources/images/tennis_ball.png"},
+    { "id" : "pear", "file" : "resources/images/SDL_logo.png"}
   ],
   
   "messages" : [
