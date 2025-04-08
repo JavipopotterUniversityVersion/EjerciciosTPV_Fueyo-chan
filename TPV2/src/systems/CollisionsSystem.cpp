@@ -24,16 +24,13 @@ void CollisionsSystem::update() {
 
 	auto pm = _mngr->getHandler(ecs::hdlr::PACMAN);
 	auto pTR = _mngr->getComponent<Transform>(pm);
-	SDL_Rect playerRect = build_sdlrect(pTR->_pos, pTR->_width, pTR->_height);
 
 	auto &ghosts = _mngr->getEntities(ecs::grp::GHOST);
 
 	for (auto i = 0u; i < ghosts.size(); i++) {
-		auto ghostTr = _mngr->getComponent<Transform>(ghosts[i]);
-		SDL_Rect ghostRect = build_sdlrect(ghostTr->_pos, ghostTr->_width, ghostTr->_height);
+		auto otherTr = _mngr->getComponent<Transform>(ghosts[i]);
 
-		SDL_Rect result;
-		if (SDL_IntersectRect(&playerRect, &ghostRect, &result)){
+		if (Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height)){
 			Message m;
 			m.id = _m_PACMAN_GHOST_COLLISION;
 			m.pacman_ghost_collision_data.pacman_wins = isPacManInmune;
@@ -46,21 +43,17 @@ void CollisionsSystem::update() {
 	auto& fruits = _mngr->getEntities(ecs::grp::FRUITS);
 
 	for (auto i = 0u; i < fruits.size(); i++) {
-		auto fruitTr = _mngr->getComponent<Transform>(fruits[i]);
-		SDL_Rect ghostRect = build_sdlrect(fruitTr->_pos, fruitTr->_width, fruitTr->_height);
+		auto otherTr = _mngr->getComponent<Transform>(fruits[i]);
 
-		SDL_Rect result;
-		if (SDL_IntersectRect(&playerRect, &ghostRect, &result)) _mngr->setAlive(fruits[i], false);
+		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) _mngr->setAlive(fruits[i], false);
 	}
 
 	auto& wonderFruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
 
 	for (auto i = 0u; i < wonderFruits.size(); i++) {
-		auto wonderFruitTr = _mngr->getComponent<Transform>(wonderFruits[i]);
-		SDL_Rect ghostRect = build_sdlrect(wonderFruitTr->_pos, wonderFruitTr->_width, wonderFruitTr->_height);
+		auto otherTr = _mngr->getComponent<Transform>(wonderFruits[i]);
 
-		SDL_Rect result;
-		if (SDL_IntersectRect(&playerRect, &ghostRect, &result)) {
+		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) {
 			_mngr->setAlive(fruits[i], false);
 			Message m;
 			m.id = _m_IMMUNITY_START;
