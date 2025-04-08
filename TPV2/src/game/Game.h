@@ -66,4 +66,5 @@ private:
 	ecs::System* _collisionSys;
 	ecs::System* _ghostSystem;
 	ecs::System* _foodSystem;
+	ecs::System* _inmunitySystem;
 };

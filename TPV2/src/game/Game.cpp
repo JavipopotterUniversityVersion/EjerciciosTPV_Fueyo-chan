@@ -62,6 +62,7 @@ void Game::initGame() {
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
 	_ghostSystem = _mngr->addSystem<GhostSystem>();
 	_foodSystem = _mngr->addSystem<FoodSystem>();
+	_inmunitySystem = _mngr->addSystem<InmunitySystem>();
 
 }
 
