@@ -27,6 +27,9 @@ void RenderSystem::update() {
 	drawGroup(ecs::grp::GHOST);
 	drawGroup(ecs::grp::FRUITS);
 	drawGroup(ecs::grp::WONDER_FRUITS);
+
+	_currentFrameStep++;
+	if (_currentFrameStep > FRAME_SPACE) _currentFrameStep = 0;
 }
 
 void RenderSystem::drawPacMan() {
@@ -85,7 +88,7 @@ void RenderSystem::draw(Transform* tr, FramedImage* framedImage) {
 	assert(framedImage->_tex != nullptr);
 	framedImage->_tex->render(source, dest, tr->_rot);
 
-	framedImage->frame++;
+	if(_currentFrameStep == FRAME_SPACE) framedImage->frame++;
 	if (framedImage->frame > framedImage->getFrameRange().getY()) framedImage->frame = framedImage->getFrameRange().getX();
 
 }

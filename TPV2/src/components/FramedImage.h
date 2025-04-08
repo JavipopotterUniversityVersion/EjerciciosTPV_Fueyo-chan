@@ -19,8 +19,13 @@ struct FramedImage: public ecs::Component {
 	Texture *_tex;
 
 	int frame;
+
 	inline const Vector2D& getFrameRange() { return _frameRange; };
-	inline const void setFrameRange(const Vector2D& range) { _frameRange = range; }
+	const void setFrameRange(const Vector2D& range) 
+	{ 
+		frame = range.getX();
+		_frameRange = range; 
+	}
 
 private:
 	Vector2D _frameRange;

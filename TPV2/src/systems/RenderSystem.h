@@ -10,7 +10,6 @@ struct FramedImage;
 
 class RenderSystem: public ecs::System {
 public:
-
 	RenderSystem();
 	virtual ~RenderSystem();
 	void initSystem() override;
@@ -21,5 +20,8 @@ private:
 	void drawMsgs();
 	void draw(Transform *tr, Texture *tex);
 	void draw(Transform* tr, FramedImage* framedImage);
+
+	static int constexpr FRAME_SPACE = 10;
+	int _currentFrameStep;
 };
 
