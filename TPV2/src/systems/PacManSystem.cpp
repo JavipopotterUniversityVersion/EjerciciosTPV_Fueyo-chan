@@ -30,6 +30,14 @@ void PacManSystem::initSystem() {
 	_mngr->addComponent<FramedImage>(pacman, AnimationUtility::getPacmanAnimation());
 }
 
+void PacManSystem::restartSystem() {
+	_pmTR = _mngr->getComponent<Transform>(_mngr->getEntities(ecs::hdlr::PACMAN)[0]);
+	auto s = 50.0f;
+	auto x = (sdlutils().width() - s) / 2.0f;
+	auto y = (sdlutils().height() - s) / 2.0f;
+	_pmTR->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
+}
+
 void PacManSystem::update() {
 
 	auto &ihldr = ih();

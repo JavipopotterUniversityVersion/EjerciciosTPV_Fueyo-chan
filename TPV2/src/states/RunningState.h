@@ -21,8 +21,8 @@ public:
 	CollisionsSystem* _collisionSystem;
 	FoodSystem* _foodSystem;
 	GhostSystem* _ghostSystem;
-	InmunitySystem* _inmunitySystem;
 	PacManSystem* _pacManSystem;
+	InmunitySystem* _inmunitySystem;
 	RenderSystem* _renderSystem;
 
 	void enter();

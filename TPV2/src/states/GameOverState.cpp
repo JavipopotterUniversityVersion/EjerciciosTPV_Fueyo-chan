@@ -1,6 +1,14 @@
 #include "GameOverState.h"
 
-void GameOverState::enter() {}
+void GameOverState::enter() {
+	_foodSystem = Game::Instance()->getManager()->getSystem<FoodSystem>();
+	_ghostSystem = Game::Instance()->getManager()->getSystem<GhostSystem>();
+	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
+
+	_foodSystem->initSystem();
+	_ghostSystem->restartSystem();
+	_pacManSystem->restartSystem();
+}
 
 void
 GameOverState::update() {

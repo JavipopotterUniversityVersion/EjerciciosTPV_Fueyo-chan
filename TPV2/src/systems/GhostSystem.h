@@ -11,6 +11,7 @@ public:
 	GhostSystem();
 	virtual ~GhostSystem();
 	void initSystem() override;
+	void restartSystem();
 	void update() override;
 	void recieve(const Message&) override;
 private:
