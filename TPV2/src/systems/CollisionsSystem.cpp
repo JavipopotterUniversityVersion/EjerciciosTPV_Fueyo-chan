@@ -83,12 +83,6 @@ void CollisionsSystem::recieve(const Message& m){
 	case _m_IMMUNITY_END:
 		isPacManInmune = false;
 		break;
-	case _m_PACMAN_FOOD_COLLISION:
-		std::cout << "foodLeft:" << m.pacman_food_collision_data.foodLeft << std::endl;
-		if (m.pacman_food_collision_data.foodLeft == 0) {
-			std::cout << "ganar" << std::endl;
-		}
-		break;
 	default:
 		break;
 	}

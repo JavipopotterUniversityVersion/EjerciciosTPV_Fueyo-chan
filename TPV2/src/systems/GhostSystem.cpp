@@ -56,9 +56,16 @@ ecs::entity_t GhostSystem::createGhost() {
 
 void GhostSystem::recieve(const Message& m)
 {
+	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 	switch (m.id) {
 	case _m_REGISTER_TIME:
 		_currentTime = m.register_time_data.new_current_time;
+		break;
+	case _m_IMMUNITY_START:
+		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->_frameRange = AnimationUtility::getVulnerableGhost();
+		break;
+	case _m_IMMUNITY_END:
+		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->_frameRange = AnimationUtility::getRedGhost();
 		break;
 	default:
 		break;
