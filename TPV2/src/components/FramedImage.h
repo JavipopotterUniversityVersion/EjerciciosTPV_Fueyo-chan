@@ -8,12 +8,8 @@ class Texture;
 
 struct FramedImage: public ecs::Component {
 
-	FramedImage() :
-			_tex() {
-	}
-
-	FramedImage(Texture *tex) :
-			_tex(tex) {
+	FramedImage(Texture* tex, Vector2D start, Vector2D end) :
+			_tex(), _start(start), _end(end){
 	}
 
 	virtual ~FramedImage() {

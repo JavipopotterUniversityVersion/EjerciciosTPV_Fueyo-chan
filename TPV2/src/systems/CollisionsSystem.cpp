@@ -54,7 +54,7 @@ void CollisionsSystem::update() {
 		auto otherTr = _mngr->getComponent<Transform>(wonderFruits[i]);
 
 		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) {
-			_mngr->setAlive(fruits[i], false);
+			_mngr->setAlive(wonderFruits[i], false);
 			Message m;
 			m.id = _m_IMMUNITY_START;
 			_mngr->send(m);
