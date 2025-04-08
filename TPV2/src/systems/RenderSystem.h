@@ -15,7 +15,7 @@ public:
 	void update() override;
 private:
 	void drawPacMan();
-	void drawGhosts();
+	void drawGroup(ecs::grp::grpId id);
 	void drawMsgs();
 	void draw(Transform *tr, Texture *tex);
 };

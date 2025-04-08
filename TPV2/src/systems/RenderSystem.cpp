@@ -23,7 +23,9 @@ void RenderSystem::initSystem() {
 void RenderSystem::update() {
 	drawMsgs();
 	drawPacMan();
-	drawGhosts();
+	drawGroup(ecs::grp::GHOST);
+	drawGroup(ecs::grp::FRUITS);
+	drawGroup(ecs::grp::WONDER_FRUITS);
 }
 
 void RenderSystem::drawPacMan() {
@@ -34,13 +36,13 @@ void RenderSystem::drawPacMan() {
 }
 
 
-void RenderSystem::drawGhosts() {
-	auto ghosts = _mngr->getEntities(ecs::grp::GHOST);
+void RenderSystem::drawGroup(ecs::grp::grpId id) {
+	auto group = _mngr->getEntities(id);
 
-	for(auto ghost : ghosts)
+	for(auto elem : group)
 	{
-		auto tr = _mngr->getComponent<Transform>(ghost);
-		auto tex = _mngr->getComponent<Image>(ghost)->_tex;
+		auto tr = _mngr->getComponent<Transform>(elem);
+		auto tex = _mngr->getComponent<Image>(elem)->_tex;
 		draw(tr, tex);
 	}
 }
