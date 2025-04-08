@@ -3,6 +3,7 @@
 #include "RenderSystem.h"
 
 #include "../components/Image.h"
+#include "../components/FramedImage.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
@@ -31,8 +32,9 @@ void RenderSystem::update() {
 void RenderSystem::drawPacMan() {
 	auto e = _mngr->getHandler(ecs::hdlr::PACMAN);
 	auto tr = _mngr->getComponent<Transform>(e);
-	auto tex = _mngr->getComponent<Image>(e)->_tex;
-	draw(tr, tex);
+	auto framedImage = _mngr->getComponent<FramedImage>(e);
+
+	draw(tr, framedImage);
 }
 
 
@@ -42,8 +44,9 @@ void RenderSystem::drawGroup(ecs::grp::grpId id) {
 	for(auto elem : group)
 	{
 		auto tr = _mngr->getComponent<Transform>(elem);
-		auto tex = _mngr->getComponent<Image>(elem)->_tex;
-		draw(tr, tex);
+		auto framedImage = _mngr->getComponent<FramedImage>(elem);
+
+		draw(tr, framedImage);
 	}
 }
 
@@ -70,4 +73,19 @@ void RenderSystem::draw(Transform *tr, Texture *tex) {
 
 	assert(tex != nullptr);
 	tex->render(dest, tr->_rot);
+}
+
+void RenderSystem::draw(Transform* tr, FramedImage* framedImage) {
+	SDL_Rect dest = build_sdlrect(tr->_pos, tr->_width, tr->_height);
+
+	Vector2D framePos = Vector2D(framedImage->frame % 8, framedImage->frame / 8);
+	framePos = framePos * 128;
+	SDL_Rect source = build_sdlrect(framePos, 128, 128);
+
+	assert(framedImage->_tex != nullptr);
+	framedImage->_tex->render(source, dest, tr->_rot);
+
+	framedImage->frame++;
+	if (framedImage->frame > framedImage->_frameRange.getY()) framedImage->frame = framedImage->_frameRange.getX();
+
 }

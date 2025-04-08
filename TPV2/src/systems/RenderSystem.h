@@ -5,6 +5,8 @@
 
 class Texture;
 struct Transform;
+struct SDL_Rect;
+struct FramedImage;
 
 class RenderSystem: public ecs::System {
 public:
@@ -18,5 +20,6 @@ private:
 	void drawGroup(ecs::grp::grpId id);
 	void drawMsgs();
 	void draw(Transform *tr, Texture *tex);
+	void draw(Transform* tr, FramedImage* framedImage);
 };
 

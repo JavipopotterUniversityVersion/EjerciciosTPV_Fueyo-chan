@@ -48,6 +48,7 @@
     <ClCompile Include="..\SRC\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\components\FramedImage.h" />
     <ClInclude Include="..\src\components\Image.h" />
     <ClInclude Include="..\src\components\Points.h" />
     <ClInclude Include="..\src\components\StarMotion.h" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\src\ecs\messages.h" />
     <ClInclude Include="..\src\ecs\messages_defs_example.h" />
     <ClInclude Include="..\src\ecs\System.h" />
+    <ClInclude Include="..\src\game\AnimationUtility.h" />
     <ClInclude Include="..\src\game\ecs_defs.h" />
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\messages_defs.h" />

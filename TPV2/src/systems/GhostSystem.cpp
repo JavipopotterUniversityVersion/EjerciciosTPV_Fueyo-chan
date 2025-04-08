@@ -1,5 +1,6 @@
 #include "GhostSystem.h"
-#include "../components/Image.h"
+#include "../components/FramedImage.h"
+#include "../game/AnimationUtility.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
@@ -48,7 +49,7 @@ ecs::entity_t GhostSystem::createGhost() {
 	else if (rndBorder == 2) pos = { float(sdlutils().rand().nextInt(10, sdlutils().width()-10)), 10.0f }; //Borde arriba
 	else if (rndBorder == 3) pos = { float(sdlutils().rand().nextInt(10, sdlutils().width()-10)), float(sdlutils().height()-10) }; //Borde abajo
 	Transform* tr = _mngr->addComponent<Transform>(ghost, pos, Vector2D{}, 50.0f, 50.0f, 0.0f);
-	_mngr->addComponent<Image>(ghost, &sdlutils().images().at("ghost"));
+	_mngr->addComponent<FramedImage>(ghost, AnimationUtility::getRedGhost());
 
 	return ghost;
 }

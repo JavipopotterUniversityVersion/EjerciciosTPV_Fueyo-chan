@@ -3,7 +3,8 @@
 #include "../ecs/Manager.h"
 #include "../components/WonderFruitComponent.h"
 #include "../components/Transform.h"
-#include "../components/Image.h"
+#include "../components/FramedImage.h"
+#include "../game/AnimationUtility.h"
 #include <vector>
 
 
@@ -23,16 +24,16 @@ void FoodSystem::update() {
 	for (ecs::entity_t fruit : wonderFruits) {
 		WonderFruitComponent* wonderComp = _mngr->getComponent<WonderFruitComponent>(fruit);
 
-		if (wonderComp->nextTime >= sdlutils().virtualTimer().currTime()) {
-			Image* wonderFruitImg = _mngr->getComponent<Image>(fruit);
+		if (wonderComp->nextTime <= sdlutils().virtualTimer().currTime()) {
+			FramedImage* wonderFruitImg = _mngr->getComponent<FramedImage>(fruit);
 			if (wonderComp->inWonderState) {
 				wonderComp->inWonderState = false;
-				wonderFruitImg->_tex = &sdlutils().images().at("cherry");
+				wonderFruitImg->_frameRange = AnimationUtility::getCherry();
 				wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->N();
 			}
 			else{
 				wonderComp->inWonderState = true;
-				wonderFruitImg->_tex = &sdlutils().images().at("pear");
+				wonderFruitImg->_frameRange = AnimationUtility::getPear();
 				wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->M();
 			}
 		}
@@ -45,11 +46,11 @@ void FoodSystem::createFruit(int x, int y) {
 
 	float s = 50.0f;
 	_mngr->addComponent<Transform>(fruit, Vector2D(x,y), Vector2D(), s, s, 0);
-	_mngr->addComponent<Image>(fruit, &sdlutils().images().at("cherry"));
+	_mngr->addComponent<FramedImage>(fruit, AnimationUtility::getCherry());
 
 	if (isWonder) {
-		int n = _rng.nextInt(1, 11);
-		int m = _rng.nextInt(1, 6);
+		int n = _rng.nextInt(1000, 11000);
+		int m = _rng.nextInt(1000, 6000);
 		WonderFruitComponent* wonderComp = _mngr->addComponent<WonderFruitComponent>(fruit, n, m);
 		wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->N();
 	}

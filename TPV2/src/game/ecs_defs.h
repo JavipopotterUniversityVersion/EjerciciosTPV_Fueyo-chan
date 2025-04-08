@@ -9,13 +9,15 @@ struct Image;
 struct StarMotion;
 struct Points;
 struct WonderFruitComponent;
+struct FramedImage;
 
 #define _CMPS_LIST_ \
 	Transform, \
 	Image, \
 	StarMotion, \
 	Points, \
-	WonderFruitComponent
+	WonderFruitComponent, \
+	FramedImage
 
 // Groups list - must have at least one element
 //
