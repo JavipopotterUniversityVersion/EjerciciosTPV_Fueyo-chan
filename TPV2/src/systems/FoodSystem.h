@@ -11,7 +11,7 @@ public:
 	void update() override;
 private:
 	void createFruit(int x, int y);
-	static int constexpr GRID_SIZE = 32;
+	static int constexpr GRID_SIZE = 128;
 	RandomNumberGenerator _rng;
 };
 

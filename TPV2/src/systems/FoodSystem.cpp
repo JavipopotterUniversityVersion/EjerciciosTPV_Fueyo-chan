@@ -11,8 +11,8 @@ FoodSystem::FoodSystem() : _rng() {}
 FoodSystem::~FoodSystem() {}
 
 void FoodSystem::initSystem() {
-	for (int i = 0; i < sdlutils().width() / GRID_SIZE; i++){
-		for (int c = 0; c < sdlutils().height() / GRID_SIZE; c++){
+	for (int i = 0; i < sdlutils().width() / GRID_SIZE + 1; i++){
+		for (int c = 0; c < sdlutils().height() / GRID_SIZE + 1; c++){
 			createFruit(i * GRID_SIZE, c * GRID_SIZE);
 		}
 	}

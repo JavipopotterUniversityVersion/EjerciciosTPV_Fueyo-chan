@@ -20,7 +20,6 @@ public:
 	ecs::entity_t _player;
 	CollisionsSystem* _collisionSystem;
 	FoodSystem* _foodSystem;
-	GameCtrlSystem* _gameCtrlSystem;
 	GhostSystem* _ghostSystem;
 	InmunitySystem* _inmunitySystem;
 	PacManSystem* _pacManSystem;

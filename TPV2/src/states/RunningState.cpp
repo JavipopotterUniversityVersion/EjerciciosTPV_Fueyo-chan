@@ -6,7 +6,6 @@ void
 RunningState::enter() {
 	_collisionSystem = Game::Instance()->getManager()->getSystem<CollisionsSystem>();
 	_foodSystem = Game::Instance()->getManager()->getSystem<FoodSystem>();
-	_gameCtrlSystem = Game::Instance()->getManager()->getSystem<GameCtrlSystem>();
 	_ghostSystem = Game::Instance()->getManager()->getSystem<GhostSystem>();
 	_inmunitySystem = Game::Instance()->getManager()->getSystem<InmunitySystem>();
 	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
@@ -24,7 +23,6 @@ RunningState::update() {
 
 	_collisionSystem->update();
 	_foodSystem->update();
-	_gameCtrlSystem->update();
 	_ghostSystem->update();
 	_inmunitySystem->update();
 	_pacManSystem->update();
