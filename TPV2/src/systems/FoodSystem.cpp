@@ -43,14 +43,18 @@ void FoodSystem::createFruit(int x, int y) {
 	bool isWonder = _rng.nextInt(0, 101) > 90;
 	ecs::entity_t fruit = _mngr->addEntity(isWonder ? ecs::grp::WONDER_FRUITS : ecs::grp::FRUITS);
 
-	float s = 50.0f;
-	_mngr->addComponent<Transform>(fruit, Vector2D(x,y), Vector2D(), s, s, 0);
-	_mngr->addComponent<Image>(fruit, &sdlutils().images().at("cherry"));
+	float s = 25.0f;
+	_mngr->addComponent<Transform>(fruit, Vector2D(x + 40,y + 40), Vector2D(), s, s, 0);
 
 	if (isWonder) {
 		int n = _rng.nextInt(1, 11);
 		int m = _rng.nextInt(1, 6);
 		WonderFruitComponent* wonderComp = _mngr->addComponent<WonderFruitComponent>(fruit, n, m);
 		wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->N();
+		_mngr->addComponent<Image>(fruit, &sdlutils().images().at("cherry"));
+	}
+	else {
+		_mngr->addComponent<Image>(fruit, &sdlutils().images().at("pear"));
+
 	}
 }
