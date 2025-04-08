@@ -28,12 +28,12 @@ void FoodSystem::update() {
 			FramedImage* wonderFruitImg = _mngr->getComponent<FramedImage>(fruit);
 			if (wonderComp->inWonderState) {
 				wonderComp->inWonderState = false;
-				wonderFruitImg->_frameRange = AnimationUtility::getCherry();
+				wonderFruitImg->setFrameRange(AnimationUtility::getCherry());
 				wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->N();
 			}
 			else{
 				wonderComp->inWonderState = true;
-				wonderFruitImg->_frameRange = AnimationUtility::getPear();
+				wonderFruitImg->setFrameRange(AnimationUtility::getPear());
 				wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->M();
 			}
 		}

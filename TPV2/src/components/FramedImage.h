@@ -9,7 +9,7 @@ class Texture;
 
 struct FramedImage: public ecs::Component {
 
-	FramedImage(Vector2D range, Texture* tex = &sdlutils().images().at("sprites")) :
+	FramedImage(const Vector2D& range, Texture* tex = &sdlutils().images().at("sprites")) :
 			_tex(tex), _frameRange(range), frame(range.getX()){
 	}
 
@@ -18,8 +18,11 @@ struct FramedImage: public ecs::Component {
 
 	Texture *_tex;
 
-	Vector2D _frameRange;
-
 	int frame;
+	inline const Vector2D& getFrameRange() { return _frameRange; };
+	inline const void setFrameRange(const Vector2D& range) { _frameRange = range; }
+
+private:
+	Vector2D _frameRange;
 };
 

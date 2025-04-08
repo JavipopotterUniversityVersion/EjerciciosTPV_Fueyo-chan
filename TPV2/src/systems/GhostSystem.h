@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/System.h"
+#include "../utils/Vector2D.h"
 #include <vector>
 
 struct Transform;
@@ -20,6 +21,7 @@ private:
 	int _currentTime;
 	int _nextTime;
 	static constexpr int SPAWN_MARGIN = 5000;
+	Vector2D _currentGhostsFrameRange;
 
 	ecs::entity_t createGhost();
 };

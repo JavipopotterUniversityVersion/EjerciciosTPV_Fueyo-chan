@@ -7,6 +7,7 @@
 #include "../utils/Collisions.h"
 #include "StarsSystem.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../components/WonderFruitComponent.h"
 
 CollisionsSystem::CollisionsSystem() {
 	// TODO Auto-generated constructor stub
@@ -56,14 +57,17 @@ void CollisionsSystem::update() {
 	for (auto i = 0u; i < wonderFruits.size(); i++) {
 		auto otherTr = _mngr->getComponent<Transform>(wonderFruits[i]);
 
-		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) {
+		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))){
 			_mngr->setAlive(wonderFruits[i], false);
 
-			Message m;
-			m.id = _m_IMMUNITY_START;
-			_mngr->send(m);
+			if(_mngr->getComponent<WonderFruitComponent>(wonderFruits[i])->inWonderState)
+			{
+				Message m;
+				m.id = _m_IMMUNITY_START;
+				_mngr->send(m);
 
-			hasEatenFruit = true;
+				hasEatenFruit = true;
+			}
 		}
 	}
 

@@ -86,6 +86,6 @@ void RenderSystem::draw(Transform* tr, FramedImage* framedImage) {
 	framedImage->_tex->render(source, dest, tr->_rot);
 
 	framedImage->frame++;
-	if (framedImage->frame > framedImage->_frameRange.getY()) framedImage->frame = framedImage->_frameRange.getX();
+	if (framedImage->frame > framedImage->getFrameRange().getY()) framedImage->frame = framedImage->getFrameRange().getX();
 
 }

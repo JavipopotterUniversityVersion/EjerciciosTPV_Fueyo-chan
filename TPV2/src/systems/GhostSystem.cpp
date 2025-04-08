@@ -5,7 +5,7 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 
-GhostSystem::GhostSystem() {
+GhostSystem::GhostSystem() : _currentGhostsFrameRange(AnimationUtility::getRedGhost()) {
 
 }
 
@@ -49,23 +49,30 @@ ecs::entity_t GhostSystem::createGhost() {
 	else if (rndBorder == 2) pos = { float(sdlutils().rand().nextInt(10, sdlutils().width()-10)), 10.0f }; //Borde arriba
 	else if (rndBorder == 3) pos = { float(sdlutils().rand().nextInt(10, sdlutils().width()-10)), float(sdlutils().height()-10) }; //Borde abajo
 	Transform* tr = _mngr->addComponent<Transform>(ghost, pos, Vector2D{}, 50.0f, 50.0f, 0.0f);
-	_mngr->addComponent<FramedImage>(ghost, AnimationUtility::getRedGhost());
+	_mngr->addComponent<FramedImage>(ghost, _currentGhostsFrameRange);
 
 	return ghost;
 }
 
 void GhostSystem::recieve(const Message& m)
 {
-	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 	switch (m.id) {
 	case _m_REGISTER_TIME:
 		_currentTime = m.register_time_data.new_current_time;
 		break;
 	case _m_IMMUNITY_START:
-		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->_frameRange = AnimationUtility::getVulnerableGhost();
+	{
+		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+		_currentGhostsFrameRange = AnimationUtility::getVulnerableGhost();
+		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
+	}
 		break;
 	case _m_IMMUNITY_END:
-		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->_frameRange = AnimationUtility::getRedGhost();
+	{
+		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+		_currentGhostsFrameRange = AnimationUtility::getRedGhost();
+		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
+	}
 		break;
 	default:
 		break;
