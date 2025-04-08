@@ -14,6 +14,7 @@
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
+#include "../systems/FoodSystem.h"
 
 //Include game states
 #include "../states/GameOverState.h"
@@ -60,6 +61,8 @@ void Game::initGame() {
 	_renderSys = _mngr->addSystem<RenderSystem>();
 	_collisionSys = _mngr->addSystem<CollisionsSystem>();
 	_ghostSystem = _mngr->addSystem<GhostSystem>();
+	_foodSystem = _mngr->addSystem<FoodSystem>();
+
 }
 
 bool Game::init() {

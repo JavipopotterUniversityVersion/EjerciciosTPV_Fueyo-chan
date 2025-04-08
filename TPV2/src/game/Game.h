@@ -65,4 +65,5 @@ private:
 	ecs::System* _renderSys;
 	ecs::System* _collisionSys;
 	ecs::System* _ghostSystem;
+	ecs::System* _foodSystem;
 };
