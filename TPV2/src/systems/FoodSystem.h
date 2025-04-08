@@ -8,6 +8,7 @@ public:
 	FoodSystem();
 	virtual ~FoodSystem();
 	void initSystem() override;
+	void restartSystem();
 	void update() override;
 private:
 	void createFruit(int x, int y);

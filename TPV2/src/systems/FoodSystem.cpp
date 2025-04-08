@@ -19,6 +19,19 @@ void FoodSystem::initSystem() {
 	}
 }
 
+void FoodSystem::restartSystem() {
+	auto& fruits = _mngr->getEntities(ecs::grp::FRUITS);
+	auto& wonderFruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
+	
+	for (ecs::entity_t fruit : fruits) {
+		_mngr->setAlive(fruit, false);
+	}
+	for (ecs::entity_t wonderFruit : wonderFruits) {
+		_mngr->setAlive(wonderFruit, false);
+	}
+
+	initSystem();
+}
 void FoodSystem::update() {
 	std::vector<ecs::entity_t> wonderFruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
 	for (ecs::entity_t fruit : wonderFruits) {

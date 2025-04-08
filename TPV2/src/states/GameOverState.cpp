@@ -5,7 +5,7 @@ void GameOverState::enter() {
 	_ghostSystem = Game::Instance()->getManager()->getSystem<GhostSystem>();
 	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
 
-	_foodSystem->initSystem();
+	_foodSystem->restartSystem();
 	_ghostSystem->restartSystem();
 	_pacManSystem->restartSystem();
 }

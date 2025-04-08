@@ -38,6 +38,7 @@ void CollisionsSystem::update() {
 			_mngr->send(m);
 
 			if (isPacManInmune) _mngr->setAlive(ghosts[i], false);
+			else Game::Instance()->setState(Game::GAMEOVER);
 		}
 	}
 
