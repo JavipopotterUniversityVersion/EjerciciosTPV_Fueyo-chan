@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/System.h"
+#include "../sdlutils/RandomNumberGenerator.h"
 
 class FoodSystem : public ecs::System
 {
@@ -9,5 +10,8 @@ public:
 	void initSystem() override;
 	void update() override;
 private:
+	void createFruit(int x, int y);
+	static int constexpr GRID_SIZE = 32;
+	RandomNumberGenerator _rng;
 };
 
