@@ -12,8 +12,8 @@ FoodSystem::FoodSystem() : _rng() {}
 FoodSystem::~FoodSystem() {}
 
 void FoodSystem::initSystem() {
-	for (int i = 0; i < sdlutils().width() / GRID_SIZE + 1; i++){
-		for (int c = 0; c < sdlutils().height() / GRID_SIZE + 1; c++){
+	for (int i = 0; i < sdlutils().width() / GRID_SIZE; i++){
+		for (int c = 0; c < sdlutils().height() / GRID_SIZE; c++){
 			createFruit(i * GRID_SIZE, c * GRID_SIZE);
 		}
 	}
@@ -53,10 +53,5 @@ void FoodSystem::createFruit(int x, int y) {
 		int m = _rng.nextInt(1000, 6000);
 		WonderFruitComponent* wonderComp = _mngr->addComponent<WonderFruitComponent>(fruit, n, m);
 		wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->N();
-		_mngr->addComponent<Image>(fruit, &sdlutils().images().at("cherry"));
-	}
-	else {
-		_mngr->addComponent<Image>(fruit, &sdlutils().images().at("pear"));
-
 	}
 }

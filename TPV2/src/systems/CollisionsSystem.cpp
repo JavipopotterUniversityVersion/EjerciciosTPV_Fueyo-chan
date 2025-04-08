@@ -40,25 +40,38 @@ void CollisionsSystem::update() {
 		}
 	}
 
-	auto& fruits = _mngr->getEntities(ecs::grp::FRUITS);
+	bool hasEatenFruit = false;
 
+	auto& fruits = _mngr->getEntities(ecs::grp::FRUITS);
 	for (auto i = 0u; i < fruits.size(); i++) {
 		auto otherTr = _mngr->getComponent<Transform>(fruits[i]);
 
-		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) _mngr->setAlive(fruits[i], false);
+		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) {
+			_mngr->setAlive(fruits[i], false);
+			hasEatenFruit = true;
+		}
 	}
 
 	auto& wonderFruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
-
 	for (auto i = 0u; i < wonderFruits.size(); i++) {
 		auto otherTr = _mngr->getComponent<Transform>(wonderFruits[i]);
 
 		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) {
 			_mngr->setAlive(wonderFruits[i], false);
+
 			Message m;
 			m.id = _m_IMMUNITY_START;
 			_mngr->send(m);
+
+			hasEatenFruit = true;
 		}
+	}
+
+	if (hasEatenFruit) {
+		Message m;
+		m.id = _m_PACMAN_FOOD_COLLISION;
+		m.pacman_food_collision_data.foodLeft = fruits.size() + wonderFruits.size() - 1;
+		_mngr->send(m);
 	}
 }
 
@@ -69,6 +82,12 @@ void CollisionsSystem::recieve(const Message& m){
 		break;
 	case _m_IMMUNITY_END:
 		isPacManInmune = false;
+		break;
+	case _m_PACMAN_FOOD_COLLISION:
+		std::cout << "foodLeft:" << m.pacman_food_collision_data.foodLeft << std::endl;
+		if (m.pacman_food_collision_data.foodLeft == 0) {
+			std::cout << "ganar" << std::endl;
+		}
 		break;
 	default:
 		break;

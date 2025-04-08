@@ -37,5 +37,10 @@ struct Message {
 		struct {
 			bool pacman_wins;
 		} pacman_ghost_collision_data;
+
+		//_m_PACMAN_FOOD_COLLISION
+		struct {
+			unsigned int foodLeft;
+		} pacman_food_collision_data;
 	};
 };
