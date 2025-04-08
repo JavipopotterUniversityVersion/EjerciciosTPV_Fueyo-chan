@@ -10,6 +10,7 @@ RunningState::enter() {
 	_inmunitySystem = Game::Instance()->getManager()->getSystem<InmunitySystem>();
 	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
 	_renderSystem = Game::Instance()->getManager()->getSystem<RenderSystem>();
+
 }
 
 void

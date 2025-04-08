@@ -17,6 +17,13 @@ void GhostSystem::initSystem() {
 	_pacMan = _mngr->getComponent<Transform>(_mngr->getEntities(ecs::hdlr::PACMAN)[0]);
 }
 
+void GhostSystem::restartSystem() {
+	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+
+	for (ecs::entity_t ghost : ghosts) {
+		_mngr->setAlive(ghost, false);
+	}
+}
 void GhostSystem::update() {
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 

@@ -4,6 +4,9 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Font.h"
 #include "../sdlutils/InputHandler.h"
+#include "../systems/PacManSystem.h"
+#include "../systems/GhostSystem.h"
+#include "../systems/FoodSystem.h"
 
 class GameOverState : public GameState {
 public:
@@ -11,9 +14,10 @@ public:
 	~GameOverState() {}
 
 	Texture* _text;
-	/*std::string _loseText = "Game Over Loser! Press ENTER to continue.";
-	std::string _winText = "Game Over Champion! Press ENTER to continue.";
-	std::string _usedText;*/
+	
+	FoodSystem* _foodSystem;
+	GhostSystem* _ghostSystem;
+	PacManSystem* _pacManSystem;
 
 	InputHandler* inputHandler;
 

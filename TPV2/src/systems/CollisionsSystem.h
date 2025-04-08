@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../ecs/System.h"
+#include "../game/Game.h"
 
 class CollisionsSystem: public ecs::System {
 public:
