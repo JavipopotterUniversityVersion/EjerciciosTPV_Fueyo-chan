@@ -12,7 +12,9 @@
     { "id" : "ghost", "file" : "resources/images/ghost.png"},
     { "id" : "pacman", "file" : "resources/images/pacman.png"},
     { "id" : "sprites", "file" : "resources/images/pacman_sprites.png"},
-    { "id" : "heart", "file" : "resources/images/heart.png"}
+    { "id" : "heart", "file" : "resources/images/heart.png"},
+    { "id" : "cherry", "file" : "resources/images/heart.png"},
+    { "id" : "pear", "file" : "resources/images/heart.png"}
   ],
   
   "messages" : [
