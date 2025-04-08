@@ -3,8 +3,8 @@
 
 struct WonderFruitComponent : public ecs::Component {
 public:
-	WonderFruitComponent(int N, int M);
-	virtual ~WonderFruitComponent();
+	WonderFruitComponent(int N, int M) : _n(N), _m(M) {}
+	virtual ~WonderFruitComponent() {}
 
 	bool inWonderState;
 	int nextTime;

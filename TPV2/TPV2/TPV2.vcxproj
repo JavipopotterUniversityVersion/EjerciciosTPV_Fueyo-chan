@@ -52,6 +52,7 @@
     <ClInclude Include="..\src\components\Points.h" />
     <ClInclude Include="..\src\components\StarMotion.h" />
     <ClInclude Include="..\src\components\Transform.h" />
+    <ClInclude Include="..\src\components\WonderFruitComponent.h" />
     <ClInclude Include="..\src\ecs\Component.h" />
     <ClInclude Include="..\src\ecs\ecs.h" />
     <ClInclude Include="..\src\ecs\ecs_defs_example.h" />
