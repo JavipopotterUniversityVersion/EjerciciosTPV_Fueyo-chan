@@ -37,7 +37,10 @@ void CollisionsSystem::update() {
 			_mngr->send(m);
 
 			if (isPacManInmune) _mngr->setAlive(ghosts[i], false);
-			else Game::Instance()->setState(Game::GAMEOVER);
+			else {
+				Game::Instance()->setState(Game::GAMEOVER);
+				sdlutils().soundEffects().at("pacman_death").play();
+			}
 		}
 	}
 
@@ -76,7 +79,13 @@ void CollisionsSystem::update() {
 		m.id = _m_PACMAN_FOOD_COLLISION;
 		m.pacman_food_collision_data.foodLeft = fruits.size() + wonderFruits.size() - 1;
 		_mngr->send(m);
-		if (m.pacman_food_collision_data.foodLeft == 0) Game::Instance()->setState(Game::GAMEOVER);
+
+		sdlutils().soundEffects().at("pacman_eat").play();
+
+		if (m.pacman_food_collision_data.foodLeft == 0) {
+			sdlutils().soundEffects().at("pacman_won").play();
+			Game::Instance()->setState(Game::GAMEOVER);
+		}
 	}
 }
 

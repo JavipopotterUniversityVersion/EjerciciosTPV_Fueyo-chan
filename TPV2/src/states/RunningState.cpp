@@ -1,4 +1,5 @@
 #include "RunningState.h"
+#include "../sdlutils/SDLUtils.h"
 
 RunningState::RunningState(){ }
 
@@ -11,6 +12,7 @@ RunningState::enter() {
 	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
 	_renderSystem = Game::Instance()->getManager()->getSystem<RenderSystem>();
 
+	sdlutils().soundEffects().at("pacman_intro").play();
 }
 
 void
