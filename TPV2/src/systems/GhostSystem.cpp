@@ -33,9 +33,15 @@ void GhostSystem::update() {
 		std::cout << _currentTime << std::endl;
 	}
 
+	
 	for (ecs::entity_t ghost : ghosts){
 		Transform* gTr = _mngr->getComponent<Transform>(ghost);
-		gTr->_vel = (_pacMan->_pos - gTr->_pos).normalize() * 1.1f;
+
+		// 1 / 200 = 0.005
+		if (sdlutils().rand().nextInt(0, 200) == 0 || (_pacMan->_pos - gTr->_pos).magnitude() < 0.5f) {
+			gTr->_vel = (_pacMan->_pos - gTr->_pos).normalize() * 1.1f;
+		}
+
 		gTr->_pos = gTr->_pos + gTr->_vel;
 	}
 }
@@ -43,19 +49,13 @@ void GhostSystem::update() {
 ecs::entity_t GhostSystem::createGhost() {
 	auto ghost = _mngr->addEntity(ecs::grp::GHOST);
 
-	/*Transform* ghostTr = _mngr->addComponent<Transform>(ghost);
-	auto s = 50.0f;
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
-	ghostTr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);*/
-	
 	Vector2D pos = Vector2D();
 	int rndBorder = sdlutils().rand().nextInt(0, 4);
-	if (rndBorder == 0) pos = { 10.0f, float(sdlutils().rand().nextInt(10, sdlutils().height()-10)) }; //Borde izq.
-	else if (rndBorder == 1) pos = { float(sdlutils().width()-10), float(sdlutils().rand().nextInt(10, sdlutils().height()-10)) }; //Borde der.
-	else if (rndBorder == 2) pos = { float(sdlutils().rand().nextInt(10, sdlutils().width()-10)), 10.0f }; //Borde arriba
-	else if (rndBorder == 3) pos = { float(sdlutils().rand().nextInt(10, sdlutils().width()-10)), float(sdlutils().height()-10) }; //Borde abajo
-	Transform* tr = _mngr->addComponent<Transform>(ghost, pos, Vector2D{}, 50.0f, 50.0f, 0.0f);
+	if (rndBorder == 0) pos = { 0.0f, 0.0f}; //Esquina arriba izq.
+	else if (rndBorder == 1) pos = { float(sdlutils().width() - 40), 0.0f }; //Esquina arriba der.
+	else if (rndBorder == 2) pos = { 0.0f, float(sdlutils().height() - 40)}; //Esquina abajo izq.
+	else if (rndBorder == 3) pos = { float(sdlutils().width() - 40), float(sdlutils().height() - 40) }; //Borde abajo
+	Transform* tr = _mngr->addComponent<Transform>(ghost, pos, (_pacMan->_pos - pos).normalize() * 1.1f, 40.0f, 40.0f, 0.0f);
 	_mngr->addComponent<FramedImage>(ghost, _currentGhostsFrameRange);
 
 	return ghost;

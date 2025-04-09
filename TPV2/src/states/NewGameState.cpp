@@ -8,7 +8,7 @@ NewGameState::enter() {
 
 void
 NewGameState::update() {
-	_text->render(400,300);
+	_text->render(250,300);
 
 	if (inputHandler->keyDownEvent()) {
 		Message m;

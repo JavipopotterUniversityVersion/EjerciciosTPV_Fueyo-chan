@@ -18,6 +18,7 @@ public:
 private:
 	static int constexpr MAX_GHOSTS = 10;
 	Transform* _pacMan;
+	Vector2D _oldPacManPos;
 
 	int _currentTime;
 	int _nextTime;

@@ -12,7 +12,7 @@ void NewRoundState::enter() {
 
 void
 NewRoundState::update() {
-	_text->render(400,300);
+	_text->render(250,300);
 
 	if (inputHandler->isKeyDown(SDLK_KP_ENTER)) {
 		Message m;
