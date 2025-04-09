@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../ecs/System.h"
+#include "../sdlutils/SDLUtils.h"
 
 class Texture;
 struct Transform;
@@ -20,8 +21,12 @@ private:
 	void drawMsgs();
 	void draw(Transform *tr, Texture *tex);
 	void draw(Transform* tr, FramedImage* framedImage);
+	void drawHearts();
 
 	static int constexpr FRAME_SPACE = 10;
 	int _currentFrameStep;
+
+	static constexpr int HEART_SIZE = 30;
+	Texture* _heartTex = &sdlutils().images().at("heart");
 };
 

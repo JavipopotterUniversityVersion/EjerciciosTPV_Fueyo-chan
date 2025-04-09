@@ -4,6 +4,7 @@
 
 #include "../components/FramedImage.h"
 #include "../components/Transform.h"
+#include "../components/Health.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
@@ -28,6 +29,7 @@ void PacManSystem::initSystem() {
 	auto y = (sdlutils().height() - s) / 2.0f;
 	_pmTR->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
 	_mngr->addComponent<FramedImage>(pacman, AnimationUtility::getPacmanAnimation());
+	_mngr->addComponent<Health>(pacman, 3);
 }
 
 void PacManSystem::restartSystem() {

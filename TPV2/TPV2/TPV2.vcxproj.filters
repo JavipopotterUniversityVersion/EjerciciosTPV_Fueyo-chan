@@ -251,5 +251,17 @@
     <ClInclude Include="..\src\states\RunningState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\components\FramedImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\WonderFruitComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\AnimationUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\Health.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

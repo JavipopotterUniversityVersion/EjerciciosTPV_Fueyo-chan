@@ -5,6 +5,7 @@
 #include "../sdlutils/Font.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/InputHandler.h"
+#include "../components/Health.h"
 
 class NewGameState : public GameState {
 public:

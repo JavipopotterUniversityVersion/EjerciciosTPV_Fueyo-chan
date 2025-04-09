@@ -1,6 +1,14 @@
 #include "NewRoundState.h"
 
-void NewRoundState::enter() {}
+void NewRoundState::enter() {
+	_foodSystem = Game::Instance()->getManager()->getSystem<FoodSystem>();
+	_ghostSystem = Game::Instance()->getManager()->getSystem<GhostSystem>();
+	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
+
+	_foodSystem->restartSystem();
+	_ghostSystem->restartSystem();
+	_pacManSystem->restartSystem();
+}
 
 void
 NewRoundState::update() {

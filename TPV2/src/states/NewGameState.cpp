@@ -1,6 +1,10 @@
 #include "NewGameState.h"
 
-void NewGameState::enter() {}
+void
+NewGameState::enter() {
+	Game::Instance()->getManager()->getComponent<Health>(
+		Game::Instance()->getManager()->getEntities(ecs::hdlr::PACMAN)[0])->ResetHealth();
+}
 
 void
 NewGameState::update() {

@@ -2,9 +2,11 @@
 
 #include "RenderSystem.h"
 
+#include "../game/Game.h"
 #include "../components/Image.h"
 #include "../components/FramedImage.h"
 #include "../components/Transform.h"
+#include "../components/Health.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
@@ -24,6 +26,7 @@ void RenderSystem::initSystem() {
 void RenderSystem::update() {
 	drawMsgs();
 	drawPacMan();
+	drawHearts();
 	drawGroup(ecs::grp::GHOST);
 	drawGroup(ecs::grp::FRUITS);
 	drawGroup(ecs::grp::WONDER_FRUITS);
@@ -91,4 +94,13 @@ void RenderSystem::draw(Transform* tr, FramedImage* framedImage) {
 	if(_currentFrameStep == FRAME_SPACE) framedImage->frame++;
 	if (framedImage->frame > framedImage->getFrameRange().getY()) framedImage->frame = framedImage->getFrameRange().getX();
 
+}
+
+void RenderSystem::drawHearts() {
+	for (int c = 0; c < Game::Instance()->getManager()->getComponent<Health>(
+		Game::Instance()->getManager()->getEntities(ecs::hdlr::PACMAN)[0])->GetHealth(); c++)
+	{
+		SDL_Rect rect{ (c * HEART_SIZE), 0, HEART_SIZE, HEART_SIZE};
+		_heartTex->render(rect);
+	}
 }

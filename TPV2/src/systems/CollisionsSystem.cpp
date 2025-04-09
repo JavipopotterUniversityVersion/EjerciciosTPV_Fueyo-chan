@@ -3,6 +3,7 @@
 #include "CollisionsSystem.h"
 
 #include "../components/Transform.h"
+#include "../components/Health.h"
 #include "../ecs/Manager.h"
 #include "../utils/Collisions.h"
 #include "StarsSystem.h"
@@ -38,8 +39,15 @@ void CollisionsSystem::update() {
 
 			if (isPacManInmune) _mngr->setAlive(ghosts[i], false);
 			else {
-				Game::Instance()->setState(Game::GAMEOVER);
+				Game::Instance()->getManager()->getComponent<Health>(pm)->LoseHealth(1);
 				sdlutils().soundEffects().at("pacman_death").play();
+				if (Game::Instance()->getManager()->getComponent<Health>(pm)->GetHealth() == 0)
+				{
+					Game::Instance()->setState(Game::GAMEOVER);
+				}
+				else {
+					Game::Instance()->setState(Game::NEWROUND);
+				}
 			}
 		}
 	}
