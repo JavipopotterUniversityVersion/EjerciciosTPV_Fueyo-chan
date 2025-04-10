@@ -20,6 +20,7 @@ private:
 	Transform* _pacMan;
 	Vector2D _oldPacManPos;
 
+	bool _ghostSpawn = true;
 	int _currentTime;
 	int _nextTime;
 	static constexpr int SPAWN_MARGIN = 5000;

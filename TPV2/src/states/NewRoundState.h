@@ -18,7 +18,7 @@ public:
 	
 	InputHandler* inputHandler;
 
-	FoodSystem* _foodSystem;
+	//FoodSystem* _foodSystem;
 	GhostSystem* _ghostSystem;
 	PacManSystem* _pacManSystem;
 

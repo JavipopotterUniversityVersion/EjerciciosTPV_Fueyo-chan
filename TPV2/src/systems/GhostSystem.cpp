@@ -23,11 +23,13 @@ void GhostSystem::restartSystem() {
 	for (ecs::entity_t ghost : ghosts) {
 		_mngr->setAlive(ghost, false);
 	}
+	_currentTime = 0;
+	_nextTime = SPAWN_MARGIN;
 }
 void GhostSystem::update() {
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 
-	if (ghosts.size() < MAX_GHOSTS && _currentTime >= _nextTime) {
+	if (ghosts.size() < MAX_GHOSTS && _currentTime >= _nextTime && _ghostSpawn) {
 		_nextTime = _currentTime + SPAWN_MARGIN;
 		createGhost();
 		std::cout << _currentTime << std::endl;
@@ -72,6 +74,7 @@ void GhostSystem::recieve(const Message& m)
 		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 		_currentGhostsFrameRange = AnimationUtility::getVulnerableGhost();
 		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
+		_ghostSpawn = false;
 	}
 		break;
 	case _m_IMMUNITY_END:
@@ -79,6 +82,7 @@ void GhostSystem::recieve(const Message& m)
 		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 		_currentGhostsFrameRange = AnimationUtility::getRedGhost();
 		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
+		_ghostSpawn = true;
 	}
 		break;
 	default:

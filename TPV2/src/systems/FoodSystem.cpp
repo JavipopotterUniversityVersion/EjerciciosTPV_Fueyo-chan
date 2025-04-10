@@ -32,6 +32,7 @@ void FoodSystem::restartSystem() {
 
 	initSystem();
 }
+
 void FoodSystem::update() {
 	std::vector<ecs::entity_t> wonderFruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
 	for (ecs::entity_t fruit : wonderFruits) {
