@@ -210,16 +210,18 @@ void LittleWolf::load(std::string filename) {
 }
 
 bool LittleWolf::removePlayer(uint8_t id) {
-	auto iterator = _players.begin();
-
-	while (iterator->id != id) iterator++;
-	_players.erase(iterator);
+	int i = 0;
+	_players[id].state = NOT_USED;
 
 	return true;
 }
 
 bool LittleWolf::add_self_player() {
-	int id = _players.size();
+	int id = 0;
+
+	while (id < _max_player) {
+		if (_players[id].state != NOT_USED) id++;
+	}
 
 	assert(id < _max_player);
 
@@ -258,8 +260,6 @@ bool LittleWolf::add_self_player() {
 					ALIVE 			// Player state
 			};
 
-	_players.push_back(p);
-
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 	_map.walling[(int) p.where.y][(int) p.where.x] = player_to_tile(id);
 	_players[id] = p;
@@ -282,7 +282,7 @@ bool LittleWolf::add_player(uint8_t id, float x, float y) {
 					0.0f, 			// Rotation angle in radians.
 					ALIVE 			// Player state
 	};
-	_players.push_back(p);
+	_players[id] = p;
 	return true;
 }
 

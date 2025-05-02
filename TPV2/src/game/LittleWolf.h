@@ -13,7 +13,6 @@
 #include <string>
 #include <fstream>
 class Networking;
-#include <vector>
 
 #include "../sdlutils/SDLNetUtils.h"
 
@@ -402,7 +401,7 @@ private:
 	Map _map;
 
 	// array of players
-	std::vector<Player> _players;
+	Player _players[_max_player];
 	Networking* net_;
 
 	// id of the current player, used since we allows switching between players
