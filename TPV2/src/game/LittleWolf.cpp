@@ -218,8 +218,9 @@ bool LittleWolf::removePlayer(uint8_t id) {
 
 bool LittleWolf::add_self_player() {
 	int id = 0;
+	std::cout << "grimy grimaldo";
 
-	while (id < _max_player) {
+	while (id < _max_player && id < _max_player) {
 		if (_players[id].state != NOT_USED) id++;
 	}
 

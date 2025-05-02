@@ -109,6 +109,7 @@ void Game::start() {
 			}
 
 		}
+		std::cout << "here" << std::endl;
 
 		_little_wolf->update();
 
