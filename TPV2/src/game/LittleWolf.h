@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
+class Networking;
+#include <vector>
+
+#include "../sdlutils/SDLNetUtils.h"
 
 #include "../sdlutils/InputHandler.h"
 
@@ -128,11 +132,13 @@ public:
 	LittleWolf();
 	virtual ~LittleWolf();
 
+	Uint8 MAX_SIZE = 512;
+
 	// load a map from a file
 	void load(std::string filename);
 
-	// add a new player with identifier <id>, returns false if the id is already occupied
-	bool addPlayer(std::uint8_t id);
+	bool add_player(uint8_t id, float x, float y);
+	bool removePlayer(uint8_t p);
 
 	// initialize the SDL window information
 	void init(SDL_Window *window, SDL_Renderer *render);
@@ -151,6 +157,11 @@ public:
 		return _yres;
 	}
 
+	void update_player_state(uint8_t id, float x, float y);
+	inline void set_network(Networking* net) { net_ = net; }
+	void kill(uint8_t id);
+
+	bool add_self_player();
 private:
 
 	// mark all (used) player alive
@@ -391,7 +402,8 @@ private:
 	Map _map;
 
 	// array of players
-	Player _players[_max_player];
+	std::vector<Player> _players;
+	Networking* net_;
 
 	// id of the current player, used since we allows switching between players
 	uint8_t _curr_player_id;

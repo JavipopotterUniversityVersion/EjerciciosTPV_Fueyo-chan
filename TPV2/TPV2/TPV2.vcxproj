@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\game\Game.cpp" />
     <ClCompile Include="..\src\game\LittleWolf.cpp" />
+    <ClCompile Include="..\src\game\Networking.cpp" />
+    <ClCompile Include="..\src\game\UDPServer.cpp" />
     <ClCompile Include="..\SRC\json\JSON.cpp" />
     <ClCompile Include="..\SRC\json\JSONValue.cpp" />
     <ClCompile Include="..\SRC\json\json_demo.cpp" />
@@ -37,6 +39,9 @@
   <ItemGroup>
     <ClInclude Include="..\src\game\Game.h" />
     <ClInclude Include="..\src\game\LittleWolf.h" />
+    <ClInclude Include="..\src\game\Networking.h" />
+    <ClInclude Include="..\src\game\netwrok_messages.h" />
+    <ClInclude Include="..\src\game\UDPServer.h" />
     <ClInclude Include="..\SRC\json\JSON.h" />
     <ClInclude Include="..\SRC\json\JSONValue.h" />
     <ClInclude Include="..\SRC\json\json_demo.h" />

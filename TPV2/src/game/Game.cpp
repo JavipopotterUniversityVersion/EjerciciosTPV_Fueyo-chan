@@ -5,6 +5,7 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "LittleWolf.h"
+#include "Networking.h"
 
 Game::Game() :
 		_little_wolf() //
@@ -24,9 +25,7 @@ Game::~Game() {
 	delete _little_wolf;
 }
 
-void Game::init(const char *map) {
-
-
+bool Game::init(const char *map) {
 	_little_wolf = new LittleWolf();
 
 	// load a map
@@ -40,24 +39,52 @@ void Game::init(const char *map) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
+		return false;;
 
 	}
 
 	_little_wolf->init(sdlutils().window(), sdlutils().renderer());
 
 	// add some players
-	_little_wolf->addPlayer(0);
-	_little_wolf->addPlayer(1);
-	_little_wolf->addPlayer(2);
-	_little_wolf->addPlayer(3);
+	_little_wolf->add_self_player();
+	return true;
+}
+
+bool Game::initGame(char* host, Uint16 port) {
+
+	net_ = new Networking();
+
+	if (!net_->init(host, port)) {
+		SDLNetUtils::print_SDLNet_error();
+		return false;
+	}
+	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
+
+	// initialize the SDL singleton
+	if (!SDLUtils::Init("SDLNet Game", 800, 600,
+		"resources/config/asteroids.multiplayer.resources.json")) {
+
+		std::cerr << "Something went wrong while initializing SDLUtils"
+			<< std::endl;
+		return false;
+	}
+
+	// initialize the InputHandler singleton
+	if (!InputHandler::Init()) {
+		std::cerr << "Something went wrong while initializing SDLHandler"
+			<< std::endl;
+		return false;
+
+	}
+
+	_little_wolf->set_network(net_);
 }
 
 void Game::start() {
@@ -84,9 +111,6 @@ void Game::start() {
 		}
 
 		_little_wolf->update();
-
-		// the clear is not necessary since the texture we copy to the window occupies the whole screen
-		// sdlutils().clearRenderer();
 
 		_little_wolf->render();
 

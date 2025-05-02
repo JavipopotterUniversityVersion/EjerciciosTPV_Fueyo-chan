@@ -12,6 +12,7 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+#include "Networking.h"
 
 LittleWolf::LittleWolf() :
 		_show_help(true), //
@@ -37,7 +38,6 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
 			_xres);
 
 	_gpu = { window, render, texture, _xres, _yres };
-
 }
 
 void LittleWolf::update() {
@@ -48,16 +48,6 @@ void LittleWolf::update() {
 		// toggle help
 		if (ihdlr.isKeyDown(SDL_SCANCODE_T)) {
 			_show_help = !_show_help;
-		}
-
-		// N switches to the next player view
-		if (ihdlr.isKeyDown(SDL_SCANCODE_N)) {
-			switchToNextPlayer();
-		}
-
-		// R brings deads to life
-		if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
-			bringAllToLife();
 		}
 	}
 
@@ -219,7 +209,18 @@ void LittleWolf::load(std::string filename) {
 
 }
 
-bool LittleWolf::addPlayer(std::uint8_t id) {
+bool LittleWolf::removePlayer(uint8_t id) {
+	auto iterator = _players.begin();
+
+	while (iterator->id != id) iterator++;
+	_players.erase(iterator);
+
+	return true;
+}
+
+bool LittleWolf::add_self_player() {
+	int id = _players.size();
+
 	assert(id < _max_player);
 
 	if (_players[id].state != NOT_USED)
@@ -257,12 +258,31 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 					ALIVE 			// Player state
 			};
 
+	_players.push_back(p);
+
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 	_map.walling[(int) p.where.y][(int) p.where.x] = player_to_tile(id);
 	_players[id] = p;
 
 	_curr_player_id = id;
 
+	net_->send_my_info(p.where);
+
+	return true;
+}
+
+bool LittleWolf::add_player(uint8_t id, float x, float y) {
+	Player p = { //
+			id, //
+					viewport(0.8f), // focal
+					{ x, y }, // Where.
+					{ 0.0f, 0.0f }, 			// Velocity.
+					2.0f, 			// Speed.
+					0.9f, 			// Acceleration.
+					0.0f, 			// Rotation angle in radians.
+					ALIVE 			// Player state
+	};
+	_players.push_back(p);
 	return true;
 }
 
@@ -291,26 +311,14 @@ void LittleWolf::render() {
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 		uint8_t **walling, bool ignore_players, bool ignore_deads) {
-	// Determine whether to step horizontally or vertically on the grid.
 	Point hor = sh(where, direction);
 	Point ver = sv(where, direction);
 	Point ray = mag(sub(hor, where)) < mag(sub(ver, where)) ? hor : ver;
-	// Due to floating point error, the step may not make it to the next grid square.
-	// Three directions (dy, dx, dc) of a tiny step will be added to the ray
-	// depending on if the ray hit a horizontal wall, a vertical wall, or the corner
-	// of two walls, respectively.
 	Point dc = mul(direction, 0.01f);
 	Point dx = { dc.x, 0.0f };
 	Point dy = { 0.0f, dc.y };
-	Point test = add(ray,
-	// Tiny step for corner of two grid squares.
-			mag(sub(hor, ver)) < 1e-3f ? dc :
-			// Tiny step for vertical grid square.
-			dec(ray.x) == 0.0f ? dx :
-			// Tiny step for a horizontal grid square.
-					dy);
+	Point test = add(ray, mag(sub(hor, ver)) < 1e-3f ? dc : dec(ray.x) == 0.0f ? dx : dy);
 	const Hit hit = { tile(test, walling), ray };
-	// If a wall was not hit, then continue advancing the ray.
 
 	if (hit.tile > 0 && hit.tile < 10) {
 		return hit;
@@ -324,27 +332,21 @@ LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 
 LittleWolf::Wall LittleWolf::project(const int xres, const int yres,
 		const float focal, const Point corrected) {
-	// Normal distance of corrected ray is clamped to some small value else wall size will shoot to infinity.
 	const float normal = corrected.x < 1e-2f ? 1e-2f : 0.05 * corrected.x;
 	const float size = 0.5f * focal * xres / normal;
 	const int top = (yres + size) / 2.0f;
 	const int bot = (yres - size) / 2.0f;
-	// Top and bottom values are clamped to screen size else renderer will waste cycles
-	// (or segfault) when rasterizing pixels off screen.
 	const Wall wall = { top > yres ? yres : top, bot < 0 ? 0 : bot, size };
 	return wall;
 }
 
 void LittleWolf::render_map(Player &p) {
-	// lock the texture
 	const Display display = lock(_gpu);
 
 	const Line camera = rotate(p.fov, p.theta);
 
-	// Ray cast for all columns of the window.
 	for (int x = 0; x < _gpu.xres; x++) {
 
-		// draw walls
 		const Point direction = lerp(camera, x / (float) _gpu.xres);
 		const Hit hit = cast(p.where, direction, _map.walling, true, false);
 		const Point ray = sub(hit.where, p.where);
@@ -360,7 +362,6 @@ void LittleWolf::render_map(Player &p) {
 		for (int y = wall.top; y < _gpu.yres; y++)
 			put(display, x, y, 0x00000000);
 
-		// draw players
 		const Point direction_p = lerp(camera, x / (float) _gpu.xres);
 		const Hit hit_p = cast(p.where, direction_p, _map.walling, false,
 				false);
@@ -384,16 +385,13 @@ void LittleWolf::render_map(Player &p) {
 
 	}
 
-	// draw a rifle sight at the center
 	for (int i = -10; i < 10; i++) {
 		put(display, _gpu.xres / 2, _gpu.yres / 2 + i, 0xAAAAAAAA);
 		put(display, _gpu.xres / 2 + i, _gpu.yres / 2, 0xAAAAAAAA);
 	}
 
-	// unlock the texture
 	unlock(_gpu);
 
-	// copy the texture to the renderer
 	const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
 			/ 2, _gpu.yres, _gpu.xres, };
 	SDL_RenderCopyEx(_gpu.renderer, _gpu.texture, NULL, &dst, -90, NULL,
@@ -403,7 +401,6 @@ void LittleWolf::render_map(Player &p) {
 
 void LittleWolf::render_upper_view() {
 
-	// lock texture
 	const Display display = lock(_gpu);
 
 	for (int x = 0; x < _gpu.xres; x++)
@@ -413,8 +410,6 @@ void LittleWolf::render_upper_view() {
 	for (auto x = 0u; x < _map.walling_height; x++)
 		for (auto y = 0u; y < _map.walling_width; y++) {
 
-			// each non empty position in the walling is drawn as a square in the window,
-			// because the walling size is smaller than the resolution by 'walling_size_factor'
 			if (_map.walling[x][y] != 0)
 				for (int i = 0; i < _walling_size_factor; i++)
 					for (int j = 0; j < _walling_size_factor; j++)
@@ -423,7 +418,6 @@ void LittleWolf::render_upper_view() {
 								color(_map.walling[x][y]));
 		}
 
-	// unlock texture
 	unlock(_gpu);
 
 	const SDL_Rect dst = { (_gpu.xres - _gpu.yres) / 2, (_gpu.yres - _gpu.xres)
@@ -461,7 +455,6 @@ void LittleWolf::render_players_info() {
 	for (auto i = 0u; i < _max_player; i++) {
 		PlayerState s = _players[i].state;
 
-		// render player info if it is used
 		if (s != NOT_USED) {
 
 			std::string msg = (i == _curr_player_id ? "*P" : " P")
@@ -483,7 +476,6 @@ void LittleWolf::render_players_info() {
 void LittleWolf::move(Player &p) {
 	auto &ihdrl = ih();
 
-	// W forwards, S backwards, D right, L left
 
 	const Point last = p.where, zero = { 0.0f, 0.0f };
 
@@ -580,6 +572,8 @@ bool LittleWolf::shoot(Player &p) {
 				uint8_t id = tile_to_player(hit.tile);
 				_players[id].state = DEAD;
 				sdlutils().soundEffects().at("pain").play();
+				net_->send_dead(id);
+				
 				return true;
 			}
 		}
@@ -606,4 +600,12 @@ void LittleWolf::bringAllToLife() {
 			_players[i].state = ALIVE;
 		}
 	}
+}
+
+void LittleWolf::update_player_state(uint8_t id, float x, float y) {
+	_players[id].where = Point{ x,y };
+}
+
+void LittleWolf::kill(uint8_t id) {
+	_players[id].state = DEAD;
 }
