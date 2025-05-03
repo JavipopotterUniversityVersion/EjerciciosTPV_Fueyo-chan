@@ -266,8 +266,6 @@ bool LittleWolf::add_self_player() {
 
 	net_->send_my_info(p.where);
 
-	std::cout << "b" << std::endl;
-
 	return true;
 }
 

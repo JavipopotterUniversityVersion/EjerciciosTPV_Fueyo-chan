@@ -92,8 +92,8 @@ void Game::start() {
 		}
 
 		_little_wolf->update();
-
 		_little_wolf->render();
+		net_->update();
 
 		sdlutils().presentRenderer();
 
@@ -103,5 +103,6 @@ void Game::start() {
 			SDL_Delay(10 - frameTime);
 	}
 
+	net_->disconnect();
 }
 

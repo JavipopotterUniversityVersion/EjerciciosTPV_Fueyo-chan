@@ -104,6 +104,7 @@ void Networking::update() {
 			_masterId = m1._master_id;
 
 			m2.deserialize(_p->data);
+			std::cout << "A new player has connected, say hello" << std::endl;
 			handle_new_client(m2._client_id, m2.x, m2.y);
 			break;
 
