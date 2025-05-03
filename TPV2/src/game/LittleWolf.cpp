@@ -41,6 +41,7 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
 }
 
 void LittleWolf::update() {
+	std::cout << "grimy grimaldo";
 
 	auto &ihdlr = ih();
 
@@ -218,11 +219,8 @@ bool LittleWolf::removePlayer(uint8_t id) {
 
 bool LittleWolf::add_self_player() {
 	int id = 0;
-	std::cout << "grimy grimaldo";
 
-	while (id < _max_player && id < _max_player) {
-		if (_players[id].state != NOT_USED) id++;
-	}
+	while (_players[id].state != NOT_USED && id < _max_player) id++;
 
 	assert(id < _max_player);
 
