@@ -53,42 +53,23 @@ bool Game::init(const char *map) {
 	_little_wolf->init(sdlutils().window(), sdlutils().renderer());
 
 	// add some players
-	_little_wolf->add_self_player();
 	return true;
 }
 
 bool Game::initGame(char* host, Uint16 port) {
-
 	net_ = new Networking();
 
 	if (!net_->init(host, port)) {
 		SDLNetUtils::print_SDLNet_error();
 		return false;
 	}
-	std::cout << "Connected as client " << (int)net_->client_id() << std::endl;
-
-	// initialize the SDL singleton
-	if (!SDLUtils::Init("SDLNet Game", 800, 600,
-		"resources/config/asteroids.multiplayer.resources.json")) {
-
-		std::cerr << "Something went wrong while initializing SDLUtils"
-			<< std::endl;
-		return false;
-	}
-
-	// initialize the InputHandler singleton
-	if (!InputHandler::Init()) {
-		std::cerr << "Something went wrong while initializing SDLHandler"
-			<< std::endl;
-		return false;
-
-	}
 
 	_little_wolf->set_network(net_);
+	_little_wolf->add_self_player();
 }
 
 void Game::start() {
-
+	std::cout << "start game" << std::endl;
 	// a boolean to exit the loop
 	bool exit = false;
 
@@ -109,7 +90,6 @@ void Game::start() {
 			}
 
 		}
-		std::cout << "here" << std::endl;
 
 		_little_wolf->update();
 

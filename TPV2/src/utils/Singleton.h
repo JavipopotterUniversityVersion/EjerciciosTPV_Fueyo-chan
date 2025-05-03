@@ -65,6 +65,7 @@ public:
 	inline static bool Init(Targs &&...args) {
 		assert(!_instance);
 
+
 		// The use of an auxiliary variable guarantees that _instance is
 		// nullptr until it is fully initialized. This way we avoid using
 		// the singleton during the initialization process.

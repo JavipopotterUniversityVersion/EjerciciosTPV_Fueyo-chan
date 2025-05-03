@@ -134,11 +134,17 @@ void Networking::update() {
 }
 
 void Networking::handle_new_client(Uint8 id, float x, float y) {
-	if (id != _clientId) Game::Instance()->little_wolf()->add_player(id, x, y);
+	if (id != _clientId) {
+		Game::Instance()->little_wolf()->add_player(id, x, y);
+		std::cout << "New Player connected" << std::endl;
+	}
 }
 
 void Networking::handle_disconnet(Uint8 id) {
-	if (id != _clientId) Game::Instance()->little_wolf()->removePlayer(id);
+	if (id != _clientId) {
+		Game::Instance()->little_wolf()->removePlayer(id);
+		std::cout << "Player disconnected" << std::endl;
+	}
 }
 
 void Networking::send_state(const Vector2D &pos, float w, float h, float rot) {
@@ -168,6 +174,7 @@ void Networking::handle_dead(const MsgWithId &m) {
 }
 
 void Networking::send_my_info(const LittleWolf::Point& pos) {
+	std::cout << "Client with id " << _clientId << " connected" << std::endl;
 	PlayerStateMsg m;
 	m._type = _NEW_CLIENT_CONNECTED;
 	m._client_id = _clientId;
@@ -183,5 +190,4 @@ void Networking::send_restart() {
 }
 
 void Networking::handle_restart() {
-
 }

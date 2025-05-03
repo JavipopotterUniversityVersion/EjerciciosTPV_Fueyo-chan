@@ -41,7 +41,6 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
 }
 
 void LittleWolf::update() {
-	std::cout << "grimy grimaldo";
 
 	auto &ihdlr = ih();
 
@@ -266,6 +265,8 @@ bool LittleWolf::add_self_player() {
 	_curr_player_id = id;
 
 	net_->send_my_info(p.where);
+
+	std::cout << "b" << std::endl;
 
 	return true;
 }

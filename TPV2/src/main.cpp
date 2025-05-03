@@ -46,7 +46,6 @@ void start(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-
 	try {
 		start(argc, argv);
 	} catch (const std::string &e) { // catch exceptions thrown as strings
