@@ -529,6 +529,7 @@ void LittleWolf::move(Player &p) {
 			_map.walling[y1][x1] = _map.walling[y0][x0];
 			_map.walling[y0][x0] = 0;
 			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D { last.x, last.y });
+			std::cout << "Player " << (int)current_player_id() << " is in " << p.where.x << "x " << p.where.y << "y" << std::endl;
 		}
 	}
 
@@ -613,6 +614,7 @@ void LittleWolf::bringAllToLife() {
 }
 
 void LittleWolf::update_player_state(uint8_t id, float x, float y, float lx, float ly) {
+	std::cout << "Player " << (int)id << " is in " << x << "x " << y << "y" << std::endl;
 	_players[id].where = Point{ x,y };
 
 	int y0 = (int)ly;
