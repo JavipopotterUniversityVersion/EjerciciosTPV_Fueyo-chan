@@ -12,6 +12,7 @@ enum MsgType : Uint8 {
 	_CONNECTION_REJECTED, //
 	_DISCONNECTED,
 	_NEW_CLIENT_CONNECTED, //
+	_ADD_NEW_PLAYER,
 	_PLAYER_STATE, // sent frequently to boradcast the state
 	_DEAD, //
 	_RESTART

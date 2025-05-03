@@ -91,6 +91,8 @@ void Game::start() {
 
 		}
 
+		sdlutils().clearRenderer();
+
 		_little_wolf->update();
 		_little_wolf->render();
 		net_->update();

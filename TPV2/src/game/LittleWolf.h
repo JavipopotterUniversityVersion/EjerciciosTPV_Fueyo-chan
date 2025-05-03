@@ -161,7 +161,11 @@ public:
 	void kill(uint8_t id);
 
 	bool add_self_player();
+	void send_my_info();
+	inline uint8_t current_player_id() { return _curr_player_id; }
 private:
+
+	bool _upper_view = false;
 
 	// mark all (used) player alive
 	void bringAllToLife();

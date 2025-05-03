@@ -216,10 +216,14 @@ bool LittleWolf::removePlayer(uint8_t id) {
 	return true;
 }
 
-bool LittleWolf::add_self_player() {
-	int id = 0;
+void LittleWolf::send_my_info() {
+	net_->send_my_info(_players[_curr_player_id].where);
+}
 
-	while (_players[id].state != NOT_USED && id < _max_player) id++;
+bool LittleWolf::add_self_player() {
+	//net_->connect();
+	//net_->update();
+	int id = net_->client_id();
 
 	assert(id < _max_player);
 
@@ -281,13 +285,14 @@ bool LittleWolf::add_player(uint8_t id, float x, float y) {
 					ALIVE 			// Player state
 	};
 	_players[id] = p;
+	_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
 	return true;
 }
 
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
-	if (_players[_curr_player_id].state == DEAD)
+	if (_players[_curr_player_id].state == DEAD || _upper_view)
 		render_upper_view();
 	else
 		render_map(_players[_curr_player_id]);
@@ -477,6 +482,11 @@ void LittleWolf::move(Player &p) {
 
 	const Point last = p.where, zero = { 0.0f, 0.0f };
 
+	if (ihdrl.isKeyDown(SDL_SCANCODE_Z))
+		_upper_view = true;
+	if (ihdrl.isKeyDown(SDL_SCANCODE_X))
+		_upper_view = false;
+
 	// Accelerates with key held down.
 	if (ihdrl.isKeyDown(SDL_SCANCODE_W) || ihdrl.isKeyDown(SDL_SCANCODE_S)
 			|| ihdrl.isKeyDown(SDL_SCANCODE_D)
@@ -502,6 +512,9 @@ void LittleWolf::move(Player &p) {
 
 	// Moves.
 	p.where = add(p.where, p.velocity);
+
+	const Point current = p.where;
+	if (current.x != last.x || current.y != last.y) net_->send_state(Vector2D{ current.x, current.y });
 	// Sets velocity to zero if there is a collision and puts p back in bounds.
 
 	// if player hits a wall or a different player, we take the player back

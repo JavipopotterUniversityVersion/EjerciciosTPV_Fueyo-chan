@@ -14,6 +14,7 @@ public:
 	virtual ~Networking();
 
 	bool init(char *host, Uint16 port);
+	bool connect();
 	bool disconnect();
 	void update();
 
@@ -25,7 +26,7 @@ public:
 		return _clientId == _masterId;
 	}
 
-	void send_state(const Vector2D &pos, float w, float h, float rot);
+	void send_state(const Vector2D &pos);
 	void send_my_info(const LittleWolf::Point& pos);
 	
 	void send_dead(Uint8 id);

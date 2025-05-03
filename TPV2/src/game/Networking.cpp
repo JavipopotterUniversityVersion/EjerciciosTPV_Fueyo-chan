@@ -87,7 +87,13 @@ bool Networking::disconnect() {
 	m._type = _DISCONNECTED;
 	m._client_id = _clientId;
 	return (SDLNetUtils::serializedSend(m, _p, _sock, _srvadd) > 0);
+}
 
+bool Networking::connect() {
+	MsgWithId m;
+	m._type = _NEW_CLIENT_CONNECTED;
+	m._client_id = _clientId;
+	return (SDLNetUtils::serializedSend(m, _p, _sock, _srvadd) > 0);
 }
 
 void Networking::update() {
@@ -102,9 +108,11 @@ void Networking::update() {
 		case _NEW_CLIENT_CONNECTED:
 			m1.deserialize(_p->data);
 			_masterId = m1._master_id;
+			Game::Instance()->little_wolf()->send_my_info();
+			break;
 
+		case _ADD_NEW_PLAYER:
 			m2.deserialize(_p->data);
-			std::cout << "A new player has connected, say hello" << std::endl;
 			handle_new_client(m2._client_id, m2.x, m2.y);
 			break;
 
@@ -137,7 +145,6 @@ void Networking::update() {
 void Networking::handle_new_client(Uint8 id, float x, float y) {
 	if (id != _clientId) {
 		Game::Instance()->little_wolf()->add_player(id, x, y);
-		std::cout << "New Player connected" << std::endl;
 	}
 }
 
@@ -148,7 +155,7 @@ void Networking::handle_disconnet(Uint8 id) {
 	}
 }
 
-void Networking::send_state(const Vector2D &pos, float w, float h, float rot) {
+void Networking::send_state(const Vector2D &pos) {
 	PlayerStateMsg m;
 	m._type = _PLAYER_STATE;
 	m._client_id = _clientId;
@@ -177,7 +184,7 @@ void Networking::handle_dead(const MsgWithId &m) {
 void Networking::send_my_info(const LittleWolf::Point& pos) {
 	std::cout << "Client with id " << _clientId << " connected" << std::endl;
 	PlayerStateMsg m;
-	m._type = _NEW_CLIENT_CONNECTED;
+	m._type = _ADD_NEW_PLAYER;
 	m._client_id = _clientId;
 	m.x = pos.x;
 	m.y = pos.y;
