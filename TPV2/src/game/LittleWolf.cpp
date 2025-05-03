@@ -512,9 +512,6 @@ void LittleWolf::move(Player &p) {
 
 	// Moves.
 	p.where = add(p.where, p.velocity);
-
-	const Point current = p.where;
-	if (current.x != last.x || current.y != last.y) net_->send_state(Vector2D{ current.x, current.y });
 	// Sets velocity to zero if there is a collision and puts p back in bounds.
 
 	// if player hits a wall or a different player, we take the player back
@@ -531,8 +528,10 @@ void LittleWolf::move(Player &p) {
 		if (x0 != x1 || y0 != y1) {
 			_map.walling[y1][x1] = _map.walling[y0][x0];
 			_map.walling[y0][x0] = 0;
+			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D { last.x, last.y });
 		}
 	}
+
 }
 
 void LittleWolf::spin(Player &p) {
@@ -613,8 +612,18 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::update_player_state(uint8_t id, float x, float y) {
+void LittleWolf::update_player_state(uint8_t id, float x, float y, float lx, float ly) {
 	_players[id].where = Point{ x,y };
+
+	int y0 = (int)ly;
+	int x0 = (int)lx;
+	int y1 = (int)y;
+	int x1 = (int)x;
+
+	if (x0 != x1 || y0 != y1) {
+		_map.walling[y1][x1] = _map.walling[y0][x0];
+		_map.walling[y0][x0] = 0;
+	}
 }
 
 void LittleWolf::kill(uint8_t id) {

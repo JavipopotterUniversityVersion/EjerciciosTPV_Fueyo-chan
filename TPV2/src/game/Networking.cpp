@@ -155,19 +155,21 @@ void Networking::handle_disconnet(Uint8 id) {
 	}
 }
 
-void Networking::send_state(const Vector2D &pos) {
+void Networking::send_state(const Vector2D &pos, const Vector2D &lastPos) {
 	PlayerStateMsg m;
 	m._type = _PLAYER_STATE;
 	m._client_id = _clientId;
 	m.x = pos.getX();
 	m.y = pos.getY();
+	m.lx = lastPos.getX();
+	m.ly = lastPos.getY();
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
 
 void Networking::handle_player_state(const PlayerStateMsg &m) {
 
 	if (m._client_id != _clientId) {
-		Game::Instance()->little_wolf()->update_player_state(m._client_id, m.x, m.y);
+		Game::Instance()->little_wolf()->update_player_state(m._client_id, m.x, m.y, m.lx, m.ly);
 	}
 }
 

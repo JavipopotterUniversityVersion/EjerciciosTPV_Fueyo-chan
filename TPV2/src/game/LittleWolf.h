@@ -156,7 +156,7 @@ public:
 		return _yres;
 	}
 
-	void update_player_state(uint8_t id, float x, float y);
+	void update_player_state(uint8_t id, float x, float y, float lx, float ly);
 	inline void set_network(Networking* net) { net_ = net; }
 	void kill(uint8_t id);
 

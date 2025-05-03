@@ -26,7 +26,7 @@ public:
 		return _clientId == _masterId;
 	}
 
-	void send_state(const Vector2D &pos);
+	void send_state(const Vector2D &pos, const Vector2D &lastPos);
 	void send_my_info(const LittleWolf::Point& pos);
 	
 	void send_dead(Uint8 id);
