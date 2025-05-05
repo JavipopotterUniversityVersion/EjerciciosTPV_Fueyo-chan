@@ -15,6 +15,7 @@
 class Networking;
 
 #include "../sdlutils/SDLNetUtils.h"
+#include "../sdlutils/SDLUtils.h"
 
 #include "../sdlutils/InputHandler.h"
 
@@ -163,6 +164,18 @@ public:
 	bool add_self_player();
 	void send_my_info();
 	inline uint8_t current_player_id() { return _curr_player_id; }
+
+	bool _restart;
+	double _restart_start_time;
+	double _restart_time;
+	int _timeLeft;
+	void restart();
+
+	bool getRestart() { return _restart; }
+	void setRestart(bool value) {
+		_restart = value;
+		if (_restart) _restart_start_time = sdlutils().virtualTimer().currRealTime();
+	}
 private:
 
 	bool _upper_view = false;

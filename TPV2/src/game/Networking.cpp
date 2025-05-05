@@ -201,4 +201,5 @@ void Networking::send_restart() {
 }
 
 void Networking::handle_restart() {
+	Game::Instance()->little_wolf()->setRestart(true);
 }

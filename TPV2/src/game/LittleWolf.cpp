@@ -23,7 +23,11 @@ LittleWolf::LittleWolf() :
 		_shoot_distace(), // the shoot distance -- not that it's wrt to the walling size
 		_map(), //
 		_players(), //
-		_curr_player_id(0) { // we start with player 0
+		_curr_player_id(0), // we start with player 0
+		_restart(false),
+		_restart_start_time(0.),
+		_restart_time(5000),
+		_timeLeft(0) { 
 }
 
 LittleWolf::~LittleWolf() {
@@ -41,25 +45,33 @@ void LittleWolf::init(SDL_Window *window, SDL_Renderer *render) {
 }
 
 void LittleWolf::update() {
+	if (!_restart) {
+		auto& ihdlr = ih();
 
-	auto &ihdlr = ih();
-
-	if (ihdlr.keyDownEvent()) {
-		// toggle help
-		if (ihdlr.isKeyDown(SDL_SCANCODE_T)) {
-			_show_help = !_show_help;
+		if (ihdlr.keyDownEvent()) {
+			// toggle help
+			if (ihdlr.isKeyDown(SDL_SCANCODE_T)) {
+				_show_help = !_show_help;
+			}
 		}
+
+		Player& p = _players[net_->client_id()];
+
+		// dead player don't move/spin/shoot
+		if (p.state != ALIVE)
+			return;
+
+		spin(p);  // handle spinning
+		move(p);  // handle moving
+		shoot(p);
 	}
-
-	Player &p = _players[_curr_player_id];
-
-	// dead player don't move/spin/shoot
-	if (p.state != ALIVE)
-		return;
-
-	spin(p);  // handle spinning
-	move(p);  // handle moving
-	shoot(p); // handle shooting
+	else {
+		if (sdlutils().virtualTimer().currRealTime() > _restart_start_time + _restart_time) {
+			_restart = false;
+			if (net_->is_master()) restart();
+		}
+		_timeLeft = ((_restart_start_time + _restart_time) - sdlutils().virtualTimer().currRealTime()) / 1000;
+	}
 }
 
 void LittleWolf::load(std::string filename) {
@@ -475,6 +487,17 @@ void LittleWolf::render_players_info() {
 
 		}
 	}
+	if (_restart) {
+		std::string msg = ("The game will restart in " + std::to_string(_timeLeft) + " seconds");
+
+		Texture info(sdlutils().renderer(), msg,
+			sdlutils().fonts().at("MFR24"),
+			build_sdlcolor(color_rgba(40 + 10)));
+
+		SDL_Rect dest = build_sdlrect(0, y, info.width(), info.height());
+
+		info.render(dest);
+	}
 }
 
 void LittleWolf::move(Player &p) {
@@ -632,4 +655,61 @@ void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos, float
 
 void LittleWolf::kill(uint8_t id) {
 	_players[id].state = DEAD;
+
+	int i = 0;
+	for (auto player : _players) {
+		if (player.state == ALIVE) ++i;
+	}
+
+	if (i < 2 && net_->is_master()) {
+		net_->send_restart();
+	}
+}
+
+void LittleWolf::restart() {
+	bringAllToLife();
+
+	for (int id = 0; id < _max_player;id++) {
+		//set in a new random pos
+		if (_players[id].state != NOT_USED) {
+			Vector2D lastPos = { _players[id].where.x, _players[id].where.y };
+			_map.walling[(int)_players[id].where.y][(int)_players[id].where.x] = 0;
+
+			auto& rand = sdlutils().rand();
+
+			// The search for an empty cell start at a random position (orow,ocol)
+			uint16_t orow = rand.nextInt(0, _map.walling_height);
+			uint16_t ocol = rand.nextInt(0, _map.walling_width);
+
+			// search for an empty cell
+			uint16_t row = orow;
+			uint16_t col = (ocol + 1) % _map.walling_width;
+			while (!((orow == row) && (ocol == col)) && _map.walling[row][col] != 0) {
+				col = (col + 1) % _map.walling_width;
+				if (col == 0)
+					row = (row + 1) % _map.walling_height;
+			}
+
+			// handle the case where the search is failed, which in principle should never
+			// happen unless we start with map with few empty cells
+			if (row >= _map.walling_height)
+				return;
+
+			// initialize the player
+			Player p = { //
+					id, //
+							viewport(0.8f), // focal
+							{ col + 0.5f, row + 0.5f }, // Where.
+							{ 0.0f, 0.0f }, 			// Velocity.
+							2.0f, 			// Speed.
+							0.9f, 			// Acceleration.
+							0.0f, 			// Rotation angle in radians.
+							ALIVE, 			// Player state
+			};
+
+			// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
+			_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
+			net_->send_state({ p.where.x, p.where.y }, lastPos);
+		}
+	}
 }
