@@ -695,21 +695,11 @@ void LittleWolf::restart() {
 			if (row >= _map.walling_height)
 				return;
 
-			// initialize the player
-			Player p = { //
-					id, //
-							viewport(0.8f), // focal
-							{ col + 0.5f, row + 0.5f }, // Where.
-							{ 0.0f, 0.0f }, 			// Velocity.
-							2.0f, 			// Speed.
-							0.9f, 			// Acceleration.
-							0.0f, 			// Rotation angle in radians.
-							ALIVE, 			// Player state
-			};
+			_players[id].where = Point{ col + 0.5f, row + 0.5f };
 
 			// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
-			_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
-			net_->send_state({ p.where.x, p.where.y }, lastPos, p.theta);
+			_map.walling[(int)_players[id].where.y][(int)_players[id].where.x] = player_to_tile(id);
+			net_->send_state({ _players[id].where.x, _players[id].where.y }, lastPos, _players[id].theta);
 		}
 	}
 }
