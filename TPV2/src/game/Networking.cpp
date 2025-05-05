@@ -119,9 +119,6 @@ void Networking::update() {
 
 		case _DISCONNECTED:
 			m1.deserialize(_p->data);
-			std::cout << (int)m1._master_id<< std::endl;
-			_masterId = m1._master_id;
-			std::cout << (int)_masterId << std::endl;
 			handle_disconnet(m1._client_id);
 			break;
 
@@ -161,10 +158,11 @@ void Networking::handle_disconnet(Uint8 id) {
 	if (id != _clientId) {
 		Game::Instance()->little_wolf()->removePlayer(id);
 		std::cout << "Player disconnected" << std::endl;
-		std::cout << "My id " << (int)id << " master id " << (int)_masterId << std::endl;
+		std::cout << "My id " << (int)_clientId << " master id " << (int)_masterId << std::endl;
 		if (id == _masterId) {
 			Uint8 newId = Game::Instance()->little_wolf()->get_first_existing_player();
 			_masterId = newId;
+			std::cout << "New master is " << (int)_masterId << std::endl;
 		}
 	}
 }
