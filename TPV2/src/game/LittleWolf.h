@@ -176,7 +176,12 @@ public:
 		_restart = value;
 		if (_restart) _restart_start_time = sdlutils().virtualTimer().currRealTime();
 	}
+
 	bool handle_shoot(int id);
+
+
+	std::uint8_t get_first_existing_player();
+
 
 private:
 	bool _upper_view = false;

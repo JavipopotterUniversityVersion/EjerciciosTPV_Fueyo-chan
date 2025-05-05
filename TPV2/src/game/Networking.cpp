@@ -86,6 +86,7 @@ bool Networking::disconnect() {
 	MsgWithId m;
 	m._type = _DISCONNECTED;
 	m._client_id = _clientId;
+	std::cout << "disconected" << std::endl;
 	return (SDLNetUtils::serializedSend(m, _p, _sock, _srvadd) > 0);
 }
 
@@ -106,8 +107,8 @@ void Networking::update() {
 
 		switch (m0._type) {
 		case _NEW_CLIENT_CONNECTED:
-			m1.deserialize(_p->data);
-			_masterId = m1._master_id;
+			m4.deserialize(_p->data);
+			//_clientId = m4._client_id;
 			Game::Instance()->little_wolf()->send_my_info();
 			break;
 
@@ -118,7 +119,9 @@ void Networking::update() {
 
 		case _DISCONNECTED:
 			m1.deserialize(_p->data);
+			std::cout << (int)m1._master_id<< std::endl;
 			_masterId = m1._master_id;
+			std::cout << (int)_masterId << std::endl;
 			handle_disconnet(m1._client_id);
 			break;
 
@@ -158,6 +161,11 @@ void Networking::handle_disconnet(Uint8 id) {
 	if (id != _clientId) {
 		Game::Instance()->little_wolf()->removePlayer(id);
 		std::cout << "Player disconnected" << std::endl;
+		std::cout << "My id " << (int)id << " master id " << (int)_masterId << std::endl;
+		if (id == _masterId) {
+			Uint8 newId = Game::Instance()->little_wolf()->get_first_existing_player();
+			_masterId = newId;
+		}
 	}
 }
 

@@ -674,6 +674,14 @@ void LittleWolf::kill(uint8_t id) {
 	}
 }
 
+std::uint8_t LittleWolf::get_first_existing_player() {
+	for (int i = 0; i < _max_player; ++i) {
+		if (_players[i].id == NOT_USED) return i;
+	}
+
+	return -1;
+}
+
 void LittleWolf::restart() {
 	for (int id = 0; id < _max_player;id++) {
 		//set in a new random pos
