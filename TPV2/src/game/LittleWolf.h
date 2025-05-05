@@ -156,7 +156,7 @@ public:
 		return _yres;
 	}
 
-	void update_player_state(uint8_t id, Point pos, int x, int y, int lx, int ly);
+	void update_player_state(uint8_t id, Point pos, Point lastPos);
 	inline void set_network(Networking* net) { net_ = net; }
 	void kill(uint8_t id);
 

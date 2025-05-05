@@ -528,8 +528,8 @@ void LittleWolf::move(Player &p) {
 		if (x0 != x1 || y0 != y1) {
 			_map.walling[y1][x1] = _map.walling[y0][x0];
 			_map.walling[y0][x0] = 0;
-			net_->send_state(Vector2D{ p.where.x, p.where.y }, x1, y1, x0, y0);
-			std::cout << "!Self! " << (int)current_player_id() << " is in " << p.where.x << "x " << p.where.y << "y" << std::endl;
+			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ last.x, last.y});
+			std::cout << "!Self! " << (int)current_player_id() << " is in " << last.x << "x " << last.y << "y" << std::endl;
 		}
 	}
 
@@ -613,17 +613,19 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::update_player_state(uint8_t id, Point pos, int x, int y, int lx, int ly) {
-	std::cout << "Player " << (int)id << " is in " << x << "x " << y << "y" << std::endl;
+void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos) {
+	std::cout << "Player " << (int)id << " was in " << (int)lastPos.x << "x " << (int)lastPos.y << "y" << std::endl;
+	std::cout << "Player " << (int)id << " is in " << (int)pos.x << "x " << (int)pos.y << "y" << std::endl;
 	_players[id].where = pos;
 
-	std::cout << "Will this work perfectly fine" << std::endl;
-	if (lx != x || ly != y) {
-		_map.walling[y][x] = _map.walling[ly][lx];
-		_map.walling[ly][lx] = 0;
-		std::cout << "This worked perfectly fine" << std::endl;
-	}
-	std::cout << "This ain't worked perfectly fine" << std::endl;
+	int x = (int)pos.x;
+	int y = (int)pos.y;
+
+	int lx = (int)lastPos.x;
+	int ly = (int)lastPos.y;
+
+	_map.walling[y][x] = player_to_tile(id);
+	_map.walling[ly][lx] = 0;
 }
 
 void LittleWolf::kill(uint8_t id) {
