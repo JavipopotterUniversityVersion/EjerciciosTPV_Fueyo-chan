@@ -132,6 +132,11 @@ void Networking::update() {
 			handle_dead(m4);
 			break;
 
+		case _SHOOT:
+			m4.deserialize(_p->data);
+			handle_shoot(m4._client_id);
+			break;
+
 		case _RESTART:
 			handle_restart();
 			break;
@@ -172,6 +177,17 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 	if (m._client_id != _clientId) {
 		Game::Instance()->little_wolf()->update_player_state(m._client_id, LittleWolf::Point{ m.x, m.y }, LittleWolf::Point{ m.lx, m.ly }, m.rot);
 	}
+}
+
+void Networking::send_shoot(Uint8 id) {
+	MsgWithId m;
+	m._type = _SHOOT;
+	m._client_id = id;
+	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
+}
+
+void Networking::handle_shoot(Uint8 id) {
+	if(is_master()) Game::Instance()->little_wolf()->handle_shoot(id);
 }
 
 void Networking::send_dead(Uint8 id) {

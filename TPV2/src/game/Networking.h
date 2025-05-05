@@ -32,6 +32,8 @@ public:
 	void send_dead(Uint8 id);
 	void send_restart();
 
+	void send_shoot(Uint8 id);
+
 private:
 
 	void handle_new_client(Uint8 id, float x, float y);
@@ -39,6 +41,7 @@ private:
 	void handle_player_state(const PlayerStateMsg &m);
 	void handle_dead(const MsgWithId &m);
 	void handle_restart();
+	void handle_shoot(Uint8 id);
 
 	UDPsocket _sock;
 	SDLNet_SocketSet _socketSet;

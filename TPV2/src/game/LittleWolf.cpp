@@ -63,7 +63,7 @@ void LittleWolf::update() {
 
 		spin(p);  // handle spinning
 		move(p);  // handle moving
-		shoot(p);
+		shoot();
 	}
 	else {
 		if (sdlutils().virtualTimer().currRealTime() > _restart_start_time + _restart_time) {
@@ -233,8 +233,6 @@ void LittleWolf::send_my_info() {
 }
 
 bool LittleWolf::add_self_player() {
-	//net_->connect();
-	//net_->update();
 	int id = net_->client_id();
 
 	assert(id < _max_player);
@@ -571,46 +569,55 @@ void LittleWolf::spin(Player &p) {
 	}
 
 	if (ihdlr.isKeyDown(SDL_SCANCODE_H))
+	{
 		p.theta -= d;
+		net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ p.where.x, p.where.y }, p.theta);
+	}
 	if (ihdlr.isKeyDown(SDL_SCANCODE_L))
+	{
 		p.theta += d;
+		net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ p.where.x, p.where.y }, p.theta);
+	}
 }
 
-bool LittleWolf::shoot(Player &p) {
+void LittleWolf::shoot() {
 	auto &ihdlr = ih();
-
-	// Space shoot -- we use keyDownEvent to force a complete press/release for each bullet
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
+		net_->send_shoot(_curr_player_id);
+	}
+}
 
-		// play gun shot sound
-		sdlutils().soundEffects().at("gunshot").play();
+bool LittleWolf::handle_shoot(int id) {
+	Player p = _players[id];
 
-		// we shoot in several directions, because with projection what you see is not exact
-		for (float d = -0.05; d <= 0.05; d += 0.005) {
+	// play gun shot sound
+	sdlutils().soundEffects().at("gunshot").play();
 
-			// search which tile was hit
-			const Line camera = rotate(p.fov, p.theta + d);
-			Point direction = lerp(camera, 0.5f);
-			direction.x = direction.x / mag(direction);
-			direction.y = direction.y / mag(direction);
-			const Hit hit = cast(p.where, direction, _map.walling, false, true);
+	// we shoot in several directions, because with projection what you see is not exact
+	for (float d = -0.05; d <= 0.05; d += 0.005) {
+
+		// search which tile was hit
+		const Line camera = rotate(p.fov, p.theta + d);
+		Point direction = lerp(camera, 0.5f);
+		direction.x = direction.x / mag(direction);
+		direction.y = direction.y / mag(direction);
+		const Hit hit = cast(p.where, direction, _map.walling, false, true);
 
 #ifdef _DEBUG
-			printf(
-					"Shoot by player %d hit a tile with value %d! at distance %f\n",
-					p.id, hit.tile, mag(sub(p.where, hit.where)));
+		printf(
+				"Shoot by player %d hit a tile with value %d! at distance %f\n",
+				p.id, hit.tile, mag(sub(p.where, hit.where)));
 #endif
 
-			// if we hit a tile with a player id and the distance from that tile is smaller
-			// than shoot_distace, we mark the player as dead
-			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
-				uint8_t id = tile_to_player(hit.tile);
-				_players[id].state = DEAD;
-				sdlutils().soundEffects().at("pain").play();
-				net_->send_dead(id);
+		// if we hit a tile with a player id and the distance from that tile is smaller
+		// than shoot_distace, we mark the player as dead
+		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
+			uint8_t id = tile_to_player(hit.tile);
+			_players[id].state = DEAD;
+			sdlutils().soundEffects().at("pain").play();
+			net_->send_dead(id);
 				
-				return true;
-			}
+			return true;
 		}
 	}
 	return false;
@@ -649,8 +656,8 @@ void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos, float
 	int lx = (int)lastPos.x;
 	int ly = (int)lastPos.y;
 
-	_map.walling[y][x] = player_to_tile(id);
 	_map.walling[ly][lx] = 0;
+	_map.walling[y][x] = player_to_tile(id);
 }
 
 void LittleWolf::kill(uint8_t id) {

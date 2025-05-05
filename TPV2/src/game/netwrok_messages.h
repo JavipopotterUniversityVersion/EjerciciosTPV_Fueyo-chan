@@ -14,7 +14,8 @@ enum MsgType : Uint8 {
 	_NEW_CLIENT_CONNECTED, //
 	_ADD_NEW_PLAYER,
 	_PLAYER_STATE, // sent frequently to boradcast the state
-	_DEAD, //
+	_DEAD,
+	_SHOOT, //
 	_RESTART
 };
 
@@ -46,6 +47,6 @@ struct PlayerStateMsg: MsgWithId {
 
 	float rot;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y, lx, ly)
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y, lx, ly, rot)
 
 };
