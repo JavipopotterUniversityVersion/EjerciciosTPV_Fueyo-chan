@@ -68,7 +68,7 @@ void LittleWolf::update() {
 	else {
 		if (sdlutils().virtualTimer().currRealTime() > _restart_start_time + _restart_time) {
 			_restart = false;
-			if (net_->is_master()) restart();
+			restart();
 		}
 		_timeLeft = ((_restart_start_time + _restart_time) - sdlutils().virtualTimer().currRealTime()) / 1000;
 	}
@@ -661,7 +661,7 @@ void LittleWolf::kill(uint8_t id) {
 		if (player.state == ALIVE) ++i;
 	}
 
-	if (i < 2 && net_->is_master()) {
+	if (i < 2) {
 		net_->send_restart();
 	}
 }
@@ -709,7 +709,7 @@ void LittleWolf::restart() {
 
 			// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 			_map.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
-			net_->send_state({ p.where.x, p.where.y }, lastPos);
+			net_->send_state({ p.where.x, p.where.y }, lastPos, p.theta);
 		}
 	}
 }
