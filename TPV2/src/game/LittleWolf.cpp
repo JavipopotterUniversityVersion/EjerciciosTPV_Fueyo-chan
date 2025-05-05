@@ -292,8 +292,9 @@ bool LittleWolf::add_player(uint8_t id, float x, float y) {
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
-	if (_players[_curr_player_id].state == DEAD || _upper_view)
+	if (_players[_curr_player_id].state == DEAD || _upper_view) {
 		render_upper_view();
+	}
 	else
 		render_map(_players[_curr_player_id]);
 
@@ -528,7 +529,7 @@ void LittleWolf::move(Player &p) {
 		if (x0 != x1 || y0 != y1) {
 			_map.walling[y1][x1] = _map.walling[y0][x0];
 			_map.walling[y0][x0] = 0;
-			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ last.x, last.y});
+			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ last.x, last.y}, p.theta);
 			std::cout << "!Self! " << (int)current_player_id() << " is in " << last.x << "x " << last.y << "y" << std::endl;
 		}
 	}
@@ -613,10 +614,11 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos) {
+void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos, float rot) {
 	std::cout << "Player " << (int)id << " was in " << (int)lastPos.x << "x " << (int)lastPos.y << "y" << std::endl;
 	std::cout << "Player " << (int)id << " is in " << (int)pos.x << "x " << (int)pos.y << "y" << std::endl;
 	_players[id].where = pos;
+	_players[id].theta = rot;
 
 	int x = (int)pos.x;
 	int y = (int)pos.y;
