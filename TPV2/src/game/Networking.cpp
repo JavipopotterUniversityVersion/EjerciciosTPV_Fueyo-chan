@@ -125,6 +125,7 @@ void Networking::update() {
 		case _PLAYER_STATE:
 			m2.deserialize(_p->data);
 			handle_player_state(m2);
+			std::cout << "PlayerStateReceived" << std::endl;
 			break;
 
 		case _DEAD:
@@ -160,23 +161,25 @@ void Networking::handle_disconnet(Uint8 id) {
 	}
 }
 
-void Networking::send_state(const Vector2D& pos, const Vector2D& lastPos, float rot) {
+void Networking::send_state(const Vector2D& pos, const Vector2D& lastPos, float rot, LittleWolf::PlayerState state) {
+	send_state(pos, lastPos, rot, state, _clientId);
+}
+
+void Networking::send_state(const Vector2D& pos, const Vector2D& lastPos, float rot, LittleWolf::PlayerState state, int id) {
 	PlayerStateMsg m;
 	m._type = _PLAYER_STATE;
-	m._client_id = _clientId;
+	m._client_id = id;
 	m.x = pos.getX();
 	m.y = pos.getY();
 	m.lx = lastPos.getX();
 	m.ly = lastPos.getY();
+	m.state = state;
 	m.rot = rot;
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
 
 void Networking::handle_player_state(const PlayerStateMsg &m) {
-
-	if (m._client_id != _clientId) {
-		Game::Instance()->little_wolf()->update_player_state(m._client_id, LittleWolf::Point{ m.x, m.y }, LittleWolf::Point{ m.lx, m.ly }, m.rot);
-	}
+	Game::Instance()->little_wolf()->update_player_state(m._client_id, LittleWolf::Point{ m.x, m.y }, LittleWolf::Point{ m.lx, m.ly }, m.rot, m.state);
 }
 
 void Networking::send_shoot(Uint8 id) {

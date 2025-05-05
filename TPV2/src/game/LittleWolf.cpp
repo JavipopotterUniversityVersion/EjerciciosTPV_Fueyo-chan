@@ -68,7 +68,7 @@ void LittleWolf::update() {
 	else {
 		if (sdlutils().virtualTimer().currRealTime() > _restart_start_time + _restart_time) {
 			_restart = false;
-			restart();
+			if(net_->is_master()) restart();
 		}
 		_timeLeft = ((_restart_start_time + _restart_time) - sdlutils().virtualTimer().currRealTime()) / 1000;
 	}
@@ -550,7 +550,7 @@ void LittleWolf::move(Player &p) {
 		if (x0 != x1 || y0 != y1) {
 			_map.walling[y1][x1] = _map.walling[y0][x0];
 			_map.walling[y0][x0] = 0;
-			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ last.x, last.y}, p.theta);
+			net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ last.x, last.y}, p.theta, p.state);
 			std::cout << "!Self! " << (int)current_player_id() << " is in " << last.x << "x " << last.y << "y" << std::endl;
 		}
 	}
@@ -571,12 +571,12 @@ void LittleWolf::spin(Player &p) {
 	if (ihdlr.isKeyDown(SDL_SCANCODE_H))
 	{
 		p.theta -= d;
-		net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ p.where.x, p.where.y }, p.theta);
+		net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ p.where.x, p.where.y }, p.theta, p.state);
 	}
 	if (ihdlr.isKeyDown(SDL_SCANCODE_L))
 	{
 		p.theta += d;
-		net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ p.where.x, p.where.y }, p.theta);
+		net_->send_state(Vector2D{ p.where.x, p.where.y }, Vector2D{ p.where.x, p.where.y }, p.theta, p.state);
 	}
 }
 
@@ -644,11 +644,12 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos, float rot) {
+void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos, float rot, Uint8 state) {
 	std::cout << "Player " << (int)id << " was in " << (int)lastPos.x << "x " << (int)lastPos.y << "y" << std::endl;
 	std::cout << "Player " << (int)id << " is in " << (int)pos.x << "x " << (int)pos.y << "y" << std::endl;
 	_players[id].where = pos;
 	_players[id].theta = rot;
+	_players[id].state = (PlayerState)state;
 
 	int x = (int)pos.x;
 	int y = (int)pos.y;
@@ -674,8 +675,6 @@ void LittleWolf::kill(uint8_t id) {
 }
 
 void LittleWolf::restart() {
-	bringAllToLife();
-
 	for (int id = 0; id < _max_player;id++) {
 		//set in a new random pos
 		if (_players[id].state != NOT_USED) {
@@ -706,7 +705,9 @@ void LittleWolf::restart() {
 
 			// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
 			_map.walling[(int)_players[id].where.y][(int)_players[id].where.x] = player_to_tile(id);
-			net_->send_state({ _players[id].where.x, _players[id].where.y }, lastPos, _players[id].theta);
+
+			bringAllToLife();
+			net_->send_state({ _players[id].where.x, _players[id].where.y }, lastPos, _players[id].theta, _players[id].state, id);
 		}
 	}
 }

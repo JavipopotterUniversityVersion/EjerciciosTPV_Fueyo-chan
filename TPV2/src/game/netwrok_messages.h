@@ -47,6 +47,8 @@ struct PlayerStateMsg: MsgWithId {
 
 	float rot;
 
-	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y, lx, ly, rot)
+	Uint8 state;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y, lx, ly, rot, state)
 
 };
