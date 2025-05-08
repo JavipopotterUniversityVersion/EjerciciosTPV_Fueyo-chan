@@ -222,7 +222,7 @@ void LittleWolf::load(std::string filename) {
 }
 
 bool LittleWolf::removePlayer(uint8_t id) {
-	int i = 0;
+	if (!_players[id].state != NOT_USED)  return false;
 	_players[id].state = NOT_USED;
 
 	return true;
@@ -302,11 +302,11 @@ bool LittleWolf::add_player(uint8_t id, float x, float y) {
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
-	if (_players[_curr_player_id].state == DEAD || _upper_view) {
+	if (_players[net_->client_id()].state == DEAD || _upper_view) {
 		render_upper_view();
 	}
 	else
-		render_map(_players[_curr_player_id]);
+		render_map(_players[net_->client_id()]);
 
 	// render the identifiers, state, etc
 	render_players_info();
@@ -419,7 +419,7 @@ void LittleWolf::render_upper_view() {
 
 	for (int x = 0; x < _gpu.xres; x++)
 		for (int y = 0; y < _gpu.yres; y++)
-			put(display, y, x, 0x00000000);
+			put(display, x, y, 0x00000000);
 
 	for (auto x = 0u; x < _map.walling_height; x++)
 		for (auto y = 0u; y < _map.walling_width; y++) {
@@ -580,18 +580,18 @@ void LittleWolf::spin(Player &p) {
 	}
 }
 
-void LittleWolf::shoot() {
+bool LittleWolf::shoot() {
 	auto &ihdlr = ih();
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_SPACE)) {
-		net_->send_shoot(_curr_player_id);
+		net_->send_shoot(net_->client_id());
+
+		return true;
 	}
+	return false;
 }
 
 bool LittleWolf::handle_shoot(int id) {
 	Player p = _players[id];
-
-	// play gun shot sound
-	sdlutils().soundEffects().at("gunshot").play();
 
 	// we shoot in several directions, because with projection what you see is not exact
 	for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -614,7 +614,7 @@ bool LittleWolf::handle_shoot(int id) {
 		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < _shoot_distace) {
 			uint8_t id = tile_to_player(hit.tile);
 			_players[id].state = DEAD;
-			sdlutils().soundEffects().at("pain").play();
+			kill(id);
 			net_->send_dead(id);
 				
 			return true;
@@ -661,8 +661,11 @@ void LittleWolf::update_player_state(uint8_t id, Point pos, Point lastPos, float
 	_map.walling[y][x] = player_to_tile(id);
 }
 
-void LittleWolf::kill(uint8_t id) {
+bool LittleWolf::kill(uint8_t id) {
+	if (_players[id].state != ALIVE) return false;
+
 	_players[id].state = DEAD;
+	sdlutils().soundEffects().at("pain").play();
 
 	int i = 0;
 	for (auto player : _players) {
@@ -672,6 +675,8 @@ void LittleWolf::kill(uint8_t id) {
 	if (i < 2) {
 		net_->send_restart();
 	}
+
+	return true;
 }
 
 std::uint8_t LittleWolf::get_first_existing_player() {

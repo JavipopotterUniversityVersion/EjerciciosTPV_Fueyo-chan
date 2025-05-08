@@ -101,20 +101,16 @@ void Networking::update() {
 	Msg m0;
 	MsgWithMasterId m1;
 	PlayerStateMsg m2;
+	ShootMsg m3;
 	MsgWithId m4;
 
 	while (SDLNetUtils::deserializedReceive(m0, _p, _sock) > 0) {
 
 		switch (m0._type) {
 		case _NEW_CLIENT_CONNECTED:
-			m4.deserialize(_p->data);
-			//_clientId = m4._client_id;
+			m1.deserialize(_p->data);
+			_masterId = m1._master_id;
 			Game::Instance()->little_wolf()->send_my_info();
-			break;
-
-		case _ADD_NEW_PLAYER:
-			m2.deserialize(_p->data);
-			handle_new_client(m2._client_id, m2.x, m2.y);
 			break;
 
 		case _DISCONNECTED:
@@ -128,14 +124,19 @@ void Networking::update() {
 			std::cout << "PlayerStateReceived" << std::endl;
 			break;
 
-		case _DEAD:
-			m4.deserialize(_p->data);
-			handle_dead(m4);
+		case _ADD_NEW_PLAYER:
+			m2.deserialize(_p->data);
+			handle_new_client(m2._client_id, m2.x, m2.y);
 			break;
 
 		case _SHOOT:
+			m3.deserialize(_p->data);
+			handle_shoot(m3._client_id);
+			break;
+
+		case _DEAD:
 			m4.deserialize(_p->data);
-			handle_shoot(m4._client_id);
+			handle_dead(m4);
 			break;
 
 		case _RESTART:
@@ -155,15 +156,13 @@ void Networking::handle_new_client(Uint8 id, float x, float y) {
 }
 
 void Networking::handle_disconnet(Uint8 id) {
-	if (id != _clientId) {
-		Game::Instance()->little_wolf()->removePlayer(id);
-		std::cout << "Player disconnected" << std::endl;
-		std::cout << "My id " << (int)_clientId << " master id " << (int)_masterId << std::endl;
-		if (id == _masterId) {
-			Uint8 newId = Game::Instance()->little_wolf()->get_first_existing_player();
-			_masterId = newId;
-			std::cout << "New master is " << (int)_masterId << std::endl;
-		}
+	Game::Instance()->little_wolf()->removePlayer(id);
+	std::cout << "Player disconnected" << std::endl;
+	std::cout << "My id " << (int)_clientId << " master id " << (int)_masterId << std::endl;
+	if (id == _masterId) {
+		Uint8 newId = Game::Instance()->little_wolf()->get_first_existing_player();
+		_masterId = newId;
+		std::cout << "New master is " << (int)_masterId << std::endl;
 	}
 }
 
@@ -185,17 +184,21 @@ void Networking::send_state(const Vector2D& pos, const Vector2D& lastPos, float 
 }
 
 void Networking::handle_player_state(const PlayerStateMsg &m) {
-	Game::Instance()->little_wolf()->update_player_state(m._client_id, LittleWolf::Point{ m.x, m.y }, LittleWolf::Point{ m.lx, m.ly }, m.rot, m.state);
+	Game::Instance()->little_wolf()->update_player_state(m._client_id,
+		LittleWolf::Point{ m.x, m.y }, LittleWolf::Point{ m.lx, m.ly }, m.rot, m.state);
 }
 
 void Networking::send_shoot(Uint8 id) {
-	MsgWithId m;
+	ShootMsg m;
 	m._type = _SHOOT;
-	m._client_id = id;
+	m._client_id = _clientId;
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
 
 void Networking::handle_shoot(Uint8 id) {
+	// play gun shot sound
+	sdlutils().soundEffects().at("gunshot").play();
+
 	if(is_master()) Game::Instance()->little_wolf()->handle_shoot(id);
 }
 
@@ -205,8 +208,9 @@ void Networking::send_dead(Uint8 id) {
 	m._client_id = id;
 	SDLNetUtils::serializedSend(m, _p, _sock, _srvadd);
 }
+
 void Networking::handle_dead(const MsgWithId &m) {
-	Game::Instance()->little_wolf()->kill(m._client_id);
+	if (!is_master()) Game::Instance()->little_wolf()->kill(m._client_id);
 }
 
 void Networking::send_my_info(const LittleWolf::Point& pos) {

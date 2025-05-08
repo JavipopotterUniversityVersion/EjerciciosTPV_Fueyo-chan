@@ -8,7 +8,8 @@
 #include "Networking.h"
 
 Game::Game() :
-		_little_wolf() //
+		_little_wolf(), //
+		net_()
 {
 }
 
@@ -23,6 +24,7 @@ Game::~Game() {
 		SDLUtils::Release();
 
 	delete _little_wolf;
+	delete net_;
 }
 
 bool Game::init(const char *map) {

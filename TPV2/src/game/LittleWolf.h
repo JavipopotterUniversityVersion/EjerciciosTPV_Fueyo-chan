@@ -159,7 +159,7 @@ public:
 
 	void update_player_state(uint8_t id, Point pos, Point lastPos, float rot, Uint8 state);
 	inline void set_network(Networking* net) { net_ = net; }
-	void kill(uint8_t id);
+	bool kill(uint8_t id);
 
 	bool add_self_player();
 	void send_my_info();
@@ -201,7 +201,7 @@ private:
 			bool ignore_players, bool ignore_deads);
 
 	// Moves the player when w,a,s,d are held down. Handles collision detection for the walls.
-	void shoot();
+	bool shoot();
 
 	// Spins the player when keys grid_h,l are held down. When left-shit is held down the move is slower
 	inline void spin(Player &p);

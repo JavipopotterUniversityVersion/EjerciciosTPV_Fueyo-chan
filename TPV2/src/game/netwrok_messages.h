@@ -52,3 +52,15 @@ struct PlayerStateMsg: MsgWithId {
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y, lx, ly, rot, state)
 
 };
+
+struct ShootMsg : MsgWithId {
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId)
+
+};
+
+struct RestartMsg : MsgWithId {
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId)
+
+};
