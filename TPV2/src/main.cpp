@@ -7,7 +7,11 @@
 int main(int, char**) {
 
 	try {
-		Game::Init();
+		if (!Game::Init()) {
+			std::cerr << "Something went wrong while initializing SDLUtils"
+				<< std::endl;
+			return false;
+		}
 		Game::Instance()->initGame();
 		Game::Instance()->start();
 	} catch (const std::string &e) { // catch exceptions thrown as strings

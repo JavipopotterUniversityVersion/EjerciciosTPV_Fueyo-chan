@@ -3,14 +3,14 @@
 
 struct WonderFruitComponent : public ecs::Component {
 public:
-	WonderFruitComponent(int N, int M) : _n(N), _m(M) {}
+	WonderFruitComponent(int N, int M) : _n(N), _m(M), nextTime(0), inWonderState(false) {}
 	virtual ~WonderFruitComponent() {}
 
 	bool inWonderState;
 	int nextTime;
 
-	inline int const N() { return _n; }
-	inline int const M() { return _m; }
+	inline int N() const { return _n; }
+	inline int M() const { return _m; }
 
 private:
 	int _n, _m;

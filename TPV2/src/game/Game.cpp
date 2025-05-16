@@ -43,6 +43,12 @@ Game::~Game() {
 	// release SLDUtil if the instance was created correctly.
 	if (SDLUtils::HasInstance())
 		SDLUtils::Release();
+
+	delete _gameover_state;
+	delete _newgame_state;
+	delete _paused_state;
+	delete _runing_state;
+	delete _newround_state;
 }
 
 void Game::initGame() {
@@ -100,11 +106,6 @@ void Game::start() {
 	while (!exit) {
 		Uint32 startTime = sdlutils().currRealTime();
 		sdlutils().virtualTimer().regCurrTime();
-
-		Message m;
-		m.id = _m_REGISTER_TIME;
-		m.register_time_data.new_current_time = sdlutils().virtualTimer().currTime();
-		_mngr->send(m);
 
 		// refresh the input handler
 		ihdlr.refresh();

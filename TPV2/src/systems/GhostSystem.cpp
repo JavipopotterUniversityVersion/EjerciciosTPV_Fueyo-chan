@@ -5,7 +5,7 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 
-GhostSystem::GhostSystem() : _currentGhostsFrameRange(AnimationUtility::getRedGhost()) {
+GhostSystem::GhostSystem() : _currentGhostsFrameRange(AnimationUtility::getRedGhost()), _pacMan(nullptr) {
 
 }
 
@@ -57,7 +57,7 @@ ecs::entity_t GhostSystem::createGhost() {
 	else if (rndBorder == 1) pos = { float(sdlutils().width() - 40), 0.0f }; //Esquina arriba der.
 	else if (rndBorder == 2) pos = { 0.0f, float(sdlutils().height() - 40)}; //Esquina abajo izq.
 	else if (rndBorder == 3) pos = { float(sdlutils().width() - 40), float(sdlutils().height() - 40) }; //Borde abajo
-	Transform* tr = _mngr->addComponent<Transform>(ghost, pos, (_pacMan->_pos - pos).normalize() * 1.1f, 40.0f, 40.0f, 0.0f);
+	_mngr->addComponent<Transform>(ghost, pos, (_pacMan->_pos - pos).normalize() * 1.1f, 40.0f, 40.0f, 0.0f);
 	_mngr->addComponent<FramedImage>(ghost, _currentGhostsFrameRange);
 
 	return ghost;
@@ -66,10 +66,6 @@ ecs::entity_t GhostSystem::createGhost() {
 void GhostSystem::recieve(const Message& m)
 {
 	switch (m.id) {
-	case _m_REGISTER_TIME:
-		_currentTime = m.register_time_data.new_current_time;
-		break;
-	case _m_IMMUNITY_START:
 	{
 		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 		_currentGhostsFrameRange = AnimationUtility::getVulnerableGhost();

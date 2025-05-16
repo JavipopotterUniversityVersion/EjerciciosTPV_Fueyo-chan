@@ -6,7 +6,6 @@
 
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
-	_m_REGISTER_TIME,
 	_m_PACMAN_GHOST_COLLISION,
 	_m_IMMUNITY_START, 
 	_m_IMMUNITY_END,
