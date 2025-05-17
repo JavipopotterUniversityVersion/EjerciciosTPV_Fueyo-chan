@@ -14,7 +14,10 @@ public:
 	void initSystem() override;
 	void restartSystem();
 	void update() override;
+	void recieve(const Message&) override;
 private:
 	Transform *_pmTR;
+	ecs::entity_t _pacman;
+	bool isInmune;
 };
 

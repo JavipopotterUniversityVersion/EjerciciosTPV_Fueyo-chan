@@ -10,6 +10,8 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../game/AnimationUtility.h"
 
+#include "../game/Game.h"
+
 PacManSystem::PacManSystem() :
 		_pmTR(nullptr) {
 }
@@ -20,16 +22,16 @@ PacManSystem::~PacManSystem() {
 void PacManSystem::initSystem() {
 	// create the PacMan entity
 	//
-	auto pacman = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
+	_pacman = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::PACMAN, _pacman);
 
-	_pmTR = _mngr->addComponent<Transform>(pacman);
+	_pmTR = _mngr->addComponent<Transform>(_pacman);
 	auto s = 50.0f;
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
 	_pmTR->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	_mngr->addComponent<FramedImage>(pacman, AnimationUtility::getPacmanAnimation());
-	_mngr->addComponent<Health>(pacman, 3);
+	_mngr->addComponent<FramedImage>(_pacman, AnimationUtility::getPacmanAnimation());
+	_mngr->addComponent<Health>(_pacman, 3);
 }
 
 void PacManSystem::restartSystem() {
@@ -109,4 +111,32 @@ void PacManSystem::update() {
 		_pmTR->_vel.set(0.0f, 0.0f);
 	}
 
+}
+
+void PacManSystem::recieve(const Message& m)
+{
+	switch (m.id) {
+	case _m_IMMUNITY_START:
+		isInmune = true;
+		break;
+	case _m_IMMUNITY_END:
+		isInmune = false;
+		break;
+	case _m_PACMAN_GHOST_COLLISION:
+	{
+		if (!isInmune) {
+			Game::Instance()->getManager()->getComponent<Health>(_pacman)->LoseHealth(1);
+			sdlutils().soundEffects().at("pacman_death").play();
+
+			if (Game::Instance()->getManager()->getComponent<Health>(_pacman)->GetHealth() == 0)
+			{
+				Game::Instance()->setState(Game::GAMEOVER);
+			}
+			else {
+				Game::Instance()->setState(Game::NEWROUND);
+			}
+		}
+	}
+	break;
+	}
 }

@@ -4,6 +4,7 @@
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../sdlutils/SDLUtils.h"
 
 GhostSystem::GhostSystem() : _currentGhostsFrameRange(AnimationUtility::getRedGhost()), _pacMan(nullptr) {
 
@@ -23,16 +24,14 @@ void GhostSystem::restartSystem() {
 	for (ecs::entity_t ghost : ghosts) {
 		_mngr->setAlive(ghost, false);
 	}
-	_currentTime = 0;
 	_nextTime = SPAWN_MARGIN;
 }
 void GhostSystem::update() {
 	std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 
-	if (ghosts.size() < MAX_GHOSTS && _currentTime >= _nextTime && _ghostSpawn) {
-		_nextTime = _currentTime + SPAWN_MARGIN;
+	if (ghosts.size() < MAX_GHOSTS && sdlutils().currTime() >= _nextTime && _ghostSpawn) {
+		_nextTime = sdlutils().currRealTime() + SPAWN_MARGIN;
 		createGhost();
-		std::cout << _currentTime << std::endl;
 	}
 
 	
@@ -66,6 +65,7 @@ ecs::entity_t GhostSystem::createGhost() {
 void GhostSystem::recieve(const Message& m)
 {
 	switch (m.id) {
+	case _m_IMMUNITY_START:
 	{
 		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
 		_currentGhostsFrameRange = AnimationUtility::getVulnerableGhost();
@@ -81,7 +81,12 @@ void GhostSystem::recieve(const Message& m)
 		_ghostSpawn = true;
 	}
 		break;
-	default:
+	case _m_PACMAN_GHOST_COLLISION:
+	{
+		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+		if (isPacmanInmune()) {
+			_mngr->setAlive(ghosts[m.pacman_ghost_collision_data.ghost_index], false);
+		}
 		break;
 	}
 }

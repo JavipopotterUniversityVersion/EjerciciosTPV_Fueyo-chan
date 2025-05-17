@@ -35,20 +35,8 @@ void CollisionsSystem::update() {
 			Message m;
 			m.id = _m_PACMAN_GHOST_COLLISION;
 			m.pacman_ghost_collision_data.pacman_wins = isPacManInmune;
+			m.pacman_ghost_collision_data.ghost_index = i;
 			_mngr->send(m);
-
-			if (isPacManInmune) _mngr->setAlive(ghosts[i], false);
-			else {
-				Game::Instance()->getManager()->getComponent<Health>(pm)->LoseHealth(1);
-				sdlutils().soundEffects().at("pacman_death").play();
-				if (Game::Instance()->getManager()->getComponent<Health>(pm)->GetHealth() == 0)
-				{
-					Game::Instance()->setState(Game::GAMEOVER);
-				}
-				else {
-					Game::Instance()->setState(Game::NEWROUND);
-				}
-			}
 		}
 	}
 
@@ -74,7 +62,7 @@ void CollisionsSystem::update() {
 			if(_mngr->getComponent<WonderFruitComponent>(wonderFruits[i])->inWonderState)
 			{
 				Message m;
-				m.id = _m_IMMUNITY_START;
+				m.id = _m_WONDER_FRUIT_EATEN;
 				_mngr->send(m);
 
 				hasEatenFruit = true;
