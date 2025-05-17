@@ -41,13 +41,13 @@ void FoodSystem::update() {
 
 		if (wonderComp->nextTime <= sdlutils().currTime()) {
 			FramedImage* wonderFruitImg = _mngr->getComponent<FramedImage>(fruit);
-			if (wonderComp->inWonderState) {
-				wonderComp->inWonderState = false;
+			if (wonderComp->inWonderState()) {
+				wonderComp->setWonderState(false);
 				wonderFruitImg->setFrameRange(AnimationUtility::getCherry());
 				wonderComp->nextTime = sdlutils().currTime() + wonderComp->N();
 			}
 			else{
-				wonderComp->inWonderState = true;
+				wonderComp->setWonderState(true);
 				wonderFruitImg->setFrameRange(AnimationUtility::getPear());
 				wonderComp->nextTime = sdlutils().currTime() + wonderComp->M();
 			}
@@ -81,7 +81,15 @@ void FoodSystem::recieve(const Message& m) {
 
 			std::vector<ecs::entity_t> fruits;
 
-			if(m.pacman_food_collision_data.is_wonder) fruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
+			if (m.pacman_food_collision_data.is_wonder) {
+				fruits = _mngr->getEntities(ecs::grp::WONDER_FRUITS);
+				if(_mngr->getComponent<WonderFruitComponent>(fruits[m.pacman_food_collision_data.index])->inWonderState())
+				{
+					Message m;
+					m.id = _m_WONDER_FRUIT_EATEN;
+					_mngr->send(m);
+				}
+			}
 			else fruits = _mngr->getEntities(ecs::grp::FRUITS);
 
 			_mngr->setAlive(fruits[m.pacman_food_collision_data.index], false);

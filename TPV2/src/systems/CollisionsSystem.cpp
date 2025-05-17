@@ -66,9 +66,6 @@ void CollisionsSystem::update() {
 			m.pacman_food_collision_data.index = i;
 			m.pacman_food_collision_data.is_wonder = true;
 
-			if (_mngr->getComponent<WonderFruitComponent>(wonderFruits[i])->inWonderState) m.pacman_food_collision_data.is_wonder_and_active = true;
-			else m.pacman_food_collision_data.is_wonder_and_active = false;
-
 			_mngr->send(m);
 		}
 	}

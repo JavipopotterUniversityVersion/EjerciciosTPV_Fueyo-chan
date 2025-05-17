@@ -14,6 +14,7 @@ enum msgId : msgId_type {
 	_m_ROUND_OVER, 
 	_m_GAME_OVER,
 	_m_PACMAN_FOOD_COLLISION,
+	_m_WONDER_FRUIT_EATEN
 
 };
 
