@@ -86,7 +86,7 @@ void FoodSystem::recieve(const Message& m) {
 
 			_mngr->setAlive(fruits[m.pacman_food_collision_data.index], false);
 
-			if (_mngr->getEntities(ecs::grp::WONDER_FRUITS).size() + _mngr->getEntities(ecs::grp::FRUITS).size() <= 0) {
+			if (_mngr->getEntities(ecs::grp::WONDER_FRUITS).size() + _mngr->getEntities(ecs::grp::FRUITS).size() - 1 <= 0) {
 				sdlutils().soundEffects().at("pacman_won").play();
 				Game::Instance()->setState(Game::GAMEOVER);
 			}

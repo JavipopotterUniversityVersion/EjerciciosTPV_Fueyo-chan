@@ -11,7 +11,7 @@ void InmunitySystem::initSystem() {
 }
 
 void InmunitySystem::update() {
-	if (isInmune && sdlutils().virtualTimer().currTime() >= _nextTime) {
+	if (isInmune && sdlutils().currTime() >= _nextTime) {
 		isInmune = false;
 		Message m;
 		m.id = _m_IMMUNITY_END;
@@ -23,7 +23,7 @@ void InmunitySystem::recieve(const Message& m) {
 	switch (m.id) {
 	case _m_IMMUNITY_START:
 		isInmune = true;
-		_nextTime = sdlutils().virtualTimer().currTime() + INMUNE_TIME;
+		_nextTime = sdlutils().currTime() + INMUNE_TIME;
 		break;
 	case _m_PACMAN_FOOD_COLLISION:
 		if (m.pacman_food_collision_data.is_wonder_and_active)
