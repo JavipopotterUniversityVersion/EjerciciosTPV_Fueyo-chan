@@ -40,15 +40,19 @@ void CollisionsSystem::update() {
 		}
 	}
 
-	bool hasEatenFruit = false;
 
 	auto& fruits = _mngr->getEntities(ecs::grp::FRUITS);
 	for (auto i = 0u; i < fruits.size(); i++) {
 		auto otherTr = _mngr->getComponent<Transform>(fruits[i]);
 
 		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))) {
-			_mngr->setAlive(fruits[i], false);
-			hasEatenFruit = true;
+			Message m;
+			m.id = _m_PACMAN_FOOD_COLLISION;
+			m.pacman_food_collision_data.is_wonder = false;
+			m.pacman_food_collision_data.is_wonder_and_active = false;
+			m.pacman_food_collision_data.index = i;
+
+			_mngr->send(m);
 		}
 	}
 
@@ -57,30 +61,15 @@ void CollisionsSystem::update() {
 		auto otherTr = _mngr->getComponent<Transform>(wonderFruits[i]);
 
 		if ((Collisions::collides(pTR->_pos, pTR->_width, pTR->_height, otherTr->_pos, otherTr->_width, otherTr->_height))){
-			_mngr->setAlive(wonderFruits[i], false);
+			Message m;
+			m.id = _m_PACMAN_FOOD_COLLISION;
+			m.pacman_food_collision_data.index = i;
+			m.pacman_food_collision_data.is_wonder = true;
 
-			if(_mngr->getComponent<WonderFruitComponent>(wonderFruits[i])->inWonderState)
-			{
-				Message m;
-				m.id = _m_WONDER_FRUIT_EATEN;
-				_mngr->send(m);
+			if (_mngr->getComponent<WonderFruitComponent>(wonderFruits[i])->inWonderState) m.pacman_food_collision_data.is_wonder_and_active = true;
+			else m.pacman_food_collision_data.is_wonder_and_active = false;
 
-				hasEatenFruit = true;
-			}
-		}
-	}
-
-	if (hasEatenFruit) {
-		Message m;
-		m.id = _m_PACMAN_FOOD_COLLISION;
-		m.pacman_food_collision_data.foodLeft = fruits.size() + wonderFruits.size() - 1;
-		_mngr->send(m);
-
-		sdlutils().soundEffects().at("pacman_eat").play();
-
-		if (m.pacman_food_collision_data.foodLeft == 0) {
-			sdlutils().soundEffects().at("pacman_won").play();
-			Game::Instance()->setState(Game::GAMEOVER);
+			_mngr->send(m);
 		}
 	}
 }

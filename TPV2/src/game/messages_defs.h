@@ -7,7 +7,6 @@
 using msgId_type = uint8_t;
 enum msgId : msgId_type {
 	_m_PACMAN_GHOST_COLLISION,
-	_m_WONDER_FRUIT_EATEN,
 	_m_IMMUNITY_START, 
 	_m_IMMUNITY_END,
 	_m_NEW_GAME, 
@@ -41,7 +40,9 @@ struct Message {
 
 		//_m_PACMAN_FOOD_COLLISION
 		struct {
-			unsigned int foodLeft;
+			bool is_wonder;
+			bool is_wonder_and_active;
+			int index;
 		} pacman_food_collision_data;
 	};
 };
