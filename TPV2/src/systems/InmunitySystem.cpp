@@ -25,10 +25,13 @@ void InmunitySystem::recieve(const Message& m) {
 		isInmune = true;
 		_nextTime = sdlutils().virtualTimer().currTime() + INMUNE_TIME;
 		break;
-	case _m_WONDER_FRUIT_EATEN:
-		Message m;
-		m.id = _m_IMMUNITY_START;
-		_mngr->send(m);
+	case _m_PACMAN_FOOD_COLLISION:
+		if (m.pacman_food_collision_data.is_wonder_and_active)
+		{
+			Message m;
+			m.id = _m_IMMUNITY_START;
+			_mngr->send(m);
+		}
 		break;
 	default:
 		break;
