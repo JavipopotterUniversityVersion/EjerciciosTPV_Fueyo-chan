@@ -116,27 +116,33 @@ void PacManSystem::update() {
 void PacManSystem::recieve(const Message& m)
 {
 	switch (m.id) {
-	case _m_IMMUNITY_START:
-		isInmune = true;
-		break;
-	case _m_IMMUNITY_END:
-		isInmune = false;
-		break;
-	case _m_PACMAN_GHOST_COLLISION:
-	{
-		if (!isInmune) {
-			Game::Instance()->getManager()->getComponent<Health>(_pacman)->LoseHealth(1);
-			sdlutils().soundEffects().at("pacman_death").play();
+		case _m_IMMUNITY_START:
+			isInmune = true;
+			break;
+		case _m_IMMUNITY_END:
+			isInmune = false;
+			break;
+		case _m_PACMAN_GHOST_COLLISION:
+		{
+			if (!isInmune) {
+				Game::Instance()->getManager()->getComponent<Health>(_pacman)->LoseHealth(1);
+				sdlutils().soundEffects().at("pacman_death").play();
 
-			if (Game::Instance()->getManager()->getComponent<Health>(_pacman)->GetHealth() == 0)
-			{
-				Game::Instance()->setState(Game::GAMEOVER);
+				if (Game::Instance()->getManager()->getComponent<Health>(_pacman)->GetHealth() == 0)
+				{
+					Game::Instance()->setState(Game::GAMEOVER);
+				}
+				else {
+					Game::Instance()->setState(Game::NEWROUND);
+				}
 			}
-			else {
-				Game::Instance()->setState(Game::NEWROUND);
-			}
+			break;
 		}
-	}
-	break;
+		case _m_GAME_OVER:
+			restartSystem();
+			break;
+		case _m_ROUND_START:
+			restartSystem();
+			break;
 	}
 }

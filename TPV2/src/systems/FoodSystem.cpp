@@ -66,6 +66,14 @@ void FoodSystem::createFruit(int x, int y) {
 		int n = _rng.nextInt(1000, 11000);
 		int m = _rng.nextInt(1000, 6000);
 		WonderFruitComponent* wonderComp = _mngr->addComponent<WonderFruitComponent>(fruit, n, m);
-		wonderComp->nextTime = sdlutils().virtualTimer().currTime() + wonderComp->N();
+		wonderComp->nextTime = sdlutils().currTime() + wonderComp->N();
+	}
+}
+
+void FoodSystem::recieve(const Message& m) {
+	switch (m.id) {
+	case _m_GAME_OVER:
+		restartSystem();
+		break;
 	}
 }

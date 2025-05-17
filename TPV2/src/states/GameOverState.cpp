@@ -1,13 +1,10 @@
 #include "GameOverState.h"
 
 void GameOverState::enter() {
-	_foodSystem = Game::Instance()->getManager()->getSystem<FoodSystem>();
-	_ghostSystem = Game::Instance()->getManager()->getSystem<GhostSystem>();
-	_pacManSystem = Game::Instance()->getManager()->getSystem<PacManSystem>();
-
-	_foodSystem->restartSystem();
-	_ghostSystem->restartSystem();
-	_pacManSystem->restartSystem();
+	ecs::Manager* manager = Game::Instance()->getManager();
+	Message m;
+	m.id = _m_GAME_OVER;
+	manager->send(m);
 }
 
 void

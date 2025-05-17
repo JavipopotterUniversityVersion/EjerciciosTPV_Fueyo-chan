@@ -10,6 +10,7 @@ public:
 	void initSystem() override;
 	void restartSystem();
 	void update() override;
+	void recieve(const Message&) override;
 private:
 	void createFruit(int x, int y);
 	static int constexpr GRID_SIZE = 100;

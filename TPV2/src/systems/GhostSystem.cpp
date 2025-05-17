@@ -65,28 +65,35 @@ ecs::entity_t GhostSystem::createGhost() {
 void GhostSystem::recieve(const Message& m)
 {
 	switch (m.id) {
-	case _m_IMMUNITY_START:
-	{
-		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
-		_currentGhostsFrameRange = AnimationUtility::getVulnerableGhost();
-		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
-		_ghostSpawn = false;
-	}
-		break;
-	case _m_IMMUNITY_END:
-	{
-		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
-		_currentGhostsFrameRange = AnimationUtility::getRedGhost();
-		for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
-		_ghostSpawn = true;
-	}
-		break;
-	case _m_PACMAN_GHOST_COLLISION:
-	{
-		std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
-		if (isPacmanInmune()) {
-			_mngr->setAlive(ghosts[m.pacman_ghost_collision_data.ghost_index], false);
+		case _m_IMMUNITY_START:
+		{
+			std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+			_currentGhostsFrameRange = AnimationUtility::getVulnerableGhost();
+			for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
+			_ghostSpawn = false;
 		}
 		break;
+		case _m_IMMUNITY_END:
+		{
+			std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+			_currentGhostsFrameRange = AnimationUtility::getRedGhost();
+			for (ecs::entity_t ghost : ghosts) _mngr->getComponent<FramedImage>(ghost)->setFrameRange(_currentGhostsFrameRange);
+			_ghostSpawn = true;
+		}
+		break;
+		case _m_PACMAN_GHOST_COLLISION:
+		{
+			std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
+			if (isPacmanInmune()) {
+				_mngr->setAlive(ghosts[m.pacman_ghost_collision_data.ghost_index], false);
+			}
+			break;
+		}
+		case _m_GAME_OVER:
+			restartSystem();
+			break;
+		case _m_ROUND_START:
+			restartSystem();
+			break;
 	}
 }
