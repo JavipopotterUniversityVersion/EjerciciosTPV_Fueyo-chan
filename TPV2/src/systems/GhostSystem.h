@@ -21,7 +21,6 @@ private:
 	Vector2D _oldPacManPos;
 
 	bool _ghostSpawn = true;
-	inline bool isPacmanInmune() { return !_ghostSpawn; }
 	int _nextTime;
 	static constexpr int SPAWN_MARGIN = 5000;
 	Vector2D _currentGhostsFrameRange;

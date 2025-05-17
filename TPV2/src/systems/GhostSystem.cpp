@@ -84,7 +84,7 @@ void GhostSystem::recieve(const Message& m)
 		case _m_PACMAN_GHOST_COLLISION:
 		{
 			std::vector<ecs::entity_t> ghosts = _mngr->getEntities(ecs::grp::GHOST);
-			if (isPacmanInmune()) {
+			if (m.pacman_ghost_collision_data.pacman_wins) {
 				_mngr->setAlive(ghosts[m.pacman_ghost_collision_data.ghost_index], false);
 			}
 			break;

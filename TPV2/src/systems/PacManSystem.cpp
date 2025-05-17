@@ -116,15 +116,9 @@ void PacManSystem::update() {
 void PacManSystem::recieve(const Message& m)
 {
 	switch (m.id) {
-		case _m_IMMUNITY_START:
-			isInmune = true;
-			break;
-		case _m_IMMUNITY_END:
-			isInmune = false;
-			break;
 		case _m_PACMAN_GHOST_COLLISION:
 		{
-			if (!isInmune) {
+			if (!m.pacman_ghost_collision_data.pacman_wins) {
 				Game::Instance()->getManager()->getComponent<Health>(_pacman)->LoseHealth(1);
 				sdlutils().soundEffects().at("pacman_death").play();
 

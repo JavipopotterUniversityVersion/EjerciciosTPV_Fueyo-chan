@@ -18,6 +18,5 @@ public:
 private:
 	Transform *_pmTR;
 	ecs::entity_t _pacman;
-	bool isInmune;
 };
 
